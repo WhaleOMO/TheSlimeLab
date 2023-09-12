@@ -38,7 +38,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _SlimeExpression:
-        m_Texture: {fileID: 2800000, guid: 196662dda1d1993409cdff31d8dcf73d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1115e82fa286b1f45913103f4ac9db8f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -57,12 +57,12 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ShakeSpeed: 6
+    - _ShakeSpeed: 100
     m_Colors:
-    - _AmbientColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
-    - _Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
-    - _EyeColor: {r: 0.2830189, g: 0.26749957, b: 0.24163404, a: 0}
+    - _AmbientColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _EyeColor: {r: 1, g: 1, b: 1, a: 0}
     - _HighlightColor: {r: 1, g: 1, b: 1, a: 0}
-    - _MouthColor: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 0}
-    - _RimColor: {r: 1.2468494, g: 1.2468494, b: 1.2468494, a: 0}
+    - _MouthColor: {r: 1, g: 1, b: 1, a: 0}
+    - _RimColor: {r: 1.664642, g: 1.664642, b: 1.664642, a: 0}
   m_BuildTextureStacks: []
