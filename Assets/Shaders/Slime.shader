@@ -23,17 +23,21 @@ Shader "Custom/Slime"
     SubShader
     {
         Tags { "RenderQueue" = "Geometry" "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
-
+        
+        HLSLINCLUDE
+        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+        ENDHLSL
+        
         Pass
         {
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            
+
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS
             #pragma multi_compile_instancing
             #pragma multi_compile _ _ENABLE_SLIME_SHAKE
             
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "ShaderLib/CustomUtils.hlsl"
 
@@ -87,8 +91,7 @@ Shader "Custom/Slime"
                 const float NdotL = dot(normal, mainLight.direction);
                 const float halfLambert = NdotL * 0.5 + 0.5;
                 const float lightDirYRemap = map(saturate(mainLight.direction.y), 0, 1, 0, 1.5);
-                const half3 diffuse = halfLambert * _BaseColor.rgb * lightDirYRemap;
-                // Ambient
+                half3 diffuse = halfLambert * _BaseColor.rgb * lightDirYRemap;
                 const half3 ambient = 0.4 * _AmbientColor.rgb;
                 // Specular
                 const half3 viewDir = normalize(_WorldSpaceCameraPos - posWS);
@@ -101,12 +104,20 @@ Shader "Custom/Slime"
                 // Combined Shaded Color
                 half3 color = diffuse + ambient + specular;
                 color = lerp(color, rimColor, fresnel);
+                // Additional Point Lights
+                #if defined(_ADDITIONAL_LIGHTS)
+                    uint pixelLightCount = GetAdditionalLightsCount();
+                    LIGHT_LOOP_BEGIN(pixelLightCount)
+                        Light light = GetAdditionalLight(lightIndex, posWS, 1.0);
+                        color += saturate(dot(light.direction, normal) * 0.5 + 0.5) * light.color * light.distanceAttenuation;
+                    LIGHT_LOOP_END
+                #endif
                 // Expression
                 const float3 expressionLayers = SAMPLE_TEXTURE2D(_ExpressionTex, sampler_LinearClamp, IN.uv).rgb;
                 const float expressionMask = max(expressionLayers.b, max(expressionLayers.r, expressionLayers.g));
                 const float3 expression = expressionLayers.r * _ExpColorLayer1
-                                    + expressionLayers.g * _ExpColorLayer2
-                                    + expressionLayers.b * _ExpColorLayer3;
+                                        + expressionLayers.g * _ExpColorLayer2
+                                        + expressionLayers.b * _ExpColorLayer3;
                 // Final Lerp
                 color = lerp(color, expression, expressionMask);
                 return half4(color,1.0);
@@ -127,7 +138,6 @@ Shader "Custom/Slime"
             #pragma fragment OutlineFragment
 
             #include "ShaderLib/CustomOutline.hlsl"
-            
             ENDHLSL
         }
         
@@ -147,7 +157,7 @@ Shader "Custom/Slime"
 
             HLSLPROGRAM
             #pragma target 2.0
-
+            
             // -------------------------------------
             // Shader Stages
             #pragma vertex SlimeShadowVertex
@@ -163,37 +173,51 @@ Shader "Custom/Slime"
 
             // This is used during shadow map generation to differentiate between directional and punctual light shadows, as they use different formulas to apply Normal Bias
             #pragma multi_compile_vertex _ _CASTING_PUNCTUAL_LIGHT_SHADOW
+
+            #pragma multi_compile _ _ENABLE_SLIME_SHAKE
             
+            CBUFFER_START(UnityPerMaterial)
+                float _ShakeSpeed, _ShakeAmount;
+            CBUFFER_END
+            
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/SimpleLitInput.hlsl"
             #include "ShaderLib/CustomSlimePasses.hlsl"
             ENDHLSL
         }
         
-//        Pass
-//        {
-//            Name "DepthNormals"
-//            Tags
-//            {
-//                "LightMode" = "DepthNormals"
-//            }
-//
-//            // -------------------------------------
-//            // Render State Commands
-//            ZWrite On
-//
-//            HLSLPROGRAM
-//            #pragma target 2.0
-//
-//            // -------------------------------------
-//            // Shader Stages
-//            #pragma vertex SlimeDepthNormalVertex
-//            #pragma fragment SlimeDepthNormalsFragment
-//
-//            // -------------------------------------
-//            // Unity defined keywords
-//            #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
-//
-//            #include "ShaderLib/CustomSlimePasses.hlsl"
-//            ENDHLSL
-//        }
+        Pass
+        {
+            Name "DepthNormals"
+            Tags
+            {
+                "LightMode" = "DepthNormals"
+            }
+
+            // -------------------------------------
+            // Render State Commands
+            ZWrite On
+
+            HLSLPROGRAM
+            #pragma target 2.0
+
+            // -------------------------------------
+            // Shader Stages
+            #pragma vertex SlimeDepthNormalVertex
+            #pragma fragment SlimeDepthNormalsFragment
+
+            // -------------------------------------
+            // Unity defined keywords
+            #pragma multi_compile_fragment _ LOD_FADE_CROSSFADE
+
+            #pragma multi_compile _ _ENABLE_SLIME_SHAKE
+            
+            CBUFFER_START(UnityPerMaterial)
+                float _ShakeSpeed, _ShakeAmount;
+            CBUFFER_END
+
+            #include "Packages/com.unity.render-pipelines.universal/Shaders/SimpleLitInput.hlsl"
+            #include "ShaderLib/CustomSlimePasses.hlsl"
+            ENDHLSL
+        }
     }
 }
