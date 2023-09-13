@@ -23,6 +23,7 @@ Varyings OutlineVertex(Attributes IN)
     UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(OUT);
     
     float4 posOS = IN.positionOS;
+    // Todo: outline in view space?
     posOS.xyz += IN.normal.xyz * _OutlineWidth;
         
     #ifdef _ENABLE_SLIME_SHAKE
@@ -35,5 +36,5 @@ Varyings OutlineVertex(Attributes IN)
 
 half4 OutlineFragment(): SV_TARGET
 {
-    return half4(_OutlineColor, 1.0);
+    return half4(_OutlineColor.rgb, 1.0);
 }

@@ -29,7 +29,14 @@ Shader "Custom/Slime"
         Tags { "RenderQueue" = "Geometry" "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
         
         HLSLINCLUDE
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            // Cbuffer size/layout should be consistent across all passes to ensure srp batching
+            CBUFFER_START(UnityPerMaterial)
+                    float _ShakeSpeed, _ShakeAmount, _OutlineWidth;
+                    float4 _BaseColor, _AmbientColor, _RimColor, _HighlightColor, _OutlineColor;
+                    float3 _ExpColorLayer1, _ExpColorLayer2, _ExpColorLayer3;
+                    TEXTURE2D(_ExpressionTex);
+            CBUFFER_END
         ENDHLSL
         
         Pass
@@ -44,13 +51,6 @@ Shader "Custom/Slime"
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "ShaderLib/CustomUtils.hlsl"
-
-            CBUFFER_START(UnityPerMaterial)
-                float _ShakeSpeed, _ShakeAmount;
-                float4 _BaseColor, _AmbientColor, _RimColor, _HighlightColor;
-                float3 _ExpColorLayer1, _ExpColorLayer2, _ExpColorLayer3;
-                TEXTURE2D(_ExpressionTex);
-            CBUFFER_END
             
             struct Attributes
             {
@@ -151,12 +151,6 @@ Shader "Custom/Slime"
             
             #pragma multi_compile _ _ENABLE_SLIME_SHAKE
             
-            CBUFFER_START(UnityPerMaterial)
-                float _ShakeSpeed, _ShakeAmount;
-                float _OutlineWidth;
-                float3 _OutlineColor;
-            CBUFFER_END
-            
             #include "ShaderLib/CustomOutline.hlsl"
             ENDHLSL
         }
@@ -196,11 +190,6 @@ Shader "Custom/Slime"
 
             #pragma multi_compile _ _ENABLE_SLIME_SHAKE
             
-            CBUFFER_START(UnityPerMaterial)
-                float _ShakeSpeed, _ShakeAmount;
-            CBUFFER_END
-            
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/SimpleLitInput.hlsl"
             #include "ShaderLib/CustomSlimePasses.hlsl"
             ENDHLSL
         }
@@ -231,11 +220,6 @@ Shader "Custom/Slime"
 
             #pragma multi_compile _ _ENABLE_SLIME_SHAKE
             
-            CBUFFER_START(UnityPerMaterial)
-                float _ShakeSpeed, _ShakeAmount;
-            CBUFFER_END
-
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/SimpleLitInput.hlsl"
             #include "ShaderLib/CustomSlimePasses.hlsl"
             ENDHLSL
         }

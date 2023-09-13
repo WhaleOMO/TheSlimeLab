@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 #include "CustomUtils.hlsl"
 
 #if defined(LOD_FADE_CROSSFADE)
@@ -10,6 +9,7 @@
 
 float3 _LightDirection;
 float3 _LightPosition;
+float4 _ShadowBias;
 
 struct Attributes
 {
@@ -32,6 +32,17 @@ struct VaryingsPosNormal
     UNITY_VERTEX_INPUT_INSTANCE_ID
     UNITY_VERTEX_OUTPUT_STEREO
 };
+
+float3 ApplyShadowBias(float3 positionWS, float3 normalWS, float3 lightDirection)
+{
+    float invNdotL = 1.0 - saturate(dot(lightDirection, normalWS));
+    float scale = invNdotL * _ShadowBias.y;
+
+    // normal bias is negative since we want to apply an inset normal offset
+    positionWS = lightDirection * _ShadowBias.xxx + positionWS;
+    positionWS = normalWS * scale.xxx + positionWS;
+    return positionWS;
+}
 
 float4 GetShadowPositionHClip(float3 positionOS, float3 normalOS)
 {
