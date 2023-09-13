@@ -32,6 +32,9 @@ public class SlimeMoving : MonoBehaviour
             {
                 float offset = Random.Range(-max, max);
 
+                rb.freezeRotation = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                
                 for (int i = 0; i < nSteps; ++i)
                 {
                     Quaternion newQuaternion = new Quaternion();
@@ -41,7 +44,9 @@ public class SlimeMoving : MonoBehaviour
                     RotateFixedDir(offset, nSteps, newQuaternion);
                     yield return new WaitForSeconds(0.01f);
                 }
-                yield return new WaitForSeconds(0.5f);
+
+                rb.freezeRotation = true;
+                yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
                 Lanuch();
             }
         }
@@ -59,7 +64,6 @@ public class SlimeMoving : MonoBehaviour
         Physics.gravity = Vector3.up * gravity;
         rb.useGravity = true;
         rb.velocity = CalculateLanuchVelocity();
-        print(CalculateLanuchVelocity());
     }
 
     Vector3 CalculateLanuchVelocity()
