@@ -33,7 +33,7 @@ public class SlimeMoving : MonoBehaviour
                 float offset = Random.Range(-max, max);
 
                 rb.freezeRotation = false;
-                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
+                rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 
                 for (int i = 0; i < nSteps; ++i)
                 {
