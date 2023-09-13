@@ -35,6 +35,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableShake: 1
+    - _OutlineWidth: 0.025
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
@@ -45,5 +46,6 @@ Material:
     - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 0.4392157, g: 0.8509804, b: 1, a: 0}
+    - _OutlineColor: {r: 0.38364774, g: 0.6280698, b: 1, a: 0}
     - _RimColor: {r: 0, g: 1.9523869, b: 2.1185474, a: 0}
   m_BuildTextureStacks: []

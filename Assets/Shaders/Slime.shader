@@ -9,7 +9,7 @@ Shader "Custom/Slime"
         [HDR]_RimColor ("Slime Rim Color", Color) = (0.9, 0.9, 0.9, 1.0)
         
         [Header(Slime Expression)][Space(10)]
-        _ExpressionTex ("Slime Expression", 2D) = "black"{}
+        [NoScaleOffset]_ExpressionTex ("Slime Expression", 2D) = "black"{}
         _ExpColorLayer1 ("Expression Layer1 Color", Color) = (1.0,1.0,1.0)
         _ExpColorLayer2 ("Expression Layer2 Color", Color) = (1.0,1.0,1.0)
         _ExpColorLayer3 ("Expression Layer3 Color", Color) = (1.0,1.0,1.0)
@@ -18,6 +18,10 @@ Shader "Custom/Slime"
         [Toggle(_ENABLE_SLIME_SHAKE)]_EnableShake ("Slime Shake?", float) = 1
         _ShakeSpeed ("Shake Speed", float) = 8
         _ShakeAmount ("Shake Amount", float) = 0.15
+        
+        [Header(Slime Outline)][Space(10)]
+        _OutlineColor("Slime Outline Color", Color) = (0.0,0.0,0.0,0.0)
+        _OutlineWidth("Slime Outline Width", float) = 0.01
     }
     
     SubShader
@@ -62,6 +66,7 @@ Shader "Custom/Slime"
                 float3 normalWS     : TEXCOORD1;
                 float3 posWS        : TEXCOORD2;
                 float4 positionHCS  : SV_POSITION;
+                UNITY_VERTEX_OUTPUT_STEREO
             };            
             
             Varyings vert(Attributes IN)
@@ -99,8 +104,9 @@ Shader "Custom/Slime"
                 const float NdotH = saturate(dot(halfDir, normal));
                 half3 specular = smoothstep(0.96,1.0,NdotH) * _HighlightColor.rgb;
                 // Rim
-                const float fresnel = 1.0 - dot(normal, viewDir);
-                const half3 rimColor = fresnel * _RimColor.rgb;
+                const float rimIntensity = saturate(dot(half3(0,1,0), mainLight.direction));
+                const float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 1.0 + rimIntensity);
+                const half3 rimColor = fresnel * _RimColor.rgb * (0.5 + rimIntensity);
                 // Combined Shaded Color
                 half3 color = diffuse + ambient + specular;
                 color = lerp(color, rimColor, fresnel);
@@ -133,10 +139,24 @@ Shader "Custom/Slime"
                 "LightMode" = "SlimeOutline"
             }
             
+            Cull Front
+            
             HLSLPROGRAM
             #pragma vertex OutlineVertex
             #pragma fragment OutlineFragment
-
+            
+            //--------------------------------------
+            // GPU Instancing
+            #pragma multi_compile_instancing
+            
+            #pragma multi_compile _ _ENABLE_SLIME_SHAKE
+            
+            CBUFFER_START(UnityPerMaterial)
+                float _ShakeSpeed, _ShakeAmount;
+                float _OutlineWidth;
+                float3 _OutlineColor;
+            CBUFFER_END
+            
             #include "ShaderLib/CustomOutline.hlsl"
             ENDHLSL
         }

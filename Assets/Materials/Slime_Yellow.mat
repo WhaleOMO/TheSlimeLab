@@ -60,6 +60,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableShake: 1
+    - _OutlineWidth: 0.025
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ShakeAmount: 0.15
@@ -74,5 +75,6 @@ Material:
     - _EyeColor: {r: 0.4339623, g: 0.29474288, b: 0.06004505, a: 0}
     - _HighlightColor: {r: 0.9864847, g: 1, b: 0.36477983, a: 0}
     - _MouthColor: {r: 0.41509432, g: 0.34013474, b: 0.010442591, a: 0}
+    - _OutlineColor: {r: 0.735849, g: 0.6551784, b: 0, a: 0}
     - _RimColor: {r: 2.8284273, g: 2.0028794, b: 0, a: 0}
   m_BuildTextureStacks: []
