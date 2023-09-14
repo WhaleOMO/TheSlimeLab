@@ -22,10 +22,9 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: Slime_Yellow
   m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _ENABLE_SLIME_SHAKE
+  m_Parent: {fileID: 2100000, guid: b14a946aa8bdc465695882258fc6597a, type: 2}
+  m_ModifiedSerializedProperties: 20
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -41,40 +40,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 196662dda1d1993409cdff31d8dcf73d, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SlimeExpression:
-        m_Texture: {fileID: 2800000, guid: 196662dda1d1993409cdff31d8dcf73d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_Lightmaps:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_LightmapsInd:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - unity_ShadowMasks:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnableShake: 1
-    - _OutlineWidth: 0.025
-    - _QueueControl: 0
-    - _QueueOffset: 0
-    - _ShakeAmount: 0.15
     - _ShakeSpeed: 6
     m_Colors:
     - _AmbientColor: {r: 0.9763644, g: 1, b: 0.36477983, a: 0}
     - _BaseColor: {r: 0.98039216, g: 1, b: 0.24313726, a: 0}
-    - _Color: {r: 0.9787041, g: 1, b: 0.24213827, a: 0}
     - _ExpColorLayer1: {r: 0.43529412, g: 0.29411766, b: 0.05882353, a: 0}
     - _ExpColorLayer2: {r: 0.43529412, g: 0.29411766, b: 0.05882353, a: 0}
-    - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
-    - _EyeColor: {r: 0.4339623, g: 0.29474288, b: 0.06004505, a: 0}
     - _HighlightColor: {r: 0.9864847, g: 1, b: 0.36477983, a: 0}
-    - _MouthColor: {r: 0.41509432, g: 0.34013474, b: 0.010442591, a: 0}
     - _OutlineColor: {r: 0.735849, g: 0.6551784, b: 0, a: 0}
     - _RimColor: {r: 2.8284273, g: 2.0028794, b: 0, a: 0}
   m_BuildTextureStacks: []

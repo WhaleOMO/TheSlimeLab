@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
 
 public class SlimeMoving : MonoBehaviour
 {
-
+    public GameObject boneRoot;
     public Rigidbody rb;
 
     public float h = 1;
@@ -96,5 +98,16 @@ public class SlimeMoving : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isGrounded)
+        {
+            // TODO: Control bones when on air
+            boneRoot.transform.position = rb.position + new Vector3(0,0.2f,0);
+        }
+        
+        // boneRoot.transform.rotation = rb.rotation;
     }
 }
