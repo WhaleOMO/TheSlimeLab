@@ -57,7 +57,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _ShakeSpeed: 6
+    - _ShakeSpeed: 0
     m_Colors:
     - _AmbientColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0}
     - _Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0}
