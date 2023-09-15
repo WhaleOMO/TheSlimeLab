@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 
 public class SlimeMoving : MonoBehaviour
 {
-    public GameObject boneRoot;
+    public GameObject boneRoot;     // The center bone
+    public GameObject bonesParent;  // The parent object for all bones
+
     public Rigidbody rb;
 
     public float h = 1;
@@ -20,6 +22,7 @@ public class SlimeMoving : MonoBehaviour
     public ArrayList bones = new ArrayList();
     Vector3 bx, by, bz;
     Vector3 bx2, by2, bz2;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,7 @@ public class SlimeMoving : MonoBehaviour
         bz = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z.transform.position;
         bz2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z2.transform.position;
         rb = GetComponent<Rigidbody>();
+        bonesParent = gameObject.GetComponent<BoneSphere>().x.transform.parent.gameObject;
         StartCoroutine(Wait());
         //rb.useGravity = false;
     }
@@ -50,7 +54,7 @@ public class SlimeMoving : MonoBehaviour
                     Quaternion newQuaternion = new Quaternion();
                     newQuaternion.Set(rb.rotation.x, rb.rotation.y + offset/nSteps, rb.rotation.z, 1);
                     newQuaternion = newQuaternion.normalized;
-
+                    
                     RotateFixedDir(offset, nSteps, newQuaternion);
                     yield return new WaitForSeconds(0.01f);
                 }
@@ -61,11 +65,15 @@ public class SlimeMoving : MonoBehaviour
             }
         }
     }
-
+    
+    
     void RotateFixedDir(float offset, int numSteps, Quaternion targetQuaternion)
     {
         float step = offset/numSteps;
-        rb.rotation = Quaternion.RotateTowards(rb.rotation, targetQuaternion, step);
+        Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetQuaternion, step);
+        rb.rotation = rot;
+        // TODO: Rotate bones (算出正确的旋转...给到所有骨骼的parent game object)
+        // bonesParent.transform.rotation = Quaternion.LookRotation(-rb.transform.right, -rb.transform.up);
     }
 
 
