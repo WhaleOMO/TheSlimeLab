@@ -114,12 +114,13 @@ public class SlimeMoving : MonoBehaviour
         {
             // TODO: Control bones when on air
             boneRoot.transform.position = rb.position + new Vector3(0,0.2f,0);
-            gameObject.GetComponent<BoneSphere>().x.transform.position = boneRoot.transform.position - bx;
-            gameObject.GetComponent<BoneSphere>().x2.transform.position = boneRoot.transform.position - bx2;
-            gameObject.GetComponent<BoneSphere>().y.transform.position = boneRoot.transform.position - by;
-            gameObject.GetComponent<BoneSphere>().y2.transform.position = boneRoot.transform.position - by2;
-            gameObject.GetComponent<BoneSphere>().z.transform.position = boneRoot.transform.position - bz;
-            gameObject.GetComponent<BoneSphere>().z2.transform.position = boneRoot.transform.position - bz2;
+            var boneSphere = gameObject.GetComponent<BoneSphere>();
+            boneSphere.x.transform.position = boneRoot.transform.position - bx;
+            boneSphere.x2.transform.position = boneRoot.transform.position - bx2;
+            boneSphere.y.transform.position = boneRoot.transform.position - by;
+            boneSphere.y2.transform.position = boneRoot.transform.position - by2;
+            boneSphere.z.transform.position = boneRoot.transform.position - bz;
+            boneSphere.z2.transform.position = boneRoot.transform.position - bz2;
         }
         
         // boneRoot.transform.rotation = rb.rotation;
