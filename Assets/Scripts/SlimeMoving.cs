@@ -1,12 +1,14 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.GraphicsBuffer;
+using Random = UnityEngine.Random;
 
 public class SlimeMoving : MonoBehaviour
 {
-
+    public GameObject boneRoot;
     public Rigidbody rb;
 
     public float h = 1;
@@ -15,10 +17,18 @@ public class SlimeMoving : MonoBehaviour
 
     public int nSteps = 20;
     public float max = 45;
-
+    public ArrayList bones = new ArrayList();
+    Vector3 bx, by, bz;
+    Vector3 bx2, by2, bz2;
     // Start is called before the first frame update
     void Start()
     {
+        bx = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().x.transform.position;
+        bx2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().x2.transform.position;
+        by = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().y.transform.position;
+        by2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().y2.transform.position;
+        bz = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z.transform.position;
+        bz2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z2.transform.position;
         rb = GetComponent<Rigidbody>();
         StartCoroutine(Wait());
         //rb.useGravity = false;
@@ -96,5 +106,23 @@ public class SlimeMoving : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!isGrounded)
+        {
+            // TODO: Control bones when on air
+            boneRoot.transform.position = rb.position + new Vector3(0,0.2f,0);
+            var boneSphere = gameObject.GetComponent<BoneSphere>();
+            boneSphere.x.transform.position = boneRoot.transform.position - bx;
+            boneSphere.x2.transform.position = boneRoot.transform.position - bx2;
+            boneSphere.y.transform.position = boneRoot.transform.position - by;
+            boneSphere.y2.transform.position = boneRoot.transform.position - by2;
+            boneSphere.z.transform.position = boneRoot.transform.position - bz;
+            boneSphere.z2.transform.position = boneRoot.transform.position - bz2;
+        }
+        
+        // boneRoot.transform.rotation = rb.rotation;
     }
 }
