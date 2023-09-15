@@ -35,8 +35,12 @@ public static class Softbody
     public static SpringJoint AddSpring(ref GameObject go1, ref GameObject go2)
     {
         SpringJoint sp = AddSpring(ref go1, ref go2, Spring, Damper);
-
-
+        return sp;
+    }
+    
+    public static SpringJoint AddSpring(ref GameObject go1, ref GameObject go2, float spring)
+    {
+        SpringJoint sp = AddSpring(ref go1, ref go2, spring, Damper);
         return sp;
     }
 

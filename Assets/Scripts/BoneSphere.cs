@@ -39,10 +39,23 @@ public class BoneSphere : MonoBehaviour
 
         Softbody.AddSpring(ref x, ref root);
         Softbody.AddSpring(ref x2, ref root);
-        Softbody.AddSpring(ref y, ref root);
         Softbody.AddSpring(ref y2, ref root);
         Softbody.AddSpring(ref z, ref root);
         Softbody.AddSpring(ref z2, ref root);
+
+        float softSpringInner = Spring * 0.6f;
+        float softSpringOuter = Spring * 0.8f;
+        Softbody.AddSpring(ref y, ref root, 1.6f * Spring);
+        Softbody.AddSpring(ref y, ref z,  softSpringOuter);
+        Softbody.AddSpring(ref y, ref x,  softSpringOuter);
+        Softbody.AddSpring(ref y, ref x2, softSpringOuter);
+        Softbody.AddSpring(ref y, ref z2, softSpringOuter);
+        
+        Softbody.AddSpring(ref y2, ref root, softSpringInner);
+        Softbody.AddSpring(ref y2, ref z, softSpringOuter);
+        Softbody.AddSpring(ref y2, ref x, softSpringOuter);
+        Softbody.AddSpring(ref y2, ref x2,softSpringOuter);
+        Softbody.AddSpring(ref y2, ref z2,softSpringOuter);
     }
 
     private void OnDrawGizmos()
@@ -60,5 +73,15 @@ public class BoneSphere : MonoBehaviour
         Gizmos.DrawLine(boneCenter, y2.transform.position);
         Gizmos.DrawLine(boneCenter, z.transform.position);
         Gizmos.DrawLine(boneCenter, z2.transform.position);
+        
+        Gizmos.DrawLine(y.transform.position, z2.transform.position);
+        Gizmos.DrawLine(y.transform.position, z.transform.position);
+        Gizmos.DrawLine(y.transform.position, x.transform.position);
+        Gizmos.DrawLine(y.transform.position, x2.transform.position);
+        
+        Gizmos.DrawLine(y2.transform.position, z2.transform.position);
+        Gizmos.DrawLine(y2.transform.position, z.transform.position);
+        Gizmos.DrawLine(y2.transform.position, x.transform.position);
+        Gizmos.DrawLine(y2.transform.position, x2.transform.position);
     }
 }
