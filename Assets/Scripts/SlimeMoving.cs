@@ -41,13 +41,25 @@ public class SlimeMoving : MonoBehaviour
             if (isGrounded)
             {
                 float offset = Random.Range(-max, max);
-
+                // offset = offset - 180.0f;
+                float maxDis = 10.0f;
+                
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 
+                // if there is a obstacle in front of the slime
+                if (Physics.Raycast(rb.position, -transform.right, maxDis))
+                {
+                    print("There is an obstacle!");
+                    print("Current Offset " + offset);
+                    offset = offset - 135.0f;
+                    print("Processed Offset " + offset);
+                }
+
                 for (int i = 0; i < nSteps; ++i)
                 {
                     Quaternion newQuaternion = new Quaternion();
+                    
                     newQuaternion.Set(rb.rotation.x, rb.rotation.y + offset/nSteps, rb.rotation.z, 1);
                     newQuaternion = newQuaternion.normalized;
 
@@ -81,8 +93,9 @@ public class SlimeMoving : MonoBehaviour
         //Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
         
         // Vector3 newpos = rb.position + offset;
-        
+       
         Vector3 newpos = rb.position + transform.right * (-0.5f);
+        
 
         float displacementY = newpos.y - rb.position.y;
         Vector3 displacementXZ = new Vector3(newpos.x - rb.position.x, 0, newpos.z - rb.position.z);
