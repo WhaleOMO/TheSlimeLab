@@ -17,8 +17,7 @@ public class SlimeMoving : MonoBehaviour
     public float gravity = -18;
     public bool isGrounded;
 
-    public int nSteps = 20;
-    public float max = 45;
+    public float max = 60;
     public ArrayList bones = new ArrayList();
     Vector3 bx, by, bz;
     Vector3 bx2, by2, bz2;
@@ -45,17 +44,27 @@ public class SlimeMoving : MonoBehaviour
             if (isGrounded)
             {
                 float offset = Random.Range(-max, max);
-
+                float maxDis = 8.0f;
+                int nSteps = 20;
+                
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 
+                // if there is a obstacle in front of the slime
+                if (Physics.Raycast(rb.position, -transform.right, maxDis))
+                {
+                    //offset = -180f;
+                    offset = Random.Range(-135f,-180f);
+                    nSteps = 80;
+                }
+
                 for (int i = 0; i < nSteps; ++i)
                 {
-                    Quaternion newQuaternion = new Quaternion();
-                    newQuaternion.Set(rb.rotation.x, rb.rotation.y + offset/nSteps, rb.rotation.z, 1);
-                    newQuaternion = newQuaternion.normalized;
+                    //print("Current nSteps:" + nSteps);
+                    float step = offset / nSteps;
+
+                    rb.transform.Rotate(Vector3.up, step);
                     
-                    RotateFixedDir(offset, nSteps, newQuaternion);
                     yield return new WaitForSeconds(0.01f);
                 }
 
@@ -66,17 +75,6 @@ public class SlimeMoving : MonoBehaviour
         }
     }
     
-    
-    void RotateFixedDir(float offset, int numSteps, Quaternion targetQuaternion)
-    {
-        float step = offset/numSteps;
-        Quaternion rot = Quaternion.RotateTowards(rb.rotation, targetQuaternion, step);
-        rb.rotation = rot;
-        // TODO: Rotate bones (算出正确的旋转...给到所有骨骼的parent game object)
-        // bonesParent.transform.rotation = Quaternion.LookRotation(-rb.transform.right, -rb.transform.up);
-    }
-
-
     void Lanuch()
     {
         Physics.gravity = Vector3.up * gravity;
