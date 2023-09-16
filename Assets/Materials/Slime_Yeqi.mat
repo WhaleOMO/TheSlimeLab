@@ -24,7 +24,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ExpressionTex:
-        m_Texture: {fileID: 2800000, guid: 1115e82fa286b1f45913103f4ac9db8f, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3dc3bf50a102a5b44a88f8e31974ce34, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -38,13 +38,13 @@ Material:
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
-    - _AmbientColor: {r: 0.32156864, g: 0.6666667, b: 0.85882354, a: 0}
-    - _BaseColor: {r: 0.3254902, g: 0.7372549, b: 1, a: 0}
-    - _ExpColorLayer1: {r: 0.8392157, g: 0.38431373, b: 0.38431373, a: 0}
-    - _ExpColorLayer2: {r: 0.05490196, g: 0.2784314, b: 0.58431375, a: 0}
+    - _AmbientColor: {r: 0.4805387, g: 0.7111911, b: 0.8396226, a: 0}
+    - _BaseColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 0}
+    - _ExpColorLayer1: {r: 0, g: 0, b: 0, a: 0}
+    - _ExpColorLayer2: {r: 0.27975553, g: 0.3249489, b: 0.38679248, a: 0}
     - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 0.4392157, g: 0.8509804, b: 1, a: 0}
     - _OutlineColor: {r: 0.38364774, g: 0.6280698, b: 1, a: 0}
-    - _RimColor: {r: 0, g: 1.9523869, b: 2.1185474, a: 0}
+    - _RimColor: {r: 1.0458499, g: 2.1043086, b: 2.1880286, a: 0}
   m_BuildTextureStacks: []
