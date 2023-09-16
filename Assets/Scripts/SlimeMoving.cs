@@ -9,8 +9,7 @@ using Random = UnityEngine.Random;
 public class SlimeMoving : MonoBehaviour
 {
     public GameObject boneRoot;     // The center bone
-    public GameObject bonesParent;  // The parent object for all bones
-
+    public GameObject boneSet;
     public Rigidbody rb;
 
     public float h = 1;
@@ -19,8 +18,11 @@ public class SlimeMoving : MonoBehaviour
 
     public float max = 60;
     public ArrayList bones = new ArrayList();
+    float angleInTotal = 0f;
     Vector3 bx, by, bz;
     Vector3 bx2, by2, bz2;
+
+    Vector3 rRoot, rx, rx2, ry, ry2, rz, rz2;
     
     // Start is called before the first frame update
     void Start()
@@ -31,8 +33,28 @@ public class SlimeMoving : MonoBehaviour
         by2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().y2.transform.position;
         bz = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z.transform.position;
         bz2 = boneRoot.transform.position - gameObject.GetComponent<BoneSphere>().z2.transform.position;
+
+        rRoot = gameObject.GetComponent<BoneSphere>().root.transform.rotation.eulerAngles;
+        rx = gameObject.GetComponent<BoneSphere>().x.transform.rotation.eulerAngles;
+        rx2 = gameObject.GetComponent<BoneSphere>().x2.transform.rotation.eulerAngles;
+        ry = gameObject.GetComponent<BoneSphere>().y.transform.rotation.eulerAngles;
+        ry2 = gameObject.GetComponent<BoneSphere>().y2.transform.rotation.eulerAngles;
+        rz = gameObject.GetComponent<BoneSphere>().z.transform.rotation.eulerAngles;
+        rz2 = gameObject.GetComponent<BoneSphere>().z2.transform.rotation.eulerAngles;
+
+        /*
+        Matrix4x4 rotateMat = Matrix4x4.identity;
+        rotateMat.m00 = Mathf.Cos(Mathf.Deg2Rad * 30);
+        rotateMat.m02 = Mathf.Sin(Mathf.Deg2Rad * 30);
+        rotateMat.m20 = -Mathf.Sin(Mathf.Deg2Rad * 30);
+        rotateMat.m22 = Mathf.Cos(Mathf.Deg2Rad * 30);
+        */
+        // Debug.Log(gameObject.GetComponent<BoneSphere>().root.transform.rotation.eulerAngles);
+
+        // Debug.Log(rotateMat.MultiplyPoint(bx));
+        // 30 0.39 0.07 -0.22       270 300 0
+        //  0 0.45 0.07 0           270 270 0
         rb = GetComponent<Rigidbody>();
-        bonesParent = gameObject.GetComponent<BoneSphere>().x.transform.parent.gameObject;
         StartCoroutine(Wait());
         //rb.useGravity = false;
     }
@@ -62,12 +84,18 @@ public class SlimeMoving : MonoBehaviour
                 {
                     //print("Current nSteps:" + nSteps);
                     float step = offset / nSteps;
-
-                    rb.transform.Rotate(Vector3.up, step);
+                    angleInTotal += step;
                     
+                    rb.transform.Rotate(Vector3.up, step);
+               
+                    SychronizeNodes(0.4f);
+                    /*
+                    Vector3 nextAngle = boneSet.transform.localRotation.eulerAngles;
+                    nextAngle.y += step;
+                    boneSet.transform.localRotation = Quaternion.Euler(nextAngle);
+                    */
                     yield return new WaitForSeconds(0.01f);
                 }
-
                 rb.freezeRotation = true;
                 yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
                 Lanuch();
@@ -119,6 +147,7 @@ public class SlimeMoving : MonoBehaviour
         if (!isGrounded)
         {
             // TODO: Control bones when on air
+            /*
             boneRoot.transform.position = rb.position + new Vector3(0,0.2f,0);
             var boneSphere = gameObject.GetComponent<BoneSphere>();
             boneSphere.x.transform.position = boneRoot.transform.position - bx;
@@ -127,8 +156,35 @@ public class SlimeMoving : MonoBehaviour
             boneSphere.y2.transform.position = boneRoot.transform.position - by2;
             boneSphere.z.transform.position = boneRoot.transform.position - bz;
             boneSphere.z2.transform.position = boneRoot.transform.position - bz2;
+            */
+            SychronizeNodes(0.2f);
         }
         
         // boneRoot.transform.rotation = rb.rotation;
+    }
+    private void SychronizeNodes(float bias)
+    {
+        Debug.Log(angleInTotal);
+        Matrix4x4 rotateMat = Matrix4x4.identity;
+        rotateMat.m00 = Mathf.Cos(Mathf.Deg2Rad * angleInTotal);
+        rotateMat.m02 = Mathf.Sin(Mathf.Deg2Rad * angleInTotal);
+        rotateMat.m20 = -Mathf.Sin(Mathf.Deg2Rad * angleInTotal);
+        rotateMat.m22 = Mathf.Cos(Mathf.Deg2Rad * angleInTotal);
+        boneRoot.transform.position = rb.position + new Vector3(0, bias, 0);
+        var boneSphere = gameObject.GetComponent<BoneSphere>();
+        boneSphere.x.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bx);
+        boneSphere.x2.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bx2);
+        boneSphere.y.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(by);
+        boneSphere.y2.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(by2);
+        boneSphere.z.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bz);
+        boneSphere.z2.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bz2);
+        boneSphere.root.transform.rotation = Quaternion.Euler(new Vector3(rRoot.x, rRoot.y + angleInTotal, rRoot.z));
+        boneSphere.x.transform.rotation = Quaternion.Euler(new Vector3(rx.x, rx.y + angleInTotal, rx.z));
+        boneSphere.x2.transform.rotation = Quaternion.Euler(new Vector3(rx2.x, rx2.y + angleInTotal, rx2.z));
+        boneSphere.y.transform.rotation = Quaternion.Euler(new Vector3(ry.x, ry.y + angleInTotal, ry.z));
+        boneSphere.y2.transform.rotation = Quaternion.Euler(new Vector3(ry2.x, ry2.y + angleInTotal, ry2.z));
+        boneSphere.z.transform.rotation = Quaternion.Euler(new Vector3(rz.x, rz.y + angleInTotal, rz.z));
+        boneSphere.z2.transform.rotation = Quaternion.Euler(new Vector3(rz2.x, rz2.y + angleInTotal, rz2.z));
+
     }
 }
