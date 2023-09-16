@@ -42,21 +42,8 @@ public class SlimeMoving : MonoBehaviour
         rz = gameObject.GetComponent<BoneSphere>().z.transform.rotation.eulerAngles;
         rz2 = gameObject.GetComponent<BoneSphere>().z2.transform.rotation.eulerAngles;
 
-        /*
-        Matrix4x4 rotateMat = Matrix4x4.identity;
-        rotateMat.m00 = Mathf.Cos(Mathf.Deg2Rad * 30);
-        rotateMat.m02 = Mathf.Sin(Mathf.Deg2Rad * 30);
-        rotateMat.m20 = -Mathf.Sin(Mathf.Deg2Rad * 30);
-        rotateMat.m22 = Mathf.Cos(Mathf.Deg2Rad * 30);
-        */
-        // Debug.Log(gameObject.GetComponent<BoneSphere>().root.transform.rotation.eulerAngles);
-
-        // Debug.Log(rotateMat.MultiplyPoint(bx));
-        // 30 0.39 0.07 -0.22       270 300 0
-        //  0 0.45 0.07 0           270 270 0
         rb = GetComponent<Rigidbody>();
         StartCoroutine(Wait());
-        //rb.useGravity = false;
     }
     IEnumerator Wait()
     {
@@ -75,25 +62,21 @@ public class SlimeMoving : MonoBehaviour
                 // if there is a obstacle in front of the slime
                 if (Physics.Raycast(rb.position, -transform.right, maxDis))
                 {
-                    //offset = -180f;
                     offset = Random.Range(-135f,-180f);
                     nSteps = 80;
                 }
 
                 for (int i = 0; i < nSteps; ++i)
                 {
-                    //print("Current nSteps:" + nSteps);
                     float step = offset / nSteps;
                     angleInTotal += step;
                     
                     rb.transform.Rotate(Vector3.up, step);
-               
-                    SychronizeNodes(0.4f);
-                    /*
+                    
                     Vector3 nextAngle = boneSet.transform.localRotation.eulerAngles;
-                    nextAngle.y += step;
+                    nextAngle.y += step/2;
                     boneSet.transform.localRotation = Quaternion.Euler(nextAngle);
-                    */
+                    
                     yield return new WaitForSeconds(0.01f);
                 }
                 rb.freezeRotation = true;
@@ -112,9 +95,6 @@ public class SlimeMoving : MonoBehaviour
 
     Vector3 CalculateLanuchVelocity()
     {
-        //Vector3 offset = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
-        
-        // Vector3 newpos = rb.position + offset;
         
         Vector3 newpos = rb.position + transform.right * (-0.5f);
 
@@ -146,25 +126,13 @@ public class SlimeMoving : MonoBehaviour
     {
         if (!isGrounded)
         {
-            // TODO: Control bones when on air
-            /*
-            boneRoot.transform.position = rb.position + new Vector3(0,0.2f,0);
-            var boneSphere = gameObject.GetComponent<BoneSphere>();
-            boneSphere.x.transform.position = boneRoot.transform.position - bx;
-            boneSphere.x2.transform.position = boneRoot.transform.position - bx2;
-            boneSphere.y.transform.position = boneRoot.transform.position - by;
-            boneSphere.y2.transform.position = boneRoot.transform.position - by2;
-            boneSphere.z.transform.position = boneRoot.transform.position - bz;
-            boneSphere.z2.transform.position = boneRoot.transform.position - bz2;
-            */
             SychronizeNodes(0.2f);
         }
         
-        // boneRoot.transform.rotation = rb.rotation;
     }
     private void SychronizeNodes(float bias)
     {
-        Debug.Log(angleInTotal);
+        // Debug.Log(angleInTotal);
         Matrix4x4 rotateMat = Matrix4x4.identity;
         rotateMat.m00 = Mathf.Cos(Mathf.Deg2Rad * angleInTotal);
         rotateMat.m02 = Mathf.Sin(Mathf.Deg2Rad * angleInTotal);
@@ -178,6 +146,7 @@ public class SlimeMoving : MonoBehaviour
         boneSphere.y2.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(by2);
         boneSphere.z.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bz);
         boneSphere.z2.transform.position = boneRoot.transform.position - rotateMat.MultiplyPoint(bz2);
+        
         boneSphere.root.transform.rotation = Quaternion.Euler(new Vector3(rRoot.x, rRoot.y + angleInTotal, rRoot.z));
         boneSphere.x.transform.rotation = Quaternion.Euler(new Vector3(rx.x, rx.y + angleInTotal, rx.z));
         boneSphere.x2.transform.rotation = Quaternion.Euler(new Vector3(rx2.x, rx2.y + angleInTotal, rx2.z));
