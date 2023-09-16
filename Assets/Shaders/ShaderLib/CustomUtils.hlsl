@@ -14,6 +14,21 @@ float map(float value, float min1, float max1, float min2, float max2)
 }
 
 /**
+ * \brief Average value of v1~4
+ * \return average value
+ */
+half avg4(half v1, half v2, half v3, half v4)
+{
+    return (v1+v2+v3+v4) * 0.25;
+}
+
+half pow2(half value)
+{
+    return value * value;
+}
+
+
+/**
  * \brief Shake Slime up and down with sine wave
  * \param objectPos object space vertex position, should be from -1 to 1
  * \param shakeSpeed the frequency of shaking

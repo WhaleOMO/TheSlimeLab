@@ -17,8 +17,8 @@ public class Basket : MonoBehaviour
     {
         score = 0;
     }
-
-    private void OnCollisionEnter(Collision collision)
+    
+    private void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.TryGetComponent<SlimeMoving>(out var slimeMoving))
         {

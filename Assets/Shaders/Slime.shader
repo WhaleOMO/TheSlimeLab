@@ -22,6 +22,9 @@ Shader "Custom/Slime"
         [Header(Slime Outline)][Space(10)]
         _OutlineColor("Slime Outline Color", Color) = (0.0,0.0,0.0,0.0)
         _OutlineWidth("Slime Outline Width", float) = 0.01
+        
+        [Space(10)]
+        [Toggle(_RECEIVE_SHADOW)]_ReceiveShadow ("Receive Shadow?", float) = 1
     }
     
     SubShader
@@ -45,9 +48,12 @@ Shader "Custom/Slime"
             #pragma vertex vert
             #pragma fragment frag
 
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma multi_compile _ _ADDITIONAL_LIGHTS
+            #pragma multi_compile _ _FORWARD_PLUS
             #pragma multi_compile_instancing
             #pragma multi_compile _ _ENABLE_SLIME_SHAKE
+            #pragma multi_compile _ _RECEIVE_SHADOW
             
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
             #include "ShaderLib/CustomUtils.hlsl"
@@ -65,9 +71,13 @@ Shader "Custom/Slime"
                 float2 uv           : TEXCOORD0;
                 float3 normalWS     : TEXCOORD1;
                 float3 posWS        : TEXCOORD2;
+                half   shadow       : TEXCOORD3;
                 float4 positionHCS  : SV_POSITION;
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
+
+            #define SHADOW_OFFSET 0.6
+            #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
             {
@@ -83,6 +93,14 @@ Shader "Custom/Slime"
                 OUT.posWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.normalWS = TransformObjectToWorldNormal(IN.normal);
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
+                OUT.shadow = 1.0;
+                #ifdef _RECEIVE_SHADOW
+                    half sBack = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(SHADOW_OFFSET,0,0))));
+                    half sFront = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(-SHADOW_OFFSET,0,0))));
+                    half sLeft = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,SHADOW_OFFSET))));
+                    half sRight = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,-SHADOW_OFFSET))));
+                    OUT.shadow = avg4(sBack,sFront,sLeft,sRight);
+                #endif
                 return OUT;
             }
             
@@ -108,14 +126,21 @@ Shader "Custom/Slime"
                 const float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 1.0 + rimIntensity);
                 const half3 rimColor = fresnel * _RimColor.rgb * (0.5 + rimIntensity);
                 // Combined Shaded Color
-                half3 color = diffuse + ambient + specular;
+                half3 color = (diffuse + specular) * IN.shadow + ambient * (2.0 * SampleSH(normal));
                 color = lerp(color, rimColor, fresnel);
                 // Additional Point Lights
                 #if defined(_ADDITIONAL_LIGHTS)
+                    #if USE_FORWARD_PLUS
+                        	InputData inputData = (InputData)0;
+	                        float4 screenPos = ComputeScreenPos(TransformWorldToHClip(posWS));
+	                        inputData.normalizedScreenSpaceUV = screenPos.xy / screenPos.w;
+	                        inputData.positionWS = posWS;
+                    #endif
+                
                     uint pixelLightCount = GetAdditionalLightsCount();
                     LIGHT_LOOP_BEGIN(pixelLightCount)
                         Light light = GetAdditionalLight(lightIndex, posWS, 1.0);
-                        color += saturate(dot(light.direction, normal) * 0.5 + 0.5) * light.color * light.distanceAttenuation;
+                        color += pow2(saturate(dot(light.direction, normal))) * light.color * light.distanceAttenuation;
                     LIGHT_LOOP_END
                 #endif
                 // Expression
