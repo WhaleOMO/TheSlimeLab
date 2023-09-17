@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SocialPlatforms;
 using static UnityEngine.GraphicsBuffer;
 using Random = UnityEngine.Random;
@@ -17,8 +18,10 @@ public class SlimeMoving : MonoBehaviour
     public bool isGrounded;
 
     public float max = 60;
-    public ArrayList bones = new ArrayList();
     float angleInTotal = 0f;
+
+    public UnityEvent onJumpEvent;
+    
     Vector3 bx, by, bz;
     Vector3 bx2, by2, bz2;
 
@@ -59,7 +62,6 @@ public class SlimeMoving : MonoBehaviour
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 Vector3 nowOrientDir = transform.rotation.eulerAngles;
-                // Debug.Log(nowOrientDir);
                 nowOrientDir.x = 0f;
                 nowOrientDir.z = 0f;
                 transform.rotation = Quaternion.Euler(nowOrientDir);
@@ -79,12 +81,7 @@ public class SlimeMoving : MonoBehaviour
 
                     yield return new WaitForSeconds(0.01f);
                 }
-                /*
-                Debug.Log("BoneSet: " + boneSet.transform.rotation.eulerAngles);
-                Debug.Log("Object: " + transform.rotation.eulerAngles);
-                Debug.Log("Offset: " + offset);
-                */
-                // boneSet.transform.rotation = transform.rotation;
+
                 rb.freezeRotation = true;
                 yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
                 Lanuch();
@@ -97,6 +94,7 @@ public class SlimeMoving : MonoBehaviour
         Physics.gravity = Vector3.up * gravity;
         rb.useGravity = true;
         rb.velocity = CalculateLanuchVelocity();
+        onJumpEvent?.Invoke();
     }
 
     Vector3 CalculateLanuchVelocity()

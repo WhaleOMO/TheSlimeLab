@@ -40,8 +40,8 @@ Material:
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
-    - _AmbientColor: {r: 0.54109627, g: 0.33938524, b: 0.754717, a: 0}
-    - _BaseColor: {r: 0.7168412, g: 0, b: 1, a: 0}
+    - _AmbientColor: {r: 0.6131523, g: 0.48112944, b: 0.7529412, a: 0}
+    - _BaseColor: {r: 0.8142118, g: 0.34199995, b: 1, a: 0}
     - _ExpColorLayer1: {r: 0.3301887, g: 0.055031415, b: 0.29525962, a: 0}
     - _ExpColorLayer2: {r: 0.41509432, g: 0.12792212, b: 0.402234, a: 0}
     - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
