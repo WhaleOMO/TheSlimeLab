@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime_Yeqi
+  m_Name: Slime_Chenyi
   m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ExpressionTex:
-        m_Texture: {fileID: 2800000, guid: 3dc3bf50a102a5b44a88f8e31974ce34, type: 3}
+        m_Texture: {fileID: 2800000, guid: cfb8ccbb781660743822f906b117f60b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -40,13 +40,13 @@ Material:
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
-    - _AmbientColor: {r: 0.54109627, g: 0.33938524, b: 0.754717, a: 0}
-    - _BaseColor: {r: 0.7168412, g: 0, b: 1, a: 0}
-    - _ExpColorLayer1: {r: 0.3301887, g: 0.055031415, b: 0.29525962, a: 0}
-    - _ExpColorLayer2: {r: 0.41509432, g: 0.12792212, b: 0.402234, a: 0}
-    - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
+    - _AmbientColor: {r: 0.15450332, g: 0.8773585, b: 0.48230973, a: 0}
+    - _BaseColor: {r: 0.3837373, g: 0.9622642, b: 0.32378066, a: 0}
+    - _ExpColorLayer1: {r: 0.990566, g: 0.035589196, b: 0, a: 0}
+    - _ExpColorLayer2: {r: 0.054883104, g: 0.23584908, b: 0.13107932, a: 0}
+    - _ExpColorLayer3: {r: 1, g: 0.47395793, b: 0.40251565, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
-    - _HighlightColor: {r: 0.8247925, g: 0.74925834, b: 0.8301887, a: 0}
-    - _OutlineColor: {r: 0.6901961, g: 0.45882353, b: 0.6747275, a: 0}
-    - _RimColor: {r: 2.92119, g: 0.293956, b: 2.6239958, a: 0}
+    - _HighlightColor: {r: 0.6269462, g: 0.9528302, b: 0.62623113, a: 0}
+    - _OutlineColor: {r: 0.45911944, g: 0.54977363, b: 0.6886792, a: 0}
+    - _RimColor: {r: 1.0816911, g: 2.1880286, b: 1.0539196, a: 0}
   m_BuildTextureStacks: []

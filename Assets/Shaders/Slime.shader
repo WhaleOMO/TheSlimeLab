@@ -76,7 +76,7 @@ Shader "Custom/Slime"
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET 0.6
+            #define SHADOW_OFFSET 1.25
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -95,10 +95,12 @@ Shader "Custom/Slime"
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
-                    half sBack = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(SHADOW_OFFSET,0,0))));
-                    half sFront = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(-SHADOW_OFFSET,0,0))));
-                    half sLeft = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,SHADOW_OFFSET))));
-                    half sRight = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,-SHADOW_OFFSET))));
+                    half worldScale = length(float3(unity_ObjectToWorld[0].x, unity_ObjectToWorld[1].x, unity_ObjectToWorld[2].x));
+                    half shadowOffset = worldScale * SHADOW_OFFSET;
+                    half sBack = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(shadowOffset,0,0))));
+                    half sFront = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(-shadowOffset,0,0))));
+                    half sLeft = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,shadowOffset))));
+                    half sRight = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,-shadowOffset))));
                     OUT.shadow = avg4(sBack,sFront,sLeft,sRight);
                 #endif
                 return OUT;
