@@ -40,13 +40,13 @@ Material:
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
-    - _AmbientColor: {r: 1, g: 1, b: 1, a: 0}
-    - _BaseColor: {r: 1, g: 0.9308176, b: 0.9308176, a: 0}
-    - _ExpColorLayer1: {r: 0.6320754, g: 0.48324743, b: 0.13516071, a: 0}
-    - _ExpColorLayer2: {r: 0, g: 0, b: 0, a: 0}
+    - _AmbientColor: {r: 1, g: 0.50628924, b: 0.6795157, a: 0}
+    - _BaseColor: {r: 1, g: 0.6313726, b: 0.7549104, a: 0}
+    - _ExpColorLayer1: {r: 0.9245283, g: 0.54657644, b: 0.70432466, a: 0}
+    - _ExpColorLayer2: {r: 0.30007708, g: 0.45340052, b: 0.8018868, a: 0}
     - _ExpColorLayer3: {r: 0.764151, g: 0.27874687, b: 0.4500867, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
-    - _HighlightColor: {r: 0.8742138, g: 0.8889744, b: 1, a: 0}
+    - _HighlightColor: {r: 1, g: 0.45911944, b: 0.9926467, a: 0}
     - _OutlineColor: {r: 0.22487319, g: 0.09552627, b: 0.3301887, a: 0}
-    - _RimColor: {r: 1.6281945, g: 1.9897186, b: 2.0146532, a: 0}
+    - _RimColor: {r: 1.1837913, g: 0.29780903, b: 0.615854, a: 0}
   m_BuildTextureStacks: []
