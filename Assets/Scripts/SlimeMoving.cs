@@ -58,27 +58,33 @@ public class SlimeMoving : MonoBehaviour
                 
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-                
+                Vector3 nowOrientDir = transform.rotation.eulerAngles;
+                // Debug.Log(nowOrientDir);
+                nowOrientDir.x = 0f;
+                nowOrientDir.z = 0f;
+                transform.rotation = Quaternion.Euler(nowOrientDir);
                 // if there is a obstacle in front of the slime
                 if (Physics.Raycast(rb.position, -transform.right, maxDis))
                 {
                     offset = Random.Range(-135f,-180f);
-                    nSteps = 80;
+                    nSteps = 20;
                 }
 
                 for (int i = 0; i < nSteps; ++i)
                 {
                     float step = offset / nSteps;
-                    angleInTotal += step;
-                    
+
                     rb.transform.Rotate(Vector3.up, step);
-                    
-                    Vector3 nextAngle = boneSet.transform.localRotation.eulerAngles;
-                    nextAngle.y += step/2;
-                    boneSet.transform.localRotation = Quaternion.Euler(nextAngle);
-                    
+
+
                     yield return new WaitForSeconds(0.01f);
                 }
+                /*
+                Debug.Log("BoneSet: " + boneSet.transform.rotation.eulerAngles);
+                Debug.Log("Object: " + transform.rotation.eulerAngles);
+                Debug.Log("Offset: " + offset);
+                */
+                // boneSet.transform.rotation = transform.rotation;
                 rb.freezeRotation = true;
                 yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
                 Lanuch();
@@ -132,6 +138,7 @@ public class SlimeMoving : MonoBehaviour
     }
     private void SychronizeNodes(float bias)
     {
+        angleInTotal = transform.rotation.eulerAngles.y + 180;
         // Debug.Log(angleInTotal);
         Matrix4x4 rotateMat = Matrix4x4.identity;
         rotateMat.m00 = Mathf.Cos(Mathf.Deg2Rad * angleInTotal);
