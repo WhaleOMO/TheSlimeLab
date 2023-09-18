@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Slime_Chenyi
+  m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _RECEIVE_SHADOW
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: 2000
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ExpressionTex:
+        m_Texture: {fileID: 2800000, guid: 6f84ac254315e364099be2c25d724cdb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _EnableShake: 0
+    - _OutlineWidth: 0.025
+    - _ReceiveShadow: 1
+    - _ShakeAmount: 0.15
+    - _ShakeSpeed: 5
+    m_Colors:
+    - _AmbientColor: {r: 0.44968545, g: 1, b: 0.8057714, a: 0}
+    - _BaseColor: {r: 0.1916755, g: 0.8584906, b: 0.48471266, a: 0}
+    - _ExpColorLayer1: {r: 0.9339623, g: 0.34215906, b: 0.32306862, a: 0}
+    - _ExpColorLayer2: {r: 0.054883104, g: 0.23584908, b: 0.13107932, a: 0}
+    - _ExpColorLayer3: {r: 1, g: 0.47395793, b: 0.40251565, a: 1}
+    - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
+    - _HighlightColor: {r: 0.006289184, g: 1, b: 0.006289184, a: 0}
+    - _OutlineColor: {r: 0.1053162, g: 0.6698113, b: 0.291364, a: 0}
+    - _RimColor: {r: 0.080301285, g: 2.3214447, b: 0.8232555, a: 0}
+  m_BuildTextureStacks: []
