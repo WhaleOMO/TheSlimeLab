@@ -56,6 +56,11 @@ public class BoneSphere : MonoBehaviour
         Softbody.AddSpring(ref y2, ref x, softSpringOuter);
         Softbody.AddSpring(ref y2, ref x2,softSpringOuter);
         Softbody.AddSpring(ref y2, ref z2,softSpringOuter);
+        
+        Softbody.AddSpring(ref x2, ref z, softSpringOuter);
+        Softbody.AddSpring(ref x2, ref z2, softSpringOuter);
+        Softbody.AddSpring(ref x, ref z2,softSpringOuter);
+        Softbody.AddSpring(ref x, ref z,softSpringOuter);
     }
 
     private void OnDrawGizmos()
@@ -83,5 +88,10 @@ public class BoneSphere : MonoBehaviour
         Gizmos.DrawLine(y2.transform.position, z.transform.position);
         Gizmos.DrawLine(y2.transform.position, x.transform.position);
         Gizmos.DrawLine(y2.transform.position, x2.transform.position);
+        
+        Gizmos.DrawLine(x2.transform.position, z2.transform.position);
+        Gizmos.DrawLine(x2.transform.position, z.transform.position);
+        Gizmos.DrawLine(x.transform.position, z2.transform.position);
+        Gizmos.DrawLine(x.transform.position, z.transform.position);
     }
 }

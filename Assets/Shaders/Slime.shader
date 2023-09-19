@@ -76,7 +76,7 @@ Shader "Custom/Slime"
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET 1.25
+            #define SHADOW_OFFSET 1.5
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -97,11 +97,7 @@ Shader "Custom/Slime"
                 #ifdef _RECEIVE_SHADOW
                     half worldScale = length(float3(unity_ObjectToWorld[0].x, unity_ObjectToWorld[1].x, unity_ObjectToWorld[2].x));
                     half shadowOffset = worldScale * SHADOW_OFFSET;
-                    half sBack = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(shadowOffset,0,0))));
-                    half sFront = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(-shadowOffset,0,0))));
-                    half sLeft = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,shadowOffset))));
-                    half sRight = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,-shadowOffset))));
-                    OUT.shadow = avg4(sBack,sFront,sLeft,sRight);
+                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,shadowOffset,0))));
                 #endif
                 return OUT;
             }
@@ -112,37 +108,44 @@ Shader "Custom/Slime"
                 const Light mainLight = GetMainLight();
                 const float3 posWS = IN.posWS;
                 const float3 normal = normalize(IN.normalWS);
+                const half3 viewDir = normalize(_WorldSpaceCameraPos - posWS);
+                const half3 halfDir = normalize(viewDir + mainLight.direction);
                 // Diffuse
                 const float NdotL = dot(normal, mainLight.direction);
                 const float halfLambert = NdotL * 0.5 + 0.5;
                 const float lightDirYRemap = map(saturate(mainLight.direction.y), 0, 1, 0, 1.5);
-                half3 diffuse = halfLambert * _BaseColor.rgb * lightDirYRemap;
-                const half3 ambient = 0.4 * _AmbientColor.rgb;
+                half3 diffuse = halfLambert * mainLight.color * _BaseColor.rgb * lightDirYRemap;
                 // Specular
-                const half3 viewDir = normalize(_WorldSpaceCameraPos - posWS);
-                const half3 halfDir = normalize(viewDir + mainLight.direction);
                 const float NdotH = saturate(dot(halfDir, normal));
                 half3 specular = smoothstep(0.96,1.0,NdotH) * _HighlightColor.rgb;
                 // Rim
                 const float rimIntensity = saturate(dot(half3(0,1,0), mainLight.direction));
                 const float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 1.0 + rimIntensity);
-                const half3 rimColor = fresnel * _RimColor.rgb * (0.5 + rimIntensity);
+                const half3 rimColor = fresnel * _RimColor.rgb * max(0.2,rimIntensity);
+                // Translucent color as ambient...
+                const half3 directTranslucent = FastTranslucency(mainLight.direction, mainLight.color, _BaseColor.rgb, viewDir, normal,  1.1 - saturate(dot(normal, viewDir)), IN.shadow);
+                const half3 ambient = lerp(0.4 * _AmbientColor.rgb, directTranslucent, IN.shadow);
                 // Combined Shaded Color
-                half3 color = (diffuse + specular) * IN.shadow + ambient * (2.0 * SampleSH(normal));
+                half3 color = (diffuse + specular) * IN.shadow + ambient;
                 color = lerp(color, rimColor, fresnel);
                 // Additional Point Lights
                 #if defined(_ADDITIONAL_LIGHTS)
                     #if USE_FORWARD_PLUS
-                        	InputData inputData = (InputData)0;
-	                        float4 screenPos = ComputeScreenPos(TransformWorldToHClip(posWS));
-	                        inputData.normalizedScreenSpaceUV = screenPos.xy / screenPos.w;
-	                        inputData.positionWS = posWS;
+                        InputData inputData = (InputData)0;
+                        float4 screenPos = ComputeScreenPos(TransformWorldToHClip(posWS));
+                        inputData.normalizedScreenSpaceUV = screenPos.xy / screenPos.w;
+                        inputData.positionWS = posWS;
                     #endif
                 
                     uint pixelLightCount = GetAdditionalLightsCount();
                     LIGHT_LOOP_BEGIN(pixelLightCount)
-                        Light light = GetAdditionalLight(lightIndex, posWS, 1.0);
-                        color += pow2(saturate(dot(light.direction, normal))) * light.color * light.distanceAttenuation;
+                        Light light = GetAdditionalLight(lightIndex, posWS);
+                        half3 lightColor = normalize(light.color) * min(length(light.color), 5.0);
+                        half3 diffuseColor = pow2(saturate(dot(light.direction, normal))) * _BaseColor.rgb * light.color;
+                        half3 sphereNormal = normalize(posWS - TransformObjectToWorld(float3(0,0,0)));
+                        half3 thickness = 1.0 - saturate(dot(sphereNormal, viewDir));
+                        half3 additionalTranslucent = FastTranslucency(light.direction, lightColor, _BaseColor.rgb, viewDir, sphereNormal, thickness, 1);
+                        color += (diffuseColor + additionalTranslucent * 50) * light.distanceAttenuation;
                     LIGHT_LOOP_END
                 #endif
                 // Expression
