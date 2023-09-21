@@ -76,7 +76,7 @@ Shader "Custom/Slime"
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET 1.5
+            #define SHADOW_OFFSET -3
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -95,9 +95,7 @@ Shader "Custom/Slime"
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
-                    half worldScale = length(float3(unity_ObjectToWorld[0].x, unity_ObjectToWorld[1].x, unity_ObjectToWorld[2].x));
-                    half shadowOffset = worldScale * SHADOW_OFFSET;
-                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,shadowOffset,0))));
+                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,SHADOW_OFFSET,0))));
                 #endif
                 return OUT;
             }
