@@ -47,6 +47,6 @@ Material:
     - _ExpColorLayer3: {r: 0.764151, g: 0.27874687, b: 0.4500867, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 1, g: 0.45911944, b: 0.9926467, a: 0}
-    - _OutlineColor: {r: 0.22487319, g: 0.09552627, b: 0.3301887, a: 0}
+    - _OutlineColor: {r: 0.745283, g: 0.38435975, b: 0.50582427, a: 1}
     - _RimColor: {r: 1.1837913, g: 0.29780903, b: 0.615854, a: 0}
   m_BuildTextureStacks: []
