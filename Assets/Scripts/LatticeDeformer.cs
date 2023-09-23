@@ -23,7 +23,9 @@ public class LatticeDeformer : MonoBehaviour
     private Vector3[] _gridPoints;
     // trilinear uvw value for each vertex
     // calculate once, used every frame to lerp vertex positions based on lattice points' positions...
-    private Vector3[] _vertexUVWs;           
+    private Vector3[] _vertexUVWs;
+
+    private Mesh _deformedMesh;
     
     [ContextMenu("InitializeCubeLattice")]
     private void InitCubeLattice()
@@ -110,6 +112,22 @@ public class LatticeDeformer : MonoBehaviour
         {
             _vertexUVWs[i] = CalculateTrilinearWeights(_gridPoints, targetMesh.vertices[i]);
         }
+        
+        if (_deformedMesh==null)
+        {
+            _deformedMesh = new Mesh()
+            {
+                name = "DeformedSlimeMeshInstance",
+                vertices = _initialVerts,
+                uv = targetMesh.uv,
+                normals = targetMesh.normals,
+                tangents = targetMesh.tangents,
+                triangles = targetMesh.triangles,
+                bounds = targetMesh.bounds
+            };
+        }
+
+        GetComponent<MeshFilter>().mesh = _deformedMesh;
     }
 
     private Vector3 CalculateTrilinearWeights(Vector3[] gridPoints, Vector3 targetPoint)
@@ -122,9 +140,8 @@ public class LatticeDeformer : MonoBehaviour
     }
     
 
-    private Mesh GetDeformedVertMesh(Vector3[] latticePositions)
+    private void DeformMesh(Vector3[] latticePositions)
     {
-
         Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
         for (int i = 0; i < _initialVerts.Length; i++)
         {
@@ -143,28 +160,21 @@ public class LatticeDeformer : MonoBehaviour
             Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
             deformedVerts[i] = resultLocalSpace;
         }
-        
-        Mesh deformedMesh = new Mesh()
-        {
-            name = "DeformedSlimeMeshInstance",
-            vertices = deformedVerts,
-            uv = targetMesh.uv,
-            normals = targetMesh.normals,
-            tangents = targetMesh.tangents,
-            triangles = targetMesh.triangles,
-            bounds = targetMesh.bounds
-        };
-        return deformedMesh;
+
+        _deformedMesh.vertices = deformedVerts;
+        _deformedMesh.RecalculateNormals();
+        _deformedMesh.RecalculateBounds();
     }
     
-    private void Update()
+    private void FixedUpdate()
     {
         Vector3[] latticePositions = new[]
         {
             b0.transform.position, b1.transform.position, b2.transform.position, b3.transform.position,
             t0.transform.position, t1.transform.position, t2.transform.position, t3.transform.position
         };
-        GetComponent<MeshFilter>().mesh = GetDeformedVertMesh(latticePositions);
+        
+        DeformMesh(latticePositions);
     }
     
     private void OnDrawGizmosSelected()
