@@ -20,6 +20,7 @@ public class LatticeDeformer : MonoBehaviour
     public float rigidbodyMass = 1f;
 
     private Vector3[] _initialVerts;
+    private Vector3[] _gridPoints;
     // trilinear uvw value for each vertex
     // calculate once, used every frame to lerp vertex positions based on lattice points' positions...
     private Vector3[] _vertexUVWs;           
@@ -57,12 +58,6 @@ public class LatticeDeformer : MonoBehaviour
         
         return go;
     }
-    
-
-    private void OnEnable()
-    {
-        targetMesh = GetComponent<MeshFilter>().mesh;
-    }
 
     private void Start()
     {
@@ -94,33 +89,26 @@ public class LatticeDeformer : MonoBehaviour
         Softbody.AddSpring(ref b3, ref t1);
         
         // Precalculate weight for each vertex (UVW)
-        
         Bounds localBounds = targetMesh.bounds;
         Vector3 extents = localBounds.extents;
         // Get the center of the Bounds
         Vector3 center = localBounds.center;
         // Calculate the eight corners
-        Vector3[] corners = new Vector3[8];
-        corners[0] = center + new Vector3(-extents.x, -extents.y, -extents.z);      // bottom left
-        corners[1] = center + new Vector3(extents.x, -extents.y, -extents.z);       // top right
-        corners[2] = center + new Vector3(extents.x, -extents.y, extents.z);        // 
-        corners[3] = center + new Vector3(-extents.x, -extents.y, extents.z);
-        corners[4] = center + new Vector3(-extents.x, extents.y, -extents.z);
-        corners[5] = center + new Vector3(extents.x, extents.y, -extents.z);
-        corners[6] = center + new Vector3(extents.x, extents.y, extents.z);
-        corners[7] = center + new Vector3(-extents.x, extents.y, extents.z);
-
-        Vector3[] gridPoints =
-        {
-            corners[0], corners[1], corners[3], corners[2],
-            corners[4], corners[5], corners[7], corners[6]
-        };
+        _gridPoints = new Vector3[8];
+        _gridPoints[0] = center + new Vector3(-extents.x, -extents.y, -extents.z);
+        _gridPoints[1] = center + new Vector3(extents.x, -extents.y, -extents.z);
+        _gridPoints[2] = center + new Vector3(extents.x, -extents.y, extents.z);
+        _gridPoints[3] = center + new Vector3(-extents.x, -extents.y, extents.z);
+        _gridPoints[4] = center + new Vector3(-extents.x, extents.y, -extents.z);
+        _gridPoints[5] = center + new Vector3(extents.x, extents.y, -extents.z);
+        _gridPoints[6] = center + new Vector3(extents.x, extents.y, extents.z);
+        _gridPoints[7] = center + new Vector3(-extents.x, extents.y, extents.z);
 
         _initialVerts = targetMesh.vertices;
         _vertexUVWs = new Vector3[targetMesh.vertices.Length];
         for (int i = 0; i < _vertexUVWs.Length; i++)
         {
-            _vertexUVWs[i] = CalculateTrilinearWeights(gridPoints, targetMesh.vertices[i]);
+            _vertexUVWs[i] = CalculateTrilinearWeights(_gridPoints, targetMesh.vertices[i]);
         }
     }
 
@@ -128,40 +116,55 @@ public class LatticeDeformer : MonoBehaviour
     {
         // First, calculate the normalized coordinates (u, v, w) within the grid.
         float u = (targetPoint.x - gridPoints[0].x) / (gridPoints[1].x - gridPoints[0].x);
-        float v = (targetPoint.y - gridPoints[0].y) / (gridPoints[3].y - gridPoints[0].y);
-        float w = (targetPoint.z - gridPoints[0].z) / (gridPoints[4].z - gridPoints[0].z);
+        float v = (targetPoint.y - gridPoints[0].y) / (gridPoints[4].y - gridPoints[0].y);
+        float w = (targetPoint.z - gridPoints[0].z) / (gridPoints[6].z - gridPoints[0].z);
         return new Vector3(u, v, w);
     }
     
 
-    private Vector3[] GetDeformedVertMesh(Vector3[] latticePositions)
+    private Mesh GetDeformedVertMesh(Vector3[] latticePositions)
     {
-        for (int i = 0; i < vertices.Length; i++)
+
+        Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
+        for (int i = 0; i < _initialVerts.Length; i++)
         {
             // Interpolate along the x-axis (bottom face).
-            float bottomInterpolationA = Lerp(gridPoints[0].z, gridPoints[1].z, u);
-            float bottomInterpolationB = Lerp(gridPoints[3].z, gridPoints[2].z, u);
-            float bottomInterpolation = Lerp(bottomInterpolationA, bottomInterpolationB, v);
+            Vector3 bottomInterpolationA = Vector3.Lerp(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
+            Vector3 bottomInterpolationB = Vector3.Lerp(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
+            Vector3 bottomInterpolation = Vector3.Lerp(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
 
             // Interpolate along the x-axis (top face).
-            float topInterpolationA = Lerp(gridPoints[4].z, gridPoints[5].z, u);
-            float topInterpolationB = Lerp(gridPoints[7].z, gridPoints[6].z, u);
-            float topInterpolation = Lerp(topInterpolationA, topInterpolationB, v);
+            Vector3 topInterpolationA = Vector3.Lerp(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
+            Vector3 topInterpolationB = Vector3.Lerp(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
+            Vector3 topInterpolation = Vector3.Lerp(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
+            
+            // Interpolate along the z-axis (between bottom and top faces).
+            Vector3 resultWorldSpace = Vector3.Lerp(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
+            Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
+            deformedVerts[i] = resultLocalSpace;
         }
         
-        // Trilinear Interpolation
-        // 1. Bilinear Bottom xzPlane Pos P1
-        
-        // 2. Bilinear Top xzPlane Pos P2
-        
-        // 3. Lerp P1 and P2 with y
-        
+        Mesh deformedMesh = new Mesh()
+        {
+            name = "DeformedSlimeMeshInstance",
+            vertices = deformedVerts,
+            uv = targetMesh.uv,
+            normals = targetMesh.normals,
+            tangents = targetMesh.tangents,
+            triangles = targetMesh.triangles,
+            bounds = targetMesh.bounds
+        };
+        return deformedMesh;
     }
     
     private void Update()
     {
-        //Vector3[] latticePositions = new []{}
-        //targetMesh.vertices = GetDeformedVertMesh();
+        Vector3[] latticePositions = new[]
+        {
+            b0.transform.position, b1.transform.position, b2.transform.position, b3.transform.position,
+            t0.transform.position, t1.transform.position, t2.transform.position, t3.transform.position
+        };
+        GetComponent<MeshFilter>().mesh = GetDeformedVertMesh(latticePositions);
     }
     
     private void OnDrawGizmosSelected()
