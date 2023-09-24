@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
@@ -139,7 +140,41 @@ public class LatticeDeformer : MonoBehaviour
         return new Vector3(u, v, w);
     }
     
-
+    // Code From https://forum.unity.com/threads/how-to-recalculate-normals-so-they-appear-smoother-on-chunked-meshes.898649/
+    private void RecalculateNormalsSeamless(Mesh mesh) {
+        var trianglesOriginal = mesh.triangles;
+        var triangles = trianglesOriginal.ToArray();
+   
+        var vertices = mesh.vertices;
+   
+        var mergeIndices = new Dictionary<int, int>();
+ 
+        for (int i = 0; i < vertices.Length; i++) {
+            var vertexHash = vertices[i].GetHashCode();                  
+       
+            if (mergeIndices.TryGetValue(vertexHash, out var index)) {
+                for (int j = 0; j < triangles.Length; j++)
+                    if (triangles[j] == i)
+                        triangles[j] = index;
+            } else
+                mergeIndices.Add(vertexHash, i);
+        }
+ 
+        mesh.triangles = triangles;
+   
+        var normals = new Vector3[vertices.Length];
+   
+        mesh.RecalculateNormals();
+        var newNormals = mesh.normals;
+   
+        for (int i = 0; i < vertices.Length; i++)
+            if (mergeIndices.TryGetValue(vertices[i].GetHashCode(), out var index))
+                normals[i] = newNormals[index];
+ 
+        mesh.triangles = trianglesOriginal;
+        mesh.normals = normals;
+    }
+    
     private void DeformMesh(Vector3[] latticePositions)
     {
         Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
@@ -162,7 +197,8 @@ public class LatticeDeformer : MonoBehaviour
         }
 
         _deformedMesh.vertices = deformedVerts;
-        _deformedMesh.RecalculateNormals();
+        RecalculateNormalsSeamless(_deformedMesh);
+        // Recalculate actual mesh bounding box otherwise might be culled by renderer
         _deformedMesh.RecalculateBounds();
     }
     
