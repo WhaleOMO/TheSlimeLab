@@ -67,9 +67,10 @@ public class LatticeDeformer : MonoBehaviour
         Softbody.Init(Softbody.ColliderShape.Box, colliderSize, rigidbodyMass, spring, damper, RigidbodyConstraints.FreezeRotation);
         
         // Colliders
+        /*
         Softbody.AddCollider(ref b0); Softbody.AddCollider(ref b1); Softbody.AddCollider(ref b2); Softbody.AddCollider(ref b3);
         Softbody.AddCollider(ref t0); Softbody.AddCollider(ref t1); Softbody.AddCollider(ref t2); Softbody.AddCollider(ref t3);
-        
+        */
         // Bottom
         Softbody.AddSpring(ref b0, ref b1);
         Softbody.AddSpring(ref b1, ref b2);
