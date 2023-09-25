@@ -93,7 +93,7 @@ public class LatticeSlimeMoving : MonoBehaviour
 
     Vector3 CalculateLanuchVelocity(Rigidbody rb)
     {
-        Vector3 newpos = rb.position + rb.transform.right * (-0.5f);
+        Vector3 newpos = rb.position + rb.transform.right * (-2f);
 
         float displacementY = newpos.y - rb.position.y;
         Vector3 displacementXZ = new Vector3(newpos.x - rb.position.x, 0, newpos.z - rb.position.z);

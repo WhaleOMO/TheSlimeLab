@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17785333, g: 0.22267671, b: 0.304821, a: 1}
+  m_IndirectSpecularColor: {r: 0.17785293, g: 0.22267593, b: 0.30481955, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1002,7 +1002,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &430326488
 Transform:
   m_ObjectHideFlags: 0
@@ -1158,6 +1158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 0}
   b0: {fileID: 890139387}
   b1: {fileID: 1074532456}
   b2: {fileID: 1006523218}
@@ -2031,6 +2032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 0}
   b0: {fileID: 1825860748}
   b1: {fileID: 1806946831}
   b2: {fileID: 215475011}
@@ -2574,6 +2576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 1872809580}
   b0: {fileID: 200295839}
   b1: {fileID: 2130677501}
   b2: {fileID: 838299906}
@@ -3174,6 +3177,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1872809581}
+  - component: {fileID: 1872809582}
   m_Layer: 6
   m_Name: catch
   m_TagString: Untagged
@@ -3190,12 +3194,39 @@ Transform:
   m_GameObject: {fileID: 1872809580}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.999601, z: -0, w: 0.028245749}
-  m_LocalPosition: {x: -0.006000042, y: 0.75199986, z: -0.0009999275}
+  m_LocalPosition: {x: -0.006000042, y: -0.024, z: -0.0009999275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2026526264}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1872809582
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1872809580}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1874427430
 GameObject:
   m_ObjectHideFlags: 0
@@ -3244,6 +3275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 0}
   b0: {fileID: 2122791424}
   b1: {fileID: 1908843627}
   b2: {fileID: 726509899}
@@ -3435,6 +3467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 0}
   b0: {fileID: 327833372}
   b1: {fileID: 1707037594}
   b2: {fileID: 314601076}
@@ -4045,6 +4078,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
     type: 3}
+  grabPoint: {fileID: 0}
   b0: {fileID: 890139387}
   b1: {fileID: 1074532456}
   b2: {fileID: 1006523218}
