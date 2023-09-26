@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LatticeSlimeMoving : MonoBehaviour
 {
-     public Rigidbody rb;
+    public Rigidbody rb;
 
     public float h = 1;
     public float gravity = -18;
@@ -19,12 +20,18 @@ public class LatticeSlimeMoving : MonoBehaviour
 
     public GameObject[] controlPoints;
 
-        
+    private IEnumerator _movingCoroutine;
+
+    private void OnEnable()
+    {
+        _movingCoroutine = Wait();
+        StartCoroutine(_movingCoroutine);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        StartCoroutine(Wait());
     }
 
     void ToggleControlPointsRbKinematic(bool isKinematic)
@@ -104,5 +111,10 @@ public class LatticeSlimeMoving : MonoBehaviour
         Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * h / gravity) * Mathf.Sqrt(2 * (displacementY - h) / gravity));
 
         return velocityXZ + velocityY;
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(_movingCoroutine);
     }
 }
