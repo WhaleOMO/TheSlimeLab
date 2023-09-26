@@ -14,9 +14,11 @@ public class LatticeSlimeMoving : MonoBehaviour
     public int nSteps = 20;
     public float max = 45;
 
+
     public GameObject groundChecker;
 
     public GameObject[] controlPoints;
+
         
     // Start is called before the first frame update
     void Start()
