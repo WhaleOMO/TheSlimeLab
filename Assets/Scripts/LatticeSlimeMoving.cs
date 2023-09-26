@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class LatticeSlimeMoving : MonoBehaviour
 {
@@ -14,11 +14,16 @@ public class LatticeSlimeMoving : MonoBehaviour
 
     public int nSteps = 20;
     public float max = 45;
-
-
+    public float creepForce = 100;
+    
     public GameObject groundChecker;
 
     public GameObject[] controlPoints;
+    
+    [SerializeField] private AudioClip _jumpClip;
+    [SerializeField] private AudioClip _creepClip;
+    
+    
 
     private IEnumerator _movingCoroutine;
 
@@ -32,8 +37,10 @@ public class LatticeSlimeMoving : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        //StartCoroutine(Wait());
+        StartCoroutine(Movement());
     }
-
+    
     void ToggleControlPointsRbKinematic(bool isKinematic)
     {
         foreach (var controlPoint in controlPoints)
@@ -75,7 +82,8 @@ public class LatticeSlimeMoving : MonoBehaviour
                 ToggleControlPointsRbKinematic(false);
                 
                 yield return new WaitForSeconds(Random.Range(1.5f,2f));
-                Lanuch();
+
+                Launch();
             }
         }
     }
@@ -87,20 +95,76 @@ public class LatticeSlimeMoving : MonoBehaviour
             controlPoint.transform.Rotate(up, offset);
         }
     }
+    
+    // ReSharper disable Unity.PerformanceAnalysis
+    IEnumerator Movement()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(1);
+            isGrounded = Mathf.Abs(groundChecker.GetComponent<Rigidbody>().velocity.y) < 0.1f;
+            if (isGrounded)
+            {
+                float offset = Mathf.Max(20f, Random.Range(0, max));
+                //SlimeSound.instance.PlayJumpSound(_landClip); 
+                ToggleControlPointsRbKinematic(true);
 
+                for (int i = 0; i < nSteps; ++i)
+                {
+                    float step = offset / nSteps;
 
-    void Lanuch()
+                    RotateStep(Vector3.up, step);
+
+                    yield return new WaitForSeconds(0.01f);
+                }
+
+                ToggleControlPointsRbKinematic(false);
+
+                // yield return new WaitForSeconds(Random.Range(0.5f,2f));
+
+                // Decide whether to launch or creep  
+                bool b = Random.value < 0.5f;;
+                // print(b);
+                
+                if (b)
+                {
+                    // creep for 4 times
+                    var rb0 = controlPoints[0].GetComponent<Rigidbody>();
+                    var rb3 = controlPoints[3].GetComponent<Rigidbody>();
+                    var rb4 = controlPoints[4].GetComponent<Rigidbody>();
+                    var rb7 = controlPoints[7].GetComponent<Rigidbody>();
+                    for (int i = 0; i < 4; i++)
+                    {
+                        SlimeSound.instance.PlayJumpSound(_creepClip); 
+                        //rb0.AddForce((-1) * controlPoints[0].transform.right * creepForce, ForceMode.Acceleration);
+                        //rb3.AddForce((-1) * controlPoints[3].transform.right * creepForce, ForceMode.Acceleration);
+                        rb4.AddForce(controlPoints[4].transform.right * ((-1) * creepForce), ForceMode.Acceleration);
+                        rb7.AddForce(controlPoints[7].transform.right * ((-1) * creepForce), ForceMode.Acceleration);
+                        yield return new WaitForSeconds(1f);
+                    }
+                }
+                else
+                {
+                    yield return new WaitForSeconds(Random.Range(0.5f, 2f));
+                    Launch();
+                    SlimeSound.instance.PlayJumpSound(_jumpClip); 
+                }
+            }
+        }
+
+    }
+
+    void Launch()
     {
         Physics.gravity = Vector3.up * gravity;
         foreach (var controlPoint in controlPoints)
         {
             var rb = controlPoint.GetComponent<Rigidbody>();
-            rb.velocity = CalculateLanuchVelocity(rb);
-            //print(CalculateLanuchVelocity());
+            rb.velocity = CalculateLaunchVelocity(rb);
         }
     }
 
-    Vector3 CalculateLanuchVelocity(Rigidbody rb)
+    Vector3 CalculateLaunchVelocity(Rigidbody rb)
     {
         Vector3 newpos = rb.position + rb.transform.right * (-2f);
 

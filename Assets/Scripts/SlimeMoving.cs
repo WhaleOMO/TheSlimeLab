@@ -16,6 +16,8 @@ public class SlimeMoving : MonoBehaviour
     public float h = 1;
     public float gravity = -18;
     public bool isGrounded;
+    public int count;
+    public int countdown = 3; // Count Down Timer x seconds
 
     public float max = 60;
     float angleInTotal = 0f;
@@ -26,6 +28,9 @@ public class SlimeMoving : MonoBehaviour
     Vector3 bx2, by2, bz2;
 
     Vector3 rRoot, rx, rx2, ry, ry2, rz, rz2;
+
+    [SerializeField] private AudioClip _yellClip;
+    [SerializeField] private AudioClip _jumpClip;
     
     // Start is called before the first frame update
     void Start()
@@ -44,7 +49,8 @@ public class SlimeMoving : MonoBehaviour
         ry2 = gameObject.GetComponent<BoneSphere>().y2.transform.rotation.eulerAngles;
         rz = gameObject.GetComponent<BoneSphere>().z.transform.rotation.eulerAngles;
         rz2 = gameObject.GetComponent<BoneSphere>().z2.transform.rotation.eulerAngles;
-
+        
+        //SlimeSound.instance.PlayYellSound(_yellClip);
         rb = GetComponent<Rigidbody>();
         StartCoroutine(Wait());
     }
@@ -58,6 +64,7 @@ public class SlimeMoving : MonoBehaviour
                 float offset = Random.Range(-max, max);
                 float maxDis = 8.0f;
                 int nSteps = 20;
+                SlimeSound.instance.PlayJumpSound(_jumpClip); 
                 
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -77,8 +84,7 @@ public class SlimeMoving : MonoBehaviour
                     float step = offset / nSteps;
 
                     rb.transform.Rotate(Vector3.up, step);
-
-
+                    
                     yield return new WaitForSeconds(0.01f);
                 }
 
@@ -94,7 +100,7 @@ public class SlimeMoving : MonoBehaviour
         Physics.gravity = Vector3.up * gravity;
         rb.useGravity = true;
         rb.velocity = CalculateLanuchVelocity();
-        onJumpEvent?.Invoke();
+        //onJumpEvent?.Invoke();
     }
 
     Vector3 CalculateLanuchVelocity()
@@ -132,7 +138,6 @@ public class SlimeMoving : MonoBehaviour
         {
             SychronizeNodes(0.2f);
         }
-        
     }
     private void SychronizeNodes(float bias)
     {
