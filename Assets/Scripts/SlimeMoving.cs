@@ -64,8 +64,7 @@ public class SlimeMoving : MonoBehaviour
                 float offset = Random.Range(-max, max);
                 float maxDis = 8.0f;
                 int nSteps = 20;
-                SlimeSound.instance.PlayJumpSound(_jumpClip); 
-                
+
                 rb.freezeRotation = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
                 Vector3 nowOrientDir = transform.rotation.eulerAngles;

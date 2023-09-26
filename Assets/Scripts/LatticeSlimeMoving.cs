@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LatticeSlimeMoving : MonoBehaviour
 {
-    public Rigidbody rb;
-
     public float h = 1;
     public float gravity = -18;
     public bool isGrounded;
@@ -19,28 +18,18 @@ public class LatticeSlimeMoving : MonoBehaviour
     public GameObject groundChecker;
 
     public GameObject[] controlPoints;
-    
-    [SerializeField] private AudioClip _jumpClip;
-    [SerializeField] private AudioClip _creepClip;
-    
-    
+
+    public UnityEvent onCreepEvent;
+    public UnityEvent onJumpEvent;
 
     private IEnumerator _movingCoroutine;
 
     private void OnEnable()
     {
-        _movingCoroutine = Wait();
+        _movingCoroutine = Movement();
         StartCoroutine(_movingCoroutine);
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        //StartCoroutine(Wait());
-        StartCoroutine(Movement());
-    }
-    
     void ToggleControlPointsRbKinematic(bool isKinematic)
     {
         foreach (var controlPoint in controlPoints)
@@ -55,36 +44,6 @@ public class LatticeSlimeMoving : MonoBehaviour
                 rb.angularDrag *= 2f;
             }
             rb.freezeRotation = true;
-        }
-    }
-    
-    IEnumerator Wait()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1);
-            isGrounded = Mathf.Abs(groundChecker.GetComponent<Rigidbody>().velocity.y) < 0.1f;
-            if (isGrounded)
-            {
-                float offset = Mathf.Max(20f, Random.Range(0, max));
-                
-                ToggleControlPointsRbKinematic(true);
-                
-                for (int i = 0; i < nSteps; ++i)
-                {
-                    float step = offset / nSteps;
-                    
-                    RotateStep(Vector3.up, step);
-                    
-                    yield return new WaitForSeconds(0.01f);
-                }
-                
-                ToggleControlPointsRbKinematic(false);
-                
-                yield return new WaitForSeconds(Random.Range(1.5f,2f));
-
-                Launch();
-            }
         }
     }
 
@@ -120,8 +79,6 @@ public class LatticeSlimeMoving : MonoBehaviour
 
                 ToggleControlPointsRbKinematic(false);
 
-                // yield return new WaitForSeconds(Random.Range(0.5f,2f));
-
                 // Decide whether to launch or creep  
                 bool b = Random.value < 0.5f;;
                 // print(b);
@@ -135,7 +92,7 @@ public class LatticeSlimeMoving : MonoBehaviour
                     var rb7 = controlPoints[7].GetComponent<Rigidbody>();
                     for (int i = 0; i < 4; i++)
                     {
-                        SlimeSound.instance.PlayJumpSound(_creepClip); 
+                        onCreepEvent?.Invoke();
                         //rb0.AddForce((-1) * controlPoints[0].transform.right * creepForce, ForceMode.Acceleration);
                         //rb3.AddForce((-1) * controlPoints[3].transform.right * creepForce, ForceMode.Acceleration);
                         rb4.AddForce(controlPoints[4].transform.right * ((-1) * creepForce), ForceMode.Acceleration);
@@ -147,7 +104,7 @@ public class LatticeSlimeMoving : MonoBehaviour
                 {
                     yield return new WaitForSeconds(Random.Range(0.5f, 2f));
                     Launch();
-                    SlimeSound.instance.PlayJumpSound(_jumpClip); 
+                    onJumpEvent?.Invoke();
                 }
             }
         }
@@ -166,7 +123,7 @@ public class LatticeSlimeMoving : MonoBehaviour
 
     Vector3 CalculateLaunchVelocity(Rigidbody rb)
     {
-        Vector3 newpos = rb.position + rb.transform.right * (-2f);
+        Vector3 newpos = rb.position + rb.transform.right * (-1.5f);
 
         float displacementY = newpos.y - rb.position.y;
         Vector3 displacementXZ = new Vector3(newpos.x - rb.position.x, 0, newpos.z - rb.position.z);

@@ -4,35 +4,23 @@ using UnityEngine;
 
 public class SlimeSound : MonoBehaviour
 {
-    public static SlimeSound instance;
-
     [SerializeField] private AudioSource jumpSource, creepSource, yellSource;
-    void Awake()
+
+    public void PlayJumpSound()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
-    
-    public void PlayJumpSound(AudioClip clip)
-    {
-        
-        jumpSource.PlayOneShot(clip);
-        
+        jumpSource.PlayOneShot(jumpSource.clip);
     }
 
-    public void PlayCreepSound(AudioClip clip)
+    public void PlayCreepSound()
     {
-        
-        creepSource.PlayOneShot(clip);
-        
+        creepSource.pitch = Random.Range(0.75f, 0.9f);
+        creepSource.PlayOneShot(creepSource.clip);
     }
     
-    public void PlayYellSound(AudioClip clip)
+    public void PlayYellSound()
     {
-        yellSource.PlayOneShot(clip);
+        yellSource.pitch = Random.Range(0.5f, 1.0f);
+        yellSource.PlayOneShot(creepSource.clip);
     }
     
 }
