@@ -8,6 +8,7 @@ public class UpdateCatchPosition : MonoBehaviour
 {
     public GameObject[] controlPoints;
     public GameObject catchPoint;
+    public MergeManager mergeManager;
 
     public XRRayInteractor leftRayInteractor;
     public XRRayInteractor rightRayInteractor;
@@ -29,6 +30,7 @@ public class UpdateCatchPosition : MonoBehaviour
     void Start()
     {
         _catchPosition = catchPoint.GetComponent<Rigidbody>().position;
+        mergeManager = GameObject.Find("MergeManager").GetComponent<MergeManager>();
     }
 
     // Update is called once per frame
@@ -65,6 +67,7 @@ public class UpdateCatchPosition : MonoBehaviour
         {
             return;
         }
+        mergeManager.AddSlime(gameObject.transform.parent.gameObject, catchPoint);
         _moving.enabled = false;
         _isGrab = true;
     }
@@ -75,6 +78,7 @@ public class UpdateCatchPosition : MonoBehaviour
         {
             return;
         }
+        mergeManager.ReleaseSlime(gameObject.transform.parent.gameObject, catchPoint);
         _moving.enabled = true;
         _isGrab = false;
     }
