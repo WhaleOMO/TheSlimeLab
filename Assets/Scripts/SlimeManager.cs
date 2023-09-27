@@ -5,29 +5,29 @@ using UnityEngine;
 public class SlimeManager
 {
     /// <summary>
-    /// ÀàÃû: SlimeManager
-    /// Àà¹¦ÄÜ: ´æ´¢SlimeµÄ¸÷ÏîÊı¾İ²¢ÇÒÕë¶ÔºÏ³É½øĞĞ¼ÆËã
-    /// ×¢Òâ£ºÔÚµ÷ÓÃºÏ³É·½·¨µÄ³õÊ¼»¯Æ÷(SlimeManager)Ö®Ç°ÇëÎñ±Øµ÷ÓÃCombinationCheck½øĞĞÊôĞÔ¼ì²é
+    /// ????: SlimeManager
+    /// ????: ?æ´¢Slime???????????????????Ğ¼???
+    /// ???????Ãº?????????????(SlimeManager)??????????CombinationCheck??????????
     /// </summary>
     
     // initialize function
     public SlimeManager() { }
 
-    // Ò»¼¶³õÊ¼»¯Æ÷
+    // ??????????
     public SlimeManager(int level, Vector4 color)
     {
         this.level = level;
         this.color = color;
     }
 
-    // ¶ş¼¶³õÊ¼»¯Æ÷
+    // ???????????
     public SlimeManager(int level, Vector4 color, int decorationIndex)
     {
         this.level = level;
         this.color = color;
         this.decorationIndex = decorationIndex;
     }
-    // Èı¼¶³õÊ¼»¯Æ÷
+    // ???????????
     public SlimeManager(int level, Vector4 color, int decorationIndex, int attributeIndex)
     {
         this.level = level;
@@ -35,7 +35,7 @@ public class SlimeManager
         this.decorationIndex = decorationIndex;
         this.attributeIndex= attributeIndex;
     }
-    // Á½Ö»Ê·À³Ä·µÄºÏ²¢ĞÅÏ¢¼ÆËã
+    // ??????????????????
     public SlimeManager(SlimeManager slime1, SlimeManager slime2)
     {
         this.level = ((slime1.GetSlimeLevel() - 1) & (slime2.GetSlimeLevel() - 1)) + 1;
@@ -77,14 +77,14 @@ public class SlimeManager
     }
 
     // private
-    private int level;                  // Ê·À³Ä·µÄµÈ¼¶
-    private Vector4 color;              // Ê·À³Ä·µÄÑÕÉ«£¬ÒÔRGBA¸ñÊ½½øĞĞ´æ´¢
-    private int decorationIndex;        // Ê·À³Ä·µÄ×°ÊÎÎïĞòÁĞºÅ
-    private int attributeIndex;         // Ê·À³Ä·µÄÌØĞÔĞòÁĞºÅ
+    private int level;                  // ????????
+    private Vector4 color;              // ?????????????RGBA??????Ğ´æ´¢
+    private int decorationIndex;        // ??????????????Ğº?
+    private int attributeIndex;         // ?????????????Ğº?
 
     // public
-    public int decorationSum = 1;   // Ê·À³Ä·µÄ×°ÊÎÎï×ÜÖÖÀàÊı
-    public int attributeSum = 1;    // Ê·À³Ä·µÄÌØÕ÷×ÜÖÖÀàÊı
+    public int decorationSum = 1;   // ???????????????????
+    public int attributeSum = 1;    // ??????????????????
 
 
     // function
@@ -107,7 +107,7 @@ public class SlimeManager
     // Logic
     public bool CombinationCheck(SlimeManager slime)
     {
-        // Èı¼¶Ôò²»¿ÉºÏ³É
+        // ?????????
         if (this.level == 3 || slime.GetSlimeLevel() == 3)
         {
             return false;

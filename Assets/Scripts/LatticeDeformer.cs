@@ -176,6 +176,7 @@ public class LatticeDeformer : MonoBehaviour
         var normals = new Vector3[vertices.Length];
    
         mesh.RecalculateNormals();
+        mesh.RecalculateTangents();
         var newNormals = mesh.normals;
    
         for (int i = 0; i < vertices.Length; i++)
