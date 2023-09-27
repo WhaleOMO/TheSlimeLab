@@ -61,3 +61,14 @@ half3 FastTranslucency(half3 lightDir, half3 lightColor, half3 albedo, half3 vie
     half3 translucentColor = shadow * (HdotV + 0.4) * albedo * lightColor * saturate(thickness);
     return translucentColor;
 }
+
+/**
+ * \brief 
+ * \param tangentSpaceViewDir 
+ * \return 
+ */
+half2 ParallaxOffset(half3 tangentSpaceViewDir)
+{
+    half2 uvOffset = tangentSpaceViewDir.xy / tangentSpaceViewDir.z;
+    return uvOffset;
+}
