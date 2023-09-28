@@ -62,6 +62,7 @@ Shader "Custom/Slime"
             {
                 float4 positionOS   : POSITION;
                 float3 normal       : NORMAL;
+                float3 color        : COLOR;
                 float4 tangent      : TANGENT;
                 float2 texcoord     : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -73,6 +74,7 @@ Shader "Custom/Slime"
                 float3 normalWS     : TEXCOORD1;
                 float3 tangentWS    : TEXCOORD4;
                 float3 bitangentWS  : TEXCOORD5;
+                float3 vertColor    : TEXCOORD6;
                 float3 posWS        : TEXCOORD2;
                 half   shadow       : TEXCOORD3;
                 float4 positionHCS  : SV_POSITION;
@@ -98,6 +100,7 @@ Shader "Custom/Slime"
                 OUT.tangentWS = TransformObjectToWorldDir(IN.tangent);
                 OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangent.w * unity_WorldTransformParams.w;
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
+                OUT.vertColor = IN.color;
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
                     OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,SHADOW_OFFSET,0))));

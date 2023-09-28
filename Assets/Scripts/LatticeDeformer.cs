@@ -132,6 +132,7 @@ public class LatticeDeformer : MonoBehaviour
                 name = "DeformedSlimeMeshInstance",
                 vertices = _initialVerts,
                 uv = targetMesh.uv,
+                colors = targetMesh.colors,
                 normals = targetMesh.normals,
                 tangents = targetMesh.tangents,
                 triangles = targetMesh.triangles,

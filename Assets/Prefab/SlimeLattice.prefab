@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4071335267502460796}
   m_Layer: 6
   m_Name: catch
-  m_TagString: Untagged
+  m_TagString: Slime
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -844,7 +844,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a4022c4a2078ad74992a71638bbc4305, type: 2}
+  - {fileID: 2100000, guid: b14a946aa8bdc465695882258fc6597a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1194,7 +1194,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7260146727532463866}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1422,10 +1422,10 @@ GameObject:
   m_Component:
   - component: {fileID: 5092794516206568471}
   - component: {fileID: 2340947122194748683}
-  - component: {fileID: 1696563569005798665}
+  - component: {fileID: 8898111140389688436}
   m_Layer: 0
   m_Name: SlimePhysics
-  m_TagString: Untagged
+  m_TagString: Slime
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1512,7 +1512,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 3287842042394537970}
+      - m_Target: {fileID: 8468374825543370582}
         m_TargetAssemblyTypeName: SlimeExpression, Assembly-CSharp
         m_MethodName: PlayAnimationState
         m_Mode: 5
@@ -1524,7 +1524,7 @@ MonoBehaviour:
           m_StringArgument: Pain
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1696563569005798665
+--- !u!114 &8898111140389688436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1546,6 +1546,7 @@ MonoBehaviour:
   - {fileID: 8903783902740155283}
   - {fileID: 3399764337711558294}
   catchPoint: {fileID: 32868908388075345}
+  mergeManager: {fileID: 0}
   leftRayInteractor: {fileID: 0}
   rightRayInteractor: {fileID: 0}
   camera: {fileID: 0}

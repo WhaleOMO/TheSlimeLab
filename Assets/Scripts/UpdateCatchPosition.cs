@@ -12,7 +12,6 @@ public class UpdateCatchPosition : MonoBehaviour
 
     public XRRayInteractor leftRayInteractor;
     public XRRayInteractor rightRayInteractor;
-    public GameObject camera;
     
     private Vector3 _catchPosition;
     private LatticeSlimeMoving _moving;
@@ -54,9 +53,9 @@ public class UpdateCatchPosition : MonoBehaviour
         _catchPosition = catchPoint.GetComponent<Rigidbody>().position;
     }
 
-    Vector3 CalculateUpdateVelocity(Vector3 oldPosition, Vector3 NewPosition)
+    Vector3 CalculateUpdateVelocity(Vector3 oldPosition, Vector3 newPosition)
     {
-        Vector3 displacement = NewPosition - oldPosition;
+        Vector3 displacement = newPosition - oldPosition;
         Vector3 velocity = displacement / Time.fixedDeltaTime;
         return velocity;
     }
@@ -87,5 +86,4 @@ public class UpdateCatchPosition : MonoBehaviour
     {
 
     }
-
 }
