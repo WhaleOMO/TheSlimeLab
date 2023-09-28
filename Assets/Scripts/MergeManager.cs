@@ -7,6 +7,7 @@ public class MergeManager : MonoBehaviour
     // Start is called before the first frame update
     GameObject slime1, slime2;
     GameObject catch1, catch2;
+    public GameObject slimePrefab;
     void Start()
     {
         slime1 = null;
@@ -71,16 +72,22 @@ public class MergeManager : MonoBehaviour
             
             Destroy(catch2);
             */
-
+            Vector3 spawnPosition = (catch1.transform.position + catch1.transform.position)/2;
+            Quaternion spawnRotation = slime1.transform.rotation;
             slime1.SetActive(false);
             catch1.SetActive(false);
-            slime2.SetActive(false);
-            
+            slime2.SetActive(false);            
             catch2.SetActive(false);
+            SpawnSlime(spawnPosition, spawnRotation);
             slime1 = null;
             slime2 = null;
             catch1 = null;
             catch2 = null;
         }
+    }
+
+    void SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation)
+    {
+        GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
     }
 }

@@ -12,6 +12,7 @@ public class UpdateCatchPosition : MonoBehaviour
 
     public XRRayInteractor leftRayInteractor;
     public XRRayInteractor rightRayInteractor;
+    //public GameObject mainCamera;  Camera will not be used in this script
     
     private Vector3 _catchPosition;
     private LatticeSlimeMoving _moving;
@@ -19,6 +20,8 @@ public class UpdateCatchPosition : MonoBehaviour
     
     private void OnEnable()
     {
+        leftRayInteractor = GameObject.Find("Left Controller").GetComponent<XRRayInteractor>();
+        rightRayInteractor = GameObject.Find("Right Controller").GetComponent<XRRayInteractor>();
         leftRayInteractor.selectEntered.AddListener(OnGrabEnter);
         rightRayInteractor.selectEntered.AddListener(OnGrabEnter);
         leftRayInteractor.selectExited.AddListener(OnGrabExit);
@@ -28,6 +31,8 @@ public class UpdateCatchPosition : MonoBehaviour
 
     void Start()
     {
+        //mainCamera = Camera.main; Camera will not be used in this script
+
         _catchPosition = catchPoint.GetComponent<Rigidbody>().position;
         mergeManager = GameObject.Find("MergeManager").GetComponent<MergeManager>();
     }
