@@ -79,11 +79,15 @@ public class MergeManager : MonoBehaviour
             */
             Vector3 spawnPosition = (catch1.transform.position + catch1.transform.position)/2;
             Quaternion spawnRotation = slime1.transform.rotation;
+            Material mat_1 = slime1.GetComponentInChildren<MeshRenderer>().material;
+            Material mat_2 = slime2.GetComponentInChildren<MeshRenderer>().material;
+            Color newSlimeColor = mat_1.GetColor("_BaseColor")/2 + mat_2.GetColor("_BaseColor")/2;
             slime1.SetActive(false);
             catch1.SetActive(false);
             slime2.SetActive(false);            
             catch2.SetActive(false);
-            await SpawnSlime(spawnPosition, spawnRotation);
+
+            await SpawnSlime(spawnPosition, spawnRotation, newSlimeColor);
             slime1 = null;
             slime2 = null;
             catch1 = null;
@@ -91,11 +95,17 @@ public class MergeManager : MonoBehaviour
         }
     }
     
-    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation)
+    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation,Color baseColor)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
+        //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
         newSlime.transform.localScale *= 1.5f;
+        MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
+        Material mat = renderer.material;
+        mat.SetColor("_BaseColor", baseColor);
+        mat.SetColor("_RimColor", baseColor*3);
+        renderer.material = mat;
     }
 }
