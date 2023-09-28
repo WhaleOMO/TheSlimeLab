@@ -14,9 +14,6 @@ public static class SlimeShaderProperties
     public static readonly int ExpColorLayer1 = Shader.PropertyToID("_ExpColorLayer1");
     public static readonly int ExpColorLayer2 = Shader.PropertyToID("_ExpColorLayer2");
     public static readonly int ExpColorLayer3 = Shader.PropertyToID("_ExpColorLayer3");
-    // Slime Shake
-    public static readonly int ShakeSpeed = Shader.PropertyToID("_SlimeShakeSpeed");
-    public static readonly int ShakeAmount = Shader.PropertyToID("_ShakeAmount");
     // Slime Outline
     public static readonly int OutlineColor = Shader.PropertyToID("_OutlineColor");
     // Slime Expression
@@ -31,10 +28,11 @@ public class PropertyManager : MonoBehaviour
         MaterialColor,
         AmbientColor,
         HighlightColor,
-        RimColor,
         EyeColor,
         MouthColor,
         OutlineColor;
+
+    [ColorUsage(true, true)] private Color RimColor;
     public int ShakeSpeed;
     public Texture SlimeExpression;
 
@@ -53,7 +51,6 @@ public class PropertyManager : MonoBehaviour
         this.EyeColor = mat.GetColor(SlimeShaderProperties.ExpColorLayer1);
         this.MouthColor = mat.GetColor(SlimeShaderProperties.ExpColorLayer2);
         this.OutlineColor = mat.GetColor(SlimeShaderProperties.OutlineColor);
-        this.ShakeSpeed = mat.GetInt(SlimeShaderProperties.ShakeSpeed);
         this.SlimeExpression = mat.GetTexture(SlimeShaderProperties.ExpressionTex);
     }
 
@@ -73,7 +70,6 @@ public class PropertyManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.ExpColorLayer1, EyeColor);
         mat.SetColor(SlimeShaderProperties.ExpColorLayer2, MouthColor);
         mat.SetColor(SlimeShaderProperties.OutlineColor, OutlineColor);
-        mat.SetInt(SlimeShaderProperties.ShakeSpeed, ShakeSpeed);
         mat.SetTexture(SlimeShaderProperties.ExpressionTex, SlimeExpression);
         
         //Reassign the material to the renderer
