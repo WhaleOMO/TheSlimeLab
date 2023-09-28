@@ -1486,7 +1486,7 @@ GameObject:
   - component: {fileID: 867389747}
   - component: {fileID: 867389746}
   m_Layer: 0
-  m_Name: e
+  m_Name: eeeeeeee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3399,6 +3399,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Particle_Outburst_Rays
       objectReference: {fileID: 0}
+    - target: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5722207733637045958, guid: 693d31b013a6fb2489db0f7f9e654b25,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3448,6 +3453,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7362164407011209010, guid: 693d31b013a6fb2489db0f7f9e654b25,
+        type: 3}
+      propertyPath: stopAction
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

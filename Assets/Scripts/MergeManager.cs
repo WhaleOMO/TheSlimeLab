@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class MergeManager : MonoBehaviour
@@ -7,7 +9,10 @@ public class MergeManager : MonoBehaviour
     // Start is called before the first frame update
     GameObject slime1, slime2;
     GameObject catch1, catch2;
+    
     public GameObject slimePrefab;
+    public GameObject vfxPrefab;
+    
     void Start()
     {
         slime1 = null;
@@ -57,7 +62,7 @@ public class MergeManager : MonoBehaviour
             catch2 = null;
         }
     }
-    void MergeImplement()
+    async void MergeImplement()
     {
         float distanceOfCentre = (catch1.transform.position - catch2.transform.position).magnitude;
         float threshold = catch1.GetComponent<SphereCollider>().radius + catch2.GetComponent<SphereCollider>().radius;
@@ -78,16 +83,19 @@ public class MergeManager : MonoBehaviour
             catch1.SetActive(false);
             slime2.SetActive(false);            
             catch2.SetActive(false);
-            SpawnSlime(spawnPosition, spawnRotation);
+            await SpawnSlime(spawnPosition, spawnRotation);
             slime1 = null;
             slime2 = null;
             catch1 = null;
             catch2 = null;
         }
     }
-
-    void SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation)
+    
+    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation)
     {
+        GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
+        await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
+        newSlime.transform.localScale *= 1.5f;
     }
 }
