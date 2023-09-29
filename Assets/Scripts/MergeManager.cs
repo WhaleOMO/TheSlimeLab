@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class MergeManager : MonoBehaviour
@@ -27,7 +28,20 @@ public class MergeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            Debug.developerConsoleVisible = !Debug.developerConsoleVisible;
+        }
         
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     private void FixedUpdate()
@@ -44,6 +58,13 @@ public class MergeManager : MonoBehaviour
         }
         
     }
+
+    public void AddSlimeAtDefaultPos()
+    {
+        SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+        _mergedAmount-=2;
+    }
+    
     public void AddSlime(GameObject slime, GameObject catchPoint)
     {
         if (slime1 == null)
@@ -97,8 +118,8 @@ public class MergeManager : MonoBehaviour
             catch2.SetActive(false);
 
             await SpawnSlime(spawnPosition, spawnRotation, newSlimeColor);
-            slime1 = null;
-            slime2 = null;
+            Destroy(slime1);
+            Destroy(slime2);
             catch1 = null;
             catch2 = null;
         }
