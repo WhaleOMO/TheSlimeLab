@@ -14,12 +14,12 @@ public class MergeManager : MonoBehaviour
     
     public GameObject slimePrefab;
     public GameObject vfxPrefab;
-    
-    public int maxAllowed = 8;
+    public SlimeManager slimeManager;
+
+    public int _maxAllowed;
 
     private int _mergedAmount;
-
-    private int _generatedAmount;
+    private int _slimeCount;
     
     void Start()
     {
@@ -30,23 +30,6 @@ public class MergeManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.developerConsoleVisible = !Debug.developerConsoleVisible;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
 
     private void FixedUpdate()
     {   
@@ -57,7 +40,7 @@ public class MergeManager : MonoBehaviour
 
         if (_mergedAmount >= 3)
         {
-            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
             _mergedAmount-=2;
         }
         
@@ -65,11 +48,12 @@ public class MergeManager : MonoBehaviour
 
     public void AddSlimeAtDefaultPos()
     {
-        if (_generatedAmount < maxAllowed)
+        _maxAllowed = slimeManager.maxInscene;
+        _slimeCount = slimeManager.slimeCount;
+        if (_slimeCount < _maxAllowed)
         {
-            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f), new Vector3(1,1,1));
             _mergedAmount-=2;
-            _generatedAmount++;
         }
     }
     
@@ -119,13 +103,17 @@ public class MergeManager : MonoBehaviour
             Quaternion spawnRotation = slime1.transform.rotation;
             Material mat_1 = slime1.GetComponentInChildren<MeshRenderer>().material;
             Material mat_2 = slime2.GetComponentInChildren<MeshRenderer>().material;
+            Vector3 size_1 = slime1.transform.localScale;
+            Vector3 size_2 = slime2.transform.localScale;
+
+            Vector3 newSize = size_1 + size_2;
             Color newSlimeColor = mat_1.GetColor("_BaseColor")/2 + mat_2.GetColor("_BaseColor")/2;
             slime1.SetActive(false);
             catch1.SetActive(false);
             slime2.SetActive(false);            
             catch2.SetActive(false);
 
-            await SpawnSlime(spawnPosition, spawnRotation, newSlimeColor);
+            await SpawnSlime(spawnPosition, spawnRotation, newSlimeColor, newSize);
             Destroy(slime1);
             Destroy(slime2);
             catch1 = null;
@@ -133,13 +121,13 @@ public class MergeManager : MonoBehaviour
         }
     }
     
-    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation,Color baseColor)
+    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation,Color baseColor, Vector3 size)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
-        newSlime.transform.localScale *= 1.5f;
+        newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
         mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
