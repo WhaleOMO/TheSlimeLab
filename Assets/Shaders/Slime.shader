@@ -25,6 +25,8 @@ Shader "Custom/Slime"
         
         [Space(10)]
         [Toggle(_RECEIVE_SHADOW)]_ReceiveShadow ("Receive Shadow?", float) = 1
+        
+        [HideInInspector]_ShadowSamplePos("Shadow Sample Point", vector) = (0,0,0)
     }
     
     SubShader
@@ -111,6 +113,8 @@ Shader "Custom/Slime"
             
             half4 frag(Varyings IN) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
+                
                 // Data
                 const Light mainLight = GetMainLight();
                 const float3 posWS = IN.posWS;

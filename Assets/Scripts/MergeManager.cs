@@ -14,8 +14,12 @@ public class MergeManager : MonoBehaviour
     
     public GameObject slimePrefab;
     public GameObject vfxPrefab;
+    
+    public int maxAllowed = 8;
 
     private int _mergedAmount;
+
+    private int _generatedAmount;
     
     void Start()
     {
@@ -61,8 +65,12 @@ public class MergeManager : MonoBehaviour
 
     public void AddSlimeAtDefaultPos()
     {
-        SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
-        _mergedAmount-=2;
+        if (_generatedAmount < maxAllowed)
+        {
+            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+            _mergedAmount-=2;
+            _generatedAmount++;
+        }
     }
     
     public void AddSlime(GameObject slime, GameObject catchPoint)

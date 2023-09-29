@@ -187,7 +187,7 @@ MonoBehaviour:
   m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
-  m_StopNaN: 1
+  m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
@@ -623,6 +623,7 @@ MonoBehaviour:
     type: 3}
   vfxPrefab: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,
     type: 3}
+  maxAllowed: 6
 --- !u!1001 &191547262
 PrefabInstance:
   m_ObjectHideFlags: 0
