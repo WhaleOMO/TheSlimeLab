@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MergeManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class MergeManager : MonoBehaviour
     
     public GameObject slimePrefab;
     public GameObject vfxPrefab;
+
+    private int _mergedAmount;
     
     void Start()
     {
@@ -32,6 +35,12 @@ public class MergeManager : MonoBehaviour
         if (catch1 != null && catch2 != null)
         {
             MergeImplement();
+        }
+
+        if (_mergedAmount >= 3)
+        {
+            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+            _mergedAmount-=2;
         }
         
     }
@@ -104,8 +113,10 @@ public class MergeManager : MonoBehaviour
         newSlime.transform.localScale *= 1.5f;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
-        mat.SetColor("_BaseColor", baseColor);
-        mat.SetColor("_RimColor", baseColor*3);
+        mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
+        mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
+        mat.SetColor(SlimeShaderProperties.RimColor, baseColor*3);
         renderer.material = mat;
+        _mergedAmount++;
     }
 }

@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_TransparentFade
+  m_Name: SG_TransparentFade
   m_Shader: {fileID: -6465566751694194690, guid: df88c4489c89f4c21ba58c45563b5e1b,
     type: 3}
   m_Parent: {fileID: 0}
@@ -53,5 +53,6 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    m_Colors: []
+    m_Colors:
+    - _Tint: {r: 1, g: 0.9231705, b: 0.7798742, a: 0}
   m_BuildTextureStacks: []

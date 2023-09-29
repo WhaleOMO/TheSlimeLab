@@ -311,7 +311,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &339159130779435016
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +520,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &542928209077498678
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +729,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &2580564637226283878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1007,7 +1007,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &3914650945106423816
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,7 +1088,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &5158873197772877759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1169,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &7260146727532463866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,7 +1283,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!1 &8409412177980827334
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,6 +1423,7 @@ GameObject:
   - component: {fileID: 5092794516206568471}
   - component: {fileID: 2340947122194748683}
   - component: {fileID: 8898111140389688436}
+  - component: {fileID: 4707538554596171407}
   m_Layer: 0
   m_Name: SlimePhysics
   m_TagString: Slime
@@ -1549,7 +1550,47 @@ MonoBehaviour:
   mergeManager: {fileID: 0}
   leftRayInteractor: {fileID: 0}
   rightRayInteractor: {fileID: 0}
-  camera: {fileID: 0}
+--- !u!114 &4707538554596171407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497202978367061667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584bcb2c82d7d11418ecb2ad37fdae28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  catchPoint: {fileID: 32868908388075345}
+  onImpactEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8468374825543370582}
+        m_TargetAssemblyTypeName: SlimeExpression, Assembly-CSharp
+        m_MethodName: DisplaySingleExpression
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Dizzy
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8649915225284507125}
+        m_TargetAssemblyTypeName: SlimeSound, Assembly-CSharp
+        m_MethodName: PlayYellSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Dizzy
+          m_BoolArgument: 0
+        m_CallState: 2
+  threshold: -400
 --- !u!1 &8903783902740155283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1630,4 +1671,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2

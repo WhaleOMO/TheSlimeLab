@@ -38,6 +38,7 @@ Shader "Custom/Slime"
                     float _ShakeSpeed, _ShakeAmount, _OutlineWidth;
                     float4 _BaseColor, _AmbientColor, _RimColor, _HighlightColor, _OutlineColor;
                     float3 _ExpColorLayer1, _ExpColorLayer2, _ExpColorLayer3;
+                    float3 _ShadowSamplePos;
                     TEXTURE2D(_ExpressionTex);
             CBUFFER_END
         ENDHLSL
@@ -81,7 +82,7 @@ Shader "Custom/Slime"
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET -3
+            #define SHADOW_OFFSET 1
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -103,7 +104,7 @@ Shader "Custom/Slime"
                 OUT.vertColor = IN.color;
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
-                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,SHADOW_OFFSET,0))));
+                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(_ShadowSamplePos)));
                 #endif
                 return OUT;
             }

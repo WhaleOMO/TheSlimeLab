@@ -30,6 +30,7 @@ public class LatticeDeformer : MonoBehaviour
     private Vector3[] _vertexUVWs;
 
     private Mesh _deformedMesh;
+    private Material _slimeMat;
     
     [ContextMenu("InitializeCubeLattice")]
     private void InitCubeLattice()
@@ -143,6 +144,8 @@ public class LatticeDeformer : MonoBehaviour
         }
 
         GetComponent<MeshFilter>().mesh = _deformedMesh;
+
+        _slimeMat = GetComponent<MeshRenderer>().material;
     }
 
     private Vector3 CalculateTrilinearWeights(Vector3[] gridPoints, Vector3 targetPoint)
@@ -226,6 +229,8 @@ public class LatticeDeformer : MonoBehaviour
         };
         
         DeformMesh(latticePositions);
+        _slimeMat.SetVector("_ShadowSamplePos", 
+            _deformedMesh.bounds.center + new Vector3(0, _deformedMesh.bounds.extents.y + 0.5f, 0));
     }
     
     private void OnDrawGizmosSelected()

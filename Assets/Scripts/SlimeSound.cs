@@ -20,6 +20,9 @@ public class SlimeSound : MonoBehaviour
     public void PlayYellSound()
     {
         yellSource.pitch = Random.Range(0.5f, 1.0f);
-        yellSource.PlayOneShot(creepSource.clip);
+        if (Random.Range(0,1) < 0.3f)
+        {
+            yellSource.PlayOneShot(yellSource.clip);
+        }
     }
 }
