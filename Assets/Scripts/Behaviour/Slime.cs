@@ -2,33 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeManager
+public class Slime
 {
     /// <summary>
-    /// ????: SlimeManager
+    /// ????: Slime
     /// ????: ?洢Slime???????????????????м???
-    /// ???????ú?????????????(SlimeManager)??????????CombinationCheck??????????
+    /// ???????ú?????????????(Slime)??????????CombinationCheck??????????
     /// </summary>
     
     // initialize function
-    public SlimeManager() { }
+    public Slime() { }
 
     // ??????????
-    public SlimeManager(int level, Vector4 color)
+    public Slime(int level, Color color)
     {
         this.level = level;
         this.color = color;
     }
 
     // ???????????
-    public SlimeManager(int level, Vector4 color, int decorationIndex)
+    public Slime(int level, Color color, int decorationIndex)
     {
         this.level = level;
         this.color = color;
         this.decorationIndex = decorationIndex;
     }
     // ???????????
-    public SlimeManager(int level, Vector4 color, int decorationIndex, int attributeIndex)
+    public Slime(int level, Color color, int decorationIndex, int attributeIndex)
     {
         this.level = level;
         this.color = color;
@@ -36,13 +36,13 @@ public class SlimeManager
         this.attributeIndex= attributeIndex;
     }
     // ??????????????????
-    public SlimeManager(SlimeManager slime1, SlimeManager slime2)
+    public Slime(Slime slime1, Slime slime2)
     {
         this.level = ((slime1.GetSlimeLevel() - 1) & (slime2.GetSlimeLevel() - 1)) + 1;
         
         if (Random.Range(0f, 1f) > 0.5f)
         {
-            this.color = new Vector4(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
+            this.color = new Color(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
         }
         else
         {
@@ -78,7 +78,7 @@ public class SlimeManager
 
     // private
     private int level;                  // ????????
-    private Vector4 color;              // ?????????????RGBA??????д洢
+    private Color color;              // ?????????????RGBA??????д洢
     private int decorationIndex;        // ??????????????к?
     private int attributeIndex;         // ?????????????к?
 
@@ -95,7 +95,7 @@ public class SlimeManager
         return level;
     }
 
-    public Vector4 GetSlimeColor()
+    public Color GetSlimeColor()
     {
         return color;
     }
@@ -105,7 +105,7 @@ public class SlimeManager
     }
 
     // Logic
-    public bool CombinationCheck(SlimeManager slime)
+    public bool CombinationCheck(Slime slime)
     {
         // ?????????
         if (this.level == 3 || slime.GetSlimeLevel() == 3)
