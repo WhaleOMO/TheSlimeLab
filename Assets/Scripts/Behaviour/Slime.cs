@@ -14,21 +14,22 @@ public class Slime
     public Slime() { }
 
     // ??????????
-    public Slime(int level, Color color)
+    public Slime(int ID,int level, Color color)
     {
+        this.ID = ID;
         this.level = level;
         this.color = color;
     }
 
     // ???????????
-    public Slime(int level, Color color, int decorationIndex)
+    public Slime(int ID, int level, Color color, int decorationIndex)
     {
         this.level = level;
         this.color = color;
         this.decorationIndex = decorationIndex;
     }
     // ???????????
-    public Slime(int level, Color color, int decorationIndex, int attributeIndex)
+    public Slime(int ID, int level, Color color, int decorationIndex, int attributeIndex)
     {
         this.level = level;
         this.color = color;
@@ -36,7 +37,7 @@ public class Slime
         this.attributeIndex= attributeIndex;
     }
     // ??????????????????
-    public Slime(Slime slime1, Slime slime2)
+    public Slime(Slime slime1, Slime slime2) //need to specify id for new slime
     {
         this.level = ((slime1.GetSlimeLevel() - 1) & (slime2.GetSlimeLevel() - 1)) + 1;
         
@@ -77,6 +78,7 @@ public class Slime
     }
 
     // private
+    private int ID;
     private int level;                  // ????????
     private Color color;              // ?????????????RGBA??????д洢
     private int decorationIndex;        // ??????????????к?
@@ -93,6 +95,11 @@ public class Slime
     public int GetSlimeLevel()
     {
         return level;
+    }
+
+    public int GetSlimeID()
+    {
+        return ID;
     }
 
     public Color GetSlimeColor()

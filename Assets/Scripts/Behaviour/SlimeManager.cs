@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class SlimeManager : MonoBehaviour
 {
-    public Slime[] slimes;
-    public GameObject[] slimeObjects;
+    public List<Slime> slimes;
+    public GameObject[] initialSlimes;
     public GameObject[] slimePrefabs;
     public int maxInscene = 15; //
     public int slimeCount;
@@ -17,11 +17,12 @@ public class SlimeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        slimeCount = slimeObjects.Length;
+        slimeCount = initialSlimes.Length;
         for (int i = 0;i < slimeCount; i++)
         {
-            Color color = slimeObjects[i].GetComponentInChildren<Renderer>().material.GetColor("_BaseColor");
-            slimes[i] = new Slime(1, color);
+            Color color = initialSlimes[i].GetComponentInChildren<Renderer>().material.GetColor("_BaseColor");
+            int ID = initialSlimes[i].GetInstanceID();
+            slimes.Add(new Slime(ID, 1, color));
         }
     }
 
@@ -59,6 +60,7 @@ public class SlimeManager : MonoBehaviour
         Color baseColor = slime.GetSlimeColor();
 
         GameObject newSlime = Instantiate(slimePrefabs[level], spawnPosition, spawnRotation);
+        int ID = newSlime.GetInstanceID();
         newSlime.transform.localScale *= 1.5f;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
@@ -67,5 +69,6 @@ public class SlimeManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.RimColor, baseColor * 3);
         renderer.material = mat;
         slimeCount++;
+        slimes.Add(slime);
     }
 }
