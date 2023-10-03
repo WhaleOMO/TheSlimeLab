@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class MergeManager : MonoBehaviour
 {
+    public static MergeManager instance;
+    
     // Start is called before the first frame update
     GameObject slime1, slime2;
     GameObject catch1, catch2;
@@ -17,7 +19,7 @@ public class MergeManager : MonoBehaviour
     public SlimeManager slimeManager;
 
     public int _maxAllowed;
-
+    
     private int _mergedAmount;
     private int _slimeCount;
     
@@ -27,6 +29,7 @@ public class MergeManager : MonoBehaviour
         slime2 = null;
         catch1 = null;
         catch2 = null;
+        instance = this;
     }
 
     // Update is called once per frame

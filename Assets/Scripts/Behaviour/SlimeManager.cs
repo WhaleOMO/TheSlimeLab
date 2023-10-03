@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class SlimeManager : MonoBehaviour
 {
@@ -29,7 +30,6 @@ public class SlimeManager : MonoBehaviour
     void Update()
     {
         UpdateScene();
-
     }
 
     void UpdateScene()
@@ -37,6 +37,11 @@ public class SlimeManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+           MergeManager.instance.AddSlimeAtDefaultPos();
         }
 
         if (Input.GetKeyDown(KeyCode.V))
@@ -48,24 +53,5 @@ public class SlimeManager : MonoBehaviour
         {
             Application.Quit();
         }
-    }
-
-    async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime)
-    {
-        GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
-        //GameObject newSlimeModel;
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
-        int level = slime.GetSlimeLevel();
-        Color baseColor = slime.GetSlimeColor();
-
-        GameObject newSlime = Instantiate(slimePrefabs[level], spawnPosition, spawnRotation);
-        newSlime.transform.localScale *= 1.5f;
-        MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
-        Material mat = renderer.material;
-        mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
-        mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
-        mat.SetColor(SlimeShaderProperties.RimColor, baseColor * 3);
-        renderer.material = mat;
-        slimeCount++;
     }
 }

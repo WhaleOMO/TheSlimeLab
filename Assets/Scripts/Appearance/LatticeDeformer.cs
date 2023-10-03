@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Serialization;
 using Object = UnityEngine.Object;
 
@@ -195,27 +196,44 @@ public class LatticeDeformer : MonoBehaviour
     
     private void DeformMesh(Vector3[] latticePositions)
     {
-        Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
-        for (int i = 0; i < _initialVerts.Length; i++)
+        // Very CPU Heavy Task here...
+        // TODO:
+        // 1. Optimize mesh (reduce vertices count) or/and 
+        // 2. rewrite with Unity's Job system to do multi-threading or
+        // 3. Move the function to GPU side (dispatch a compute shader)
+        Profiler.BeginSample("Deformed vertices update");
         {
-            // Interpolate along the x-axis (bottom face).
-            Vector3 bottomInterpolationA = Vector3.Lerp(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
-            Vector3 bottomInterpolationB = Vector3.Lerp(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
-            Vector3 bottomInterpolation = Vector3.Lerp(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
+            Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
+            for (int i = 0; i < _initialVerts.Length; i++)
+            {
+                // Interpolate along the x-axis (bottom face).
+                Vector3 bottomInterpolationA = Vector3.Lerp(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
+                Vector3 bottomInterpolationB = Vector3.Lerp(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
+                Vector3 bottomInterpolation =
+                    Vector3.Lerp(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
 
-            // Interpolate along the x-axis (top face).
-            Vector3 topInterpolationA = Vector3.Lerp(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
-            Vector3 topInterpolationB = Vector3.Lerp(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
-            Vector3 topInterpolation = Vector3.Lerp(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
-            
-            // Interpolate along the z-axis (between bottom and top faces).
-            Vector3 resultWorldSpace = Vector3.Lerp(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
-            Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
-            deformedVerts[i] = resultLocalSpace;
+                // Interpolate along the x-axis (top face).
+                Vector3 topInterpolationA = Vector3.Lerp(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
+                Vector3 topInterpolationB = Vector3.Lerp(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
+                Vector3 topInterpolation = Vector3.Lerp(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
+
+                // Interpolate along the z-axis (between bottom and top faces).
+                Vector3 resultWorldSpace = Vector3.Lerp(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
+                Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
+                deformedVerts[i] = resultLocalSpace;
+            }
+            _deformedMesh.vertices = deformedVerts;
         }
+        Profiler.EndSample();
 
-        _deformedMesh.vertices = deformedVerts;
-        RecalculateNormalsSeamless(_deformedMesh);
+        // Very CPU Heavy Task here...
+        // TODO: Same as above
+        Profiler.BeginSample("Mesh normal updates");
+        {
+            RecalculateNormalsSeamless(_deformedMesh);
+        }
+        Profiler.EndSample();
+        
         // Recalculate actual mesh bounding box otherwise might be culled by renderer
         _deformedMesh.RecalculateBounds();
     }

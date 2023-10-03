@@ -228,8 +228,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.65
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!1 &251671652011453575
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,7 +844,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b14a946aa8bdc465695882258fc6597a, type: 2}
+  - {fileID: 2100000, guid: 0dfa7bc07212de04bb00327ef60af398, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -878,7 +878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ddd53fe702c5e04d897932423583ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetMesh: {fileID: -4774633631125878159, guid: 2ff5f209c6df0824c95dd298e67bbac5,
+  targetMesh: {fileID: -4316092416910985907, guid: 379b68914a4cd094799cfaf58d282bf9,
     type: 3}
   grabPoint: {fileID: 32868908388075345}
   b0: {fileID: 251671652011453575}
@@ -1421,9 +1421,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5092794516206568471}
-  - component: {fileID: 2340947122194748683}
   - component: {fileID: 8898111140389688436}
-  - component: {fileID: 4707538554596171407}
+  - component: {fileID: 8741361020960611561}
+  - component: {fileID: 4334366029296769072}
   m_Layer: 0
   m_Name: SlimePhysics
   m_TagString: Slime
@@ -1455,7 +1455,32 @@ Transform:
   - {fileID: 8208070176810452153}
   m_Father: {fileID: 1176730940367121640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2340947122194748683
+--- !u!114 &8898111140389688436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497202978367061667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45df473078ababd40b50116c083fdb05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlPoints:
+  - {fileID: 251671652011453575}
+  - {fileID: 7329693123395297849}
+  - {fileID: 563008937671038205}
+  - {fileID: 5158873197772877759}
+  - {fileID: 3914650945106423816}
+  - {fileID: 369197921301996195}
+  - {fileID: 8903783902740155283}
+  - {fileID: 3399764337711558294}
+  catchPoint: {fileID: 32868908388075345}
+  mergeManager: {fileID: 0}
+  leftRayInteractor: {fileID: 0}
+  rightRayInteractor: {fileID: 0}
+--- !u!114 &8741361020960611561
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1470,9 +1495,9 @@ MonoBehaviour:
   h: 1
   gravity: -18
   isGrounded: 0
-  nSteps: 150
-  max: 90
-  creepForce: 700
+  nSteps: 20
+  max: 45
+  creepForce: 100
   groundChecker: {fileID: 251671652011453575}
   controlPoints:
   - {fileID: 251671652011453575}
@@ -1515,7 +1540,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8468374825543370582}
         m_TargetAssemblyTypeName: SlimeExpression, Assembly-CSharp
-        m_MethodName: PlayAnimationState
+        m_MethodName: DisplaySingleExpression
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1525,32 +1550,7 @@ MonoBehaviour:
           m_StringArgument: Pain
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8898111140389688436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8497202978367061667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45df473078ababd40b50116c083fdb05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controlPoints:
-  - {fileID: 251671652011453575}
-  - {fileID: 7329693123395297849}
-  - {fileID: 563008937671038205}
-  - {fileID: 5158873197772877759}
-  - {fileID: 3914650945106423816}
-  - {fileID: 369197921301996195}
-  - {fileID: 8903783902740155283}
-  - {fileID: 3399764337711558294}
-  catchPoint: {fileID: 32868908388075345}
-  mergeManager: {fileID: 0}
-  leftRayInteractor: {fileID: 0}
-  rightRayInteractor: {fileID: 0}
---- !u!114 &4707538554596171407
+--- !u!114 &4334366029296769072
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1578,19 +1578,7 @@ MonoBehaviour:
           m_StringArgument: Dizzy
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8649915225284507125}
-        m_TargetAssemblyTypeName: SlimeSound, Assembly-CSharp
-        m_MethodName: PlayYellSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Dizzy
-          m_BoolArgument: 0
-        m_CallState: 2
-  threshold: -400
+  threshold: -200
 --- !u!1 &8903783902740155283
 GameObject:
   m_ObjectHideFlags: 0
