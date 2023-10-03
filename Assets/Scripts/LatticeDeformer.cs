@@ -10,6 +10,7 @@ public class LatticeDeformer : MonoBehaviour
 {
     // The mesh to be deformed
     public Mesh targetMesh;
+    public GameObject grabPoint;
     public GameObject b0, b1, b2, b3, t0, t1, t2, t3;
     
     [Tooltip("Strength of spring")]
@@ -67,9 +68,10 @@ public class LatticeDeformer : MonoBehaviour
         Softbody.Init(Softbody.ColliderShape.Box, colliderSize, rigidbodyMass, spring, damper, RigidbodyConstraints.FreezeRotation);
         
         // Colliders
+        /*
         Softbody.AddCollider(ref b0); Softbody.AddCollider(ref b1); Softbody.AddCollider(ref b2); Softbody.AddCollider(ref b3);
         Softbody.AddCollider(ref t0); Softbody.AddCollider(ref t1); Softbody.AddCollider(ref t2); Softbody.AddCollider(ref t3);
-        
+        */
         // Bottom
         Softbody.AddSpring(ref b0, ref b1);
         Softbody.AddSpring(ref b1, ref b2);
@@ -90,6 +92,15 @@ public class LatticeDeformer : MonoBehaviour
         Softbody.AddSpring(ref b1, ref t3);
         Softbody.AddSpring(ref b2, ref t0);
         Softbody.AddSpring(ref b3, ref t1);
+        // GrabPoint
+        Softbody.AddSpring(ref grabPoint, ref b0);
+        Softbody.AddSpring(ref grabPoint, ref b1);
+        Softbody.AddSpring(ref grabPoint, ref b2);
+        Softbody.AddSpring(ref grabPoint, ref b3);
+        Softbody.AddSpring(ref grabPoint, ref t0);
+        Softbody.AddSpring(ref grabPoint, ref t1);
+        Softbody.AddSpring(ref grabPoint, ref t2);
+        Softbody.AddSpring(ref grabPoint, ref t3);
         
         // Precalculate weight for each vertex (UVW)
         Bounds localBounds = targetMesh.bounds;
