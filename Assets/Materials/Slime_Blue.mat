@@ -35,7 +35,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableShake: 0
-    - _OutlineWidth: 0.025
+    - _OutlineWidth: 0.015
     - _ReceiveShadow: 1
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5

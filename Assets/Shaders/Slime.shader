@@ -25,6 +25,8 @@ Shader "Custom/Slime"
         
         [Space(10)]
         [Toggle(_RECEIVE_SHADOW)]_ReceiveShadow ("Receive Shadow?", float) = 1
+        
+        [HideInInspector]_ShadowSamplePos("Shadow Sample Point", vector) = (0,0,0)
     }
     
     SubShader
@@ -38,6 +40,7 @@ Shader "Custom/Slime"
                     float _ShakeSpeed, _ShakeAmount, _OutlineWidth;
                     float4 _BaseColor, _AmbientColor, _RimColor, _HighlightColor, _OutlineColor;
                     float3 _ExpColorLayer1, _ExpColorLayer2, _ExpColorLayer3;
+                    float3 _ShadowSamplePos;
                     TEXTURE2D(_ExpressionTex);
             CBUFFER_END
         ENDHLSL
@@ -62,6 +65,8 @@ Shader "Custom/Slime"
             {
                 float4 positionOS   : POSITION;
                 float3 normal       : NORMAL;
+                float3 color        : COLOR;
+                float4 tangent      : TANGENT;
                 float2 texcoord     : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
@@ -70,13 +75,16 @@ Shader "Custom/Slime"
             {
                 float2 uv           : TEXCOORD0;
                 float3 normalWS     : TEXCOORD1;
+                float3 tangentWS    : TEXCOORD4;
+                float3 bitangentWS  : TEXCOORD5;
+                float3 vertColor    : TEXCOORD6;
                 float3 posWS        : TEXCOORD2;
                 half   shadow       : TEXCOORD3;
                 float4 positionHCS  : SV_POSITION;
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET -3
+            #define SHADOW_OFFSET 1
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -92,16 +100,21 @@ Shader "Custom/Slime"
                 #endif
                 OUT.posWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.normalWS = TransformObjectToWorldNormal(IN.normal);
+                OUT.tangentWS = TransformObjectToWorldDir(IN.tangent);
+                OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangent.w * unity_WorldTransformParams.w;
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
+                OUT.vertColor = IN.color;
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
-                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,SHADOW_OFFSET,0))));
+                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(_ShadowSamplePos)));
                 #endif
                 return OUT;
             }
             
             half4 frag(Varyings IN) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
+                
                 // Data
                 const Light mainLight = GetMainLight();
                 const float3 posWS = IN.posWS;
@@ -149,7 +162,10 @@ Shader "Custom/Slime"
                 // Expression
                 const float3 expressionLayers = SAMPLE_TEXTURE2D(_ExpressionTex, sampler_LinearClamp, IN.uv).rgb;
                 const float expressionMask = max(expressionLayers.b, max(expressionLayers.r, expressionLayers.g));
-                const float3 expression = expressionLayers.r * _ExpColorLayer1
+                const half2 parallaxOffset = ParallaxOffset(mul(float3x3(IN.tangentWS, IN.bitangentWS, IN.normalWS), viewDir));
+                const float tongueMask = (1.0 - step(0.1, distance(saturate(IN.uv * float2(1.0, 1.5) - 0.3 * parallaxOffset), float2(0.5, 0.55)))) * expressionLayers.r;
+                const float mouseArea = lerp(0.35, 1.0, 1.0 + tongueMask - saturate(IN.uv.y - 0.2 + parallaxOffset.y)) * expressionLayers.r;
+                const float3 expression = mouseArea * _ExpColorLayer1
                                         + expressionLayers.g * _ExpColorLayer2
                                         + expressionLayers.b * _ExpColorLayer3;
                 // Final Lerp
