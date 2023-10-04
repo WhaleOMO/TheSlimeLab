@@ -48,8 +48,8 @@ public class MergeManager : MonoBehaviour
 
     public void AddSlimeAtDefaultPos()
     {
-        _maxAllowed = slimeManager.maxInscene;
-        _slimeCount = slimeManager.slimeCount;
+        _maxAllowed = SlimeManager.maxInScene;
+        _slimeCount = SlimeManager.slimeCount;
         if (_slimeCount < _maxAllowed)
         {
             SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f), new Vector3(1,1,1));
@@ -101,6 +101,11 @@ public class MergeManager : MonoBehaviour
             */
             Vector3 spawnPosition = (catch1.transform.position + catch1.transform.position)/2;
             Quaternion spawnRotation = slime1.transform.rotation;
+
+            Slime slimeData1 = slime1.GetComponent<SlimeManager>().GetSlime();
+            Slime slimeData2 = slime2.GetComponent<SlimeManager>().GetSlime();
+            Slime newSlimeData = new Slime(slimeData1, slimeData2);
+
             Material mat_1 = slime1.GetComponentInChildren<MeshRenderer>().material;
             Material mat_2 = slime2.GetComponentInChildren<MeshRenderer>().material;
             Vector3 size_1 = slime1.transform.localScale;

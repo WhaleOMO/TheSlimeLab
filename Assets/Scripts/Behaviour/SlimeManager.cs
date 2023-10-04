@@ -7,23 +7,30 @@ using UnityEngine.SceneManagement;
 
 public class SlimeManager : MonoBehaviour
 {
-    public List<Slime> slimes;
-    public GameObject[] initialSlimes;
-    public GameObject[] slimePrefabs;
-    public int maxInscene = 15; //
-    public int slimeCount;
-    public GameObject vfxPrefab;
+    public static List<Slime> allSlimes = new List<Slime>();
+    public static int maxInScene = 15;
+    public static int slimeCount;
+
+
+    private Slime _slime;
+    private int ID;
+
+
 
     // Start is called before the first frame update
+    private void OnEnable()
+    {
+        //Generate slime data
+        FetchData();
+
+        AddSlime(_slime);
+
+        Debug.Log(allSlimes.Count);
+    }
+
     void Start()
     {
-        slimeCount = initialSlimes.Length;
-        for (int i = 0;i < slimeCount; i++)
-        {
-            Color color = initialSlimes[i].GetComponentInChildren<Renderer>().material.GetColor("_BaseColor");
-            int ID = initialSlimes[i].GetInstanceID();
-            slimes.Add(new Slime(ID, 1, color));
-        }
+        ID = _slime.GetSlimeID();
     }
 
     // Update is called once per frame
@@ -33,7 +40,14 @@ public class SlimeManager : MonoBehaviour
 
     }
 
-    void UpdateScene()
+    private void OnDisable()
+    {
+        DeletSlime(ID);
+        Debug.Log(allSlimes.Count);
+    }
+
+
+    private void UpdateScene()
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -51,24 +65,37 @@ public class SlimeManager : MonoBehaviour
         }
     }
 
-    async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime)
+    public void AddSlime(Slime slime)
     {
-        GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
-        //GameObject newSlimeModel;
-        await Task.Delay(TimeSpan.FromSeconds(0.5f));
-        int level = slime.GetSlimeLevel();
-        Color baseColor = slime.GetSlimeColor();
-
-        GameObject newSlime = Instantiate(slimePrefabs[level], spawnPosition, spawnRotation);
-        int ID = newSlime.GetInstanceID();
-        newSlime.transform.localScale *= 1.5f;
-        MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
-        Material mat = renderer.material;
-        mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
-        mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
-        mat.SetColor(SlimeShaderProperties.RimColor, baseColor * 3);
-        renderer.material = mat;
-        slimeCount++;
-        slimes.Add(slime);
+        allSlimes.Add(slime);
+        slimeCount = allSlimes.Count;
     }
+
+    public void FetchData()
+    {
+        //Generate slime data
+        int ID = GetInstanceID();
+        string level_string = gameObject.tag;
+        int level = level_string[5];
+        Color slimeColor = GetComponentInChildren<MeshRenderer>().material.GetColor("_BaseColor");
+        this._slime = new Slime(ID, level, slimeColor);
+    }
+
+    public void DeletSlime(int ID)
+    {
+        int iter = 0;
+        while(iter < slimeCount)
+        {
+            if (allSlimes[iter].GetSlimeID() == ID) break;
+            iter++;
+        }
+        allSlimes.RemoveAt(iter);
+        slimeCount--;
+    }
+
+    public Slime GetSlime()
+    {
+        return _slime;
+    }
+
 }

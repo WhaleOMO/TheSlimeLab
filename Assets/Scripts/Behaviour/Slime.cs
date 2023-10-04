@@ -92,15 +92,17 @@ public class Slime
     // function
     
     // Gets
+    public int GetSlimeID()
+    {
+        return ID;
+    }
+    
     public int GetSlimeLevel()
     {
         return level;
     }
 
-    public int GetSlimeID()
-    {
-        return ID;
-    }
+
 
     public Color GetSlimeColor()
     {
