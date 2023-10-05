@@ -39,16 +39,18 @@ public class Slime
     // ??????????????????
     public Slime(Slime slime1, Slime slime2) //need to specify id for new slime
     {
-        this.level = ((slime1.GetSlimeLevel() - 1) & (slime2.GetSlimeLevel() - 1)) + 1;
+        this.level = ((slime1.GetSlimeLevel() - 1) | (slime2.GetSlimeLevel() - 1)) + 1;
         
-        if (Random.Range(0f, 1f) > 0.5f)
-        {
-            this.color = new Color(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
-        }
-        else
-        {
-            this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
-        }
+        //if (Random.Range(0f, 1f) > 0.9f)
+        //{
+        //    this.color = new Color(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
+        //}
+        //else
+        //{
+        //    this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
+        //}
+        //a rare bug may happen when the color is set to white
+        this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
         this.decorationIndex = 0;
         this.attributeIndex = 0;
         if (this.level == 2)

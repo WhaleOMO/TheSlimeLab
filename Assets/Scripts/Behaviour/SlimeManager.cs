@@ -25,7 +25,6 @@ public class SlimeManager : MonoBehaviour
 
         AddSlime(_slime);
 
-        Debug.Log(allSlimes.Count);
     }
 
     void Start()
@@ -42,8 +41,7 @@ public class SlimeManager : MonoBehaviour
 
     private void OnDisable()
     {
-        DeletSlime(ID);
-        Debug.Log(allSlimes.Count);
+        //DeletSlime(ID);
     }
 
 
@@ -75,8 +73,8 @@ public class SlimeManager : MonoBehaviour
     {
         //Generate slime data
         int ID = GetInstanceID();
-        string level_string = gameObject.tag;
-        int level = level_string[5];
+        //Debug.Log(gameObject.tag);
+        int level = int.Parse(gameObject.tag);
         Color slimeColor = GetComponentInChildren<MeshRenderer>().material.GetColor("_BaseColor");
         this._slime = new Slime(ID, level, slimeColor);
     }
@@ -96,6 +94,12 @@ public class SlimeManager : MonoBehaviour
     public Slime GetSlime()
     {
         return _slime;
+    }
+
+    public void SetSlime(Slime slime)
+    {
+        this._slime = slime;
+        //Debug.Log(_slime.GetSlimeLevel());
     }
 
 }

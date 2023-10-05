@@ -381,6 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 171300300}
   - component: {fileID: 171300301}
+  - component: {fileID: 171300302}
   m_Layer: 0
   m_Name: MergeManager
   m_TagString: Untagged
@@ -419,8 +420,19 @@ MonoBehaviour:
     type: 3}
   vfxPrefab: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,
     type: 3}
-  slimeManager: {fileID: 0}
-  _maxAllowed: 0
+--- !u!114 &171300302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171300299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9b19746afb0d74ab2cb227e8200b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mergeTree: {fileID: 4900000, guid: 92e1e6d7b59a41c4c85f685519dcd804, type: 3}
 --- !u!1 &210788202
 GameObject:
   m_ObjectHideFlags: 0
