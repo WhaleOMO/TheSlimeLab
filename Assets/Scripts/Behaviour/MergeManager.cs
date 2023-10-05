@@ -12,11 +12,11 @@ public class MergeManager : MonoBehaviour
     GameObject slime1, slime2;
     GameObject catch1, catch2;
     Slime slimeData1, slimeData2;
+
+    public GameObject[] level2Slimes;
+    public GameObject[] level3Slimes;
     
-
-
-
-    public GameObject slimePrefab;
+    public GameObject basicPrefab;
     public GameObject vfxPrefab;
 
     private int _maxAllowed;
@@ -32,7 +32,6 @@ public class MergeManager : MonoBehaviour
     }
 
     // Update is called once per frame
-
     private void FixedUpdate()
     {   
         if (catch1 != null && catch2 != null && slimeData1.CombinationCheck(slimeData2))
@@ -45,7 +44,6 @@ public class MergeManager : MonoBehaviour
             SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
             _mergedAmount-=2;
         }
-        
     }
 
     public void AddSlimeAtDefaultPos()
@@ -109,12 +107,23 @@ public class MergeManager : MonoBehaviour
 
             Slime newSlimeData = new Slime(slimeData1, slimeData2);
             Debug.Log("newSlime level is" + newSlimeData.GetSlimeLevel());
-            Material mat_1 = slime1.GetComponentInChildren<MeshRenderer>().material;
-            Material mat_2 = slime2.GetComponentInChildren<MeshRenderer>().material;
+            int prefabIndex = 0;
+            int newSlimeLevel = newSlimeData.GetSlimeLevel();
+            if(newSlimeLevel == 2)
+            {
+                prefabIndex = newSlimeData.GetSlimeDecorationIndex();
+            }
+            if(newSlimeLevel == 3)
+            {
+                prefabIndex = DataLoader.mergeData[slimeData1.GetSlimeDecorationIndex()][slimeData2.GetSlimeDecorationIndex()];
+            }
+
             Vector3 size_1 = slime1.transform.localScale;
             Vector3 size_2 = slime2.transform.localScale;
 
             Vector3 newSize = size_1 + size_2;
+
+
 
 
             slime1.SetActive(false);
@@ -122,7 +131,10 @@ public class MergeManager : MonoBehaviour
             slime2.SetActive(false);            
             catch2.SetActive(false);
 
-            await SpawnSlime(spawnPosition, spawnRotation, newSlimeData, newSize);
+
+
+
+            await SpawnSlime(spawnPosition, spawnRotation, newSlimeData, newSize, prefabIndex);
             Destroy(slime1);
             Destroy(slime2);
             catch1 = null;
@@ -135,7 +147,7 @@ public class MergeManager : MonoBehaviour
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
-        GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
+        GameObject newSlime = Instantiate(basicPrefab, spawnPosition, spawnRotation);
         newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
@@ -146,11 +158,18 @@ public class MergeManager : MonoBehaviour
         _mergedAmount++;
     }
 
-    async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size)
+    async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size, int prefabIndex = 0)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
+        GameObject slimePrefab;
+        int slimeLevel = slime.GetSlimeLevel();
+
+        slimePrefab = (slimeLevel == 2) ? level2Slimes[prefabIndex] : level3Slimes[prefabIndex];
+        //else if (slimeLevel == 2) slimePrefab = level2Slimes[prefabIndex];
+        //else slimePrefab = level3Slimes[prefabIndex];
+
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
         newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();

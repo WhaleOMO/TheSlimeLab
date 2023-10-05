@@ -6,7 +6,7 @@ public class DataLoader : MonoBehaviour
 {
     // Start is called before the first frame update
     public TextAsset mergeTree;
-    public List<int[]> mergeData = new List<int[]>();
+    public static List<int[]> mergeData = new List<int[]>();
     
     void Start()
     {
