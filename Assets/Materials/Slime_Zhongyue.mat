@@ -15,9 +15,9 @@ Material:
   - _RECEIVE_SHADOW
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -42,11 +42,11 @@ Material:
     m_Colors:
     - _AmbientColor: {r: 1, g: 0.50628924, b: 0.6795157, a: 0}
     - _BaseColor: {r: 1, g: 0.5911949, b: 0.7303626, a: 0}
-    - _ExpColorLayer1: {r: 0.9245283, g: 0.54657644, b: 0.70432466, a: 0}
+    - _ExpColorLayer1: {r: 0.8509804, g: 0.30980393, b: 0.2784314, a: 0}
     - _ExpColorLayer2: {r: 0.30007708, g: 0.45340052, b: 0.8018868, a: 0}
     - _ExpColorLayer3: {r: 0.764151, g: 0.27874687, b: 0.4500867, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
     - _HighlightColor: {r: 1, g: 0.45911944, b: 0.9926467, a: 0}
-    - _OutlineColor: {r: 0.22487319, g: 0.09552627, b: 0.3301887, a: 0}
+    - _OutlineColor: {r: 0.745283, g: 0.38435975, b: 0.50582427, a: 1}
     - _RimColor: {r: 1.1837913, g: 0.29780903, b: 0.615854, a: 0}
   m_BuildTextureStacks: []

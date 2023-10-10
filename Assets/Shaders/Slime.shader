@@ -25,6 +25,8 @@ Shader "Custom/Slime"
         
         [Space(10)]
         [Toggle(_RECEIVE_SHADOW)]_ReceiveShadow ("Receive Shadow?", float) = 1
+        
+        [HideInInspector]_ShadowSamplePos("Shadow Sample Point", vector) = (0,0,0)
     }
     
     SubShader
@@ -38,6 +40,7 @@ Shader "Custom/Slime"
                     float _ShakeSpeed, _ShakeAmount, _OutlineWidth;
                     float4 _BaseColor, _AmbientColor, _RimColor, _HighlightColor, _OutlineColor;
                     float3 _ExpColorLayer1, _ExpColorLayer2, _ExpColorLayer3;
+                    float3 _ShadowSamplePos;
                     TEXTURE2D(_ExpressionTex);
             CBUFFER_END
         ENDHLSL
@@ -62,6 +65,8 @@ Shader "Custom/Slime"
             {
                 float4 positionOS   : POSITION;
                 float3 normal       : NORMAL;
+                float3 color        : COLOR;
+                float4 tangent      : TANGENT;
                 float2 texcoord     : TEXCOORD0;
                 UNITY_VERTEX_INPUT_INSTANCE_ID
             };
@@ -70,13 +75,16 @@ Shader "Custom/Slime"
             {
                 float2 uv           : TEXCOORD0;
                 float3 normalWS     : TEXCOORD1;
+                float3 tangentWS    : TEXCOORD4;
+                float3 bitangentWS  : TEXCOORD5;
+                float3 vertColor    : TEXCOORD6;
                 float3 posWS        : TEXCOORD2;
                 half   shadow       : TEXCOORD3;
                 float4 positionHCS  : SV_POSITION;
                 UNITY_VERTEX_OUTPUT_STEREO
             };            
 
-            #define SHADOW_OFFSET 1.25
+            #define SHADOW_OFFSET 1
             #define SLIME_MAX_POINT_LIGHTS 4
             
             Varyings vert(Attributes IN)
@@ -92,63 +100,72 @@ Shader "Custom/Slime"
                 #endif
                 OUT.posWS = TransformObjectToWorld(IN.positionOS.xyz);
                 OUT.normalWS = TransformObjectToWorldNormal(IN.normal);
+                OUT.tangentWS = TransformObjectToWorldDir(IN.tangent);
+                OUT.bitangentWS = cross(OUT.normalWS, OUT.tangentWS) * IN.tangent.w * unity_WorldTransformParams.w;
                 OUT.positionHCS = TransformObjectToHClip(posOS.xyz);
+                OUT.vertColor = IN.color;
                 OUT.shadow = 1.0;
                 #ifdef _RECEIVE_SHADOW
-                    half worldScale = length(float3(unity_ObjectToWorld[0].x, unity_ObjectToWorld[1].x, unity_ObjectToWorld[2].x));
-                    half shadowOffset = worldScale * SHADOW_OFFSET;
-                    half sBack = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(shadowOffset,0,0))));
-                    half sFront = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(-shadowOffset,0,0))));
-                    half sLeft = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,shadowOffset))));
-                    half sRight = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(float3(0,0,-shadowOffset))));
-                    OUT.shadow = avg4(sBack,sFront,sLeft,sRight);
+                    OUT.shadow = MainLightRealtimeShadow(TransformWorldToShadowCoord(TransformObjectToWorld(_ShadowSamplePos)));
                 #endif
                 return OUT;
             }
             
             half4 frag(Varyings IN) : SV_Target
             {
+                UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(IN);
+                
                 // Data
                 const Light mainLight = GetMainLight();
                 const float3 posWS = IN.posWS;
                 const float3 normal = normalize(IN.normalWS);
+                const half3 viewDir = normalize(_WorldSpaceCameraPos - posWS);
+                const half3 halfDir = normalize(viewDir + mainLight.direction);
                 // Diffuse
                 const float NdotL = dot(normal, mainLight.direction);
                 const float halfLambert = NdotL * 0.5 + 0.5;
                 const float lightDirYRemap = map(saturate(mainLight.direction.y), 0, 1, 0, 1.5);
-                half3 diffuse = halfLambert * _BaseColor.rgb * lightDirYRemap;
-                const half3 ambient = 0.4 * _AmbientColor.rgb;
+                half3 diffuse = halfLambert * mainLight.color * _BaseColor.rgb * lightDirYRemap;
                 // Specular
-                const half3 viewDir = normalize(_WorldSpaceCameraPos - posWS);
-                const half3 halfDir = normalize(viewDir + mainLight.direction);
                 const float NdotH = saturate(dot(halfDir, normal));
                 half3 specular = smoothstep(0.96,1.0,NdotH) * _HighlightColor.rgb;
                 // Rim
                 const float rimIntensity = saturate(dot(half3(0,1,0), mainLight.direction));
                 const float fresnel = pow(1.0 - saturate(dot(normal, viewDir)), 1.0 + rimIntensity);
-                const half3 rimColor = fresnel * _RimColor.rgb * (0.5 + rimIntensity);
+                const half3 rimColor = fresnel * _RimColor.rgb * max(0.2,rimIntensity);
+                // Translucent color as ambient...
+                const half3 directTranslucent = FastTranslucency(mainLight.direction, mainLight.color, _BaseColor.rgb, viewDir, normal,  1.1 - saturate(dot(normal, viewDir)), IN.shadow);
+                const half3 ambient = lerp(0.4 * _AmbientColor.rgb, directTranslucent, IN.shadow);
                 // Combined Shaded Color
-                half3 color = (diffuse + specular) * IN.shadow + ambient * (2.0 * SampleSH(normal));
+                half3 color = (diffuse + specular) * IN.shadow + ambient;
                 color = lerp(color, rimColor, fresnel);
                 // Additional Point Lights
                 #if defined(_ADDITIONAL_LIGHTS)
                     #if USE_FORWARD_PLUS
-                        	InputData inputData = (InputData)0;
-	                        float4 screenPos = ComputeScreenPos(TransformWorldToHClip(posWS));
-	                        inputData.normalizedScreenSpaceUV = screenPos.xy / screenPos.w;
-	                        inputData.positionWS = posWS;
+                        InputData inputData = (InputData)0;
+                        float4 screenPos = ComputeScreenPos(TransformWorldToHClip(posWS));
+                        inputData.normalizedScreenSpaceUV = screenPos.xy / screenPos.w;
+                        inputData.positionWS = posWS;
                     #endif
                 
                     uint pixelLightCount = GetAdditionalLightsCount();
                     LIGHT_LOOP_BEGIN(pixelLightCount)
-                        Light light = GetAdditionalLight(lightIndex, posWS, 1.0);
-                        color += pow2(saturate(dot(light.direction, normal))) * light.color * light.distanceAttenuation;
+                        Light light = GetAdditionalLight(lightIndex, posWS);
+                        half3 lightColor = normalize(light.color) * min(length(light.color), 5.0);
+                        half3 diffuseColor = pow2(saturate(dot(light.direction, normal))) * _BaseColor.rgb * light.color;
+                        half3 sphereNormal = normalize(posWS - TransformObjectToWorld(float3(0,0,0)));
+                        half3 thickness = 1.0 - saturate(dot(sphereNormal, viewDir));
+                        half3 additionalTranslucent = FastTranslucency(light.direction, lightColor, _BaseColor.rgb, viewDir, sphereNormal, thickness, 1);
+                        color += (diffuseColor + additionalTranslucent * 50) * light.distanceAttenuation;
                     LIGHT_LOOP_END
                 #endif
                 // Expression
                 const float3 expressionLayers = SAMPLE_TEXTURE2D(_ExpressionTex, sampler_LinearClamp, IN.uv).rgb;
                 const float expressionMask = max(expressionLayers.b, max(expressionLayers.r, expressionLayers.g));
-                const float3 expression = expressionLayers.r * _ExpColorLayer1
+                const half2 parallaxOffset = ParallaxOffset(mul(float3x3(IN.tangentWS, IN.bitangentWS, IN.normalWS), viewDir));
+                const float tongueMask = (1.0 - step(0.1, distance(saturate(IN.uv * float2(1.0, 1.5) - 0.3 * parallaxOffset), float2(0.5, 0.55)))) * expressionLayers.r;
+                const float mouseArea = lerp(0.35, 1.0, 1.0 + tongueMask - saturate(IN.uv.y - 0.2 + parallaxOffset.y)) * expressionLayers.r;
+                const float3 expression = mouseArea * _ExpColorLayer1
                                         + expressionLayers.g * _ExpColorLayer2
                                         + expressionLayers.b * _ExpColorLayer3;
                 // Final Lerp

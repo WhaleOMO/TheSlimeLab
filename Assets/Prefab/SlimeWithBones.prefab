@@ -259,8 +259,8 @@ MonoBehaviour:
   y2: {fileID: 4060097470968337065}
   z: {fileID: 4836933448409254249}
   z2: {fileID: 8076837309807034962}
-  Spring: 100
-  Damper: 0.2
+  Spring: 150
+  Damper: 0.1
   Shape: 0
   ColliderSize: 0.0035
   RigidbodyMass: 1
