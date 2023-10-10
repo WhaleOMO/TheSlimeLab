@@ -6,7 +6,7 @@ public class RotateTrail : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject trial1, trial2, trial3;
-    float radius = 2f, radspeed = 0.02f;
+    float radius = 2f, radspeed = 0.005f;
     float radCounter = 0f;
     void Start()
     {
