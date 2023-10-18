@@ -55,18 +55,31 @@ namespace Inventory
             {
                 Destroy(tempObject);
                 InventoryManager.Instance.RemoveItem(item);
+                uiRoot.DisplayMessage($"{item.name} removed!");
                 return;
             }
 
             if (actionOnDrop == DropAction.Take)
             {
+                // Try Enable Collider
+                if (tempObject.TryGetComponent<Collider>(out Collider col))
+                {
+                    col.enabled = true;
+                }
+                
                 // Try Enable Gravity
                 if (tempObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
                 {
                     rb.useGravity = true;
                 }
+                
+                // Add Item holder to object
+                tempObject.AddComponent<ItemHolder>().item = item;
+                
                 tempObject.transform.localScale /= objectScaleFactor;
                 InventoryManager.Instance.RemoveItem(item);
+                
+                uiRoot.DisplayMessage($"{item.name} taken!");
             }
         }
     }

@@ -16,6 +16,8 @@ namespace Inventory
         public int maxInventorySize = 15;
 
         public event Action OnInventoryUpdate;
+        public event Action<string> OnItemAdded;
+        
         private void Awake()
         {
             // Ensure that there's only one instance of InventoryManager
@@ -27,7 +29,7 @@ namespace Inventory
             else if (Instance != this)
             {
                 Destroy(gameObject);
-            }
+            } 
         }
         
         public bool AddItem(Item newItem)
@@ -40,6 +42,7 @@ namespace Inventory
                 {
                     existingItem.count++;
                     OnInventoryUpdate?.Invoke();
+                    OnItemAdded?.Invoke($"{newItem.name} has been added");
                     return true;
                 }
             }
@@ -50,6 +53,7 @@ namespace Inventory
                 inventory.Add(newItem, invItem);
                 inventoryList.Add(invItem); 
                 OnInventoryUpdate?.Invoke();
+                OnItemAdded?.Invoke($"{newItem.name} has been added");
                 return true;  
             }
 

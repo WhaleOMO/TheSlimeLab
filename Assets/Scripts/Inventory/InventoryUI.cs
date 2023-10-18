@@ -9,20 +9,40 @@ namespace Inventory
     {
         public Transform itemSlotContainer;        // Ref to the UI container (with GridLayoutGroup)
         public GameObject itemSlotPrefab;          // Prefab for the item slot UI
-
+        public TextMeshProUGUI message;
+        
         public Action OnItemBeginDrag;
         public Action OnItemEndDrag;
+
+        public void DisplayMessage(string msg)
+        {
+            DisplayMessage(msg, 2f);
+        }
         
+        public void DisplayMessage(string msg, float seconds)
+        {
+            message.SetText(msg);
+            Invoke("ClearMessage", seconds);
+        }
+
+        public void ClearMessage()
+        {
+            message.SetText("");
+        }
+
         private void OnEnable()
         {
             // Register as Listener to Inventory update event
             InventoryManager.Instance.OnInventoryUpdate += UpdateUI;
+            InventoryManager.Instance.OnItemAdded += DisplayMessage;
+            UpdateUI();
         }
 
         private void OnDisable()
         {
             // Deregister
             InventoryManager.Instance.OnInventoryUpdate -= UpdateUI;
+            InventoryManager.Instance.OnItemAdded -= DisplayMessage;
         }
 
         private void Start()
