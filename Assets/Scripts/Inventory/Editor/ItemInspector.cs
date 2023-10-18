@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Inventory.Editor
 {
+    /// <summary>
+    /// Custom Inspector for Item objects
+    /// </summary>
     [CustomEditor(typeof(Item))]
     public class ItemInspector : UnityEditor.Editor
     {
@@ -42,11 +45,7 @@ namespace Inventory.Editor
         
         public void OnDisable()
         {
-            // Clean up the instantiated prefab
-            if (previewObject)
-            {
-                DestroyImmediate(previewObject);
-            }
+            OnDestroy();
         }
         
         void OnDestroy()

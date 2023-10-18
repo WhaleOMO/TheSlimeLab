@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Inventory
@@ -17,14 +18,41 @@ namespace Inventory
         public bool isStackable;                // if the item could stack in UI Item slot
         public int maxStackAmount = 10;         // The maximum amount to stack
 
-        public override bool Equals(object other)
+        /// <summary>
+        /// Create a new Item, with only color difference
+        /// </summary>
+        /// <param name="from">The original item to copy from</param>
+        /// <param name="newColor">The new color to be set</param>
+        /// <returns>a new runtime instance of the Item. This new instance won't be saved as an asset in the project</returns>
+        public Item CreateColorVariant(Item from, Color newColor)
         {
-            return base.Equals(other);
-        }
+            Item newItem = ScriptableObject.CreateInstance<Item>();
 
-        protected bool Equals(Item other)
+            // Copy properties from the original item to the new item
+            {
+                newItem.id = from.id;
+                newItem.itemName = from.itemName;
+                newItem.description = from.description;
+                newItem.icon = from.icon;
+                newItem.prefab = from.prefab;
+                newItem.isStackable = from.isStackable;
+                newItem.maxStackAmount = from.maxStackAmount;
+            }
+            
+            // Set the new color
+            newItem.color = newColor;
+
+            return newItem;
+        }
+        
+        public override bool Equals(object o)
         {
-            return id == other.id && color.Equals(other.color);
+            if (o.GetType() == typeof(Item))
+            {
+                return id == (o as Item).id && color.CompareRGB((o as Item).color);
+            }
+
+            return false;
         }
 
         public override int GetHashCode()

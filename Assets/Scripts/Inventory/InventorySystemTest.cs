@@ -8,6 +8,11 @@ namespace Inventory
         public Item testItem1;
         public Item testItem2;
 
+        private void Start()
+        {
+            Invoke("TestAddItems", 1);
+        }
+
         [ContextMenu("Test Add Items")]
         public void TestAddItems()
         {

@@ -15,8 +15,8 @@ MonoBehaviour:
   id: 0
   itemName: Test
   description: Dummy Test Item
-  icon: {fileID: 21300000, guid: dc71c444d9062474fb77b4171c1a4a03, type: 3}
-  prefab: {fileID: 7516989854395125640, guid: d2d6934a666a18d46b8b7a3864dc9f63, type: 3}
-  color: {r: 1, g: 0.49803925, b: 0.55868906, a: 0}
+  icon: {fileID: 21300000, guid: b60859c953badc54e9a217c09a900aff, type: 3}
+  prefab: {fileID: 9107678918550379722, guid: b9d1cf7d64823564b865e03dc12ff0fa, type: 3}
+  color: {r: 0.6320754, g: 0.16497563, b: 0.21971388, a: 1}
   isStackable: 1
   maxStackAmount: 10
