@@ -422,6 +422,8 @@ MonoBehaviour:
   level3Slimes:
   - {fileID: 5691364537994014767, guid: 78b04de45e572e04a99194a2f2352a8d, type: 3}
   - {fileID: 4451655296247266856, guid: fc662343961a9d042b576c9ba26cc5df, type: 3}
+  slimeCrystals:
+  - {fileID: 8758423527188247893, guid: 6b6929af436f23943863e568beb6b8fc, type: 3}
   basicPrefab: {fileID: 7260146727532463866, guid: 0796f977c5dc99042aa09ce2703dcd24,
     type: 3}
   vfxPrefab: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,

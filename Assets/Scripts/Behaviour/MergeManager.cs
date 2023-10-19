@@ -125,15 +125,10 @@ public class MergeManager : MonoBehaviour
 
             Vector3 newSize = size_1 + size_2;
 
-
-
-
             slime1.SetActive(false);
             catch1.SetActive(false);
             slime2.SetActive(false);            
             catch2.SetActive(false);
-
-
 
             await SpawnCrystal(spawnPosition, spawnRotation, slimeData1);
             await SpawnCrystal(spawnPosition, spawnRotation, slimeData2);
