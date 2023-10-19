@@ -4,6 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
+[System.Serializable]
+public class HapticFeedback
+{
+    [Range(0, 1)] 
+    public float intensity;
+    public float duration;
+    
+    public void TriggerHaptic(BaseInteractionEventArgs eventArgs)
+    {
+        if (eventArgs.interactorObject is XRBaseControllerInteractor controllerInteractor)
+        {
+            TriggerHaptic(controllerInteractor.xrController);
+        }
+    } 
+    
+    public void TriggerHaptic(XRBaseController controller)
+    {
+        if (intensity > 0)
+        {
+            controller.SendHapticImpulse(intensity, duration);
+        }
+    }
+    
+}
+
 public class UpdateCatchPosition : MonoBehaviour
 {
     public GameObject[] controlPoints;
@@ -12,7 +37,11 @@ public class UpdateCatchPosition : MonoBehaviour
 
     public XRRayInteractor leftRayInteractor;
     public XRRayInteractor rightRayInteractor;
-    //public GameObject mainCamera;  Camera will not be used in this script
+    
+    //public GameObject mainCamera;   // Camera will not be used in this script
+    
+    public HapticFeedback HapticEnter;
+    public HapticFeedback HapticExit;
     
     private Vector3 _catchPosition;
     private LatticeSlimeMoving _moving;
@@ -22,17 +51,22 @@ public class UpdateCatchPosition : MonoBehaviour
     {
         leftRayInteractor = GameObject.Find("Left Controller").GetComponent<XRRayInteractor>();
         rightRayInteractor = GameObject.Find("Right Controller").GetComponent<XRRayInteractor>();
+        
         leftRayInteractor.selectEntered.AddListener(OnGrabEnter);
+        leftRayInteractor.selectEntered.AddListener(HapticEnter.TriggerHaptic);
         rightRayInteractor.selectEntered.AddListener(OnGrabEnter);
+        rightRayInteractor.selectEntered.AddListener(HapticEnter.TriggerHaptic);
+        
         leftRayInteractor.selectExited.AddListener(OnGrabExit);
+        leftRayInteractor.selectExited.AddListener(HapticExit.TriggerHaptic);
         rightRayInteractor.selectExited.AddListener(OnGrabExit);
+        rightRayInteractor.selectExited.AddListener(HapticExit.TriggerHaptic);
         _moving = gameObject.GetComponent<LatticeSlimeMoving>();
     }
 
     void Start()
     {
         //mainCamera = Camera.main; Camera will not be used in this script
-
         _catchPosition = catchPoint.GetComponent<Rigidbody>().position;
         mergeManager = GameObject.Find("MergeManager").GetComponent<MergeManager>();
     }
@@ -67,10 +101,12 @@ public class UpdateCatchPosition : MonoBehaviour
     
     private void OnGrabEnter(SelectEnterEventArgs args)
     {
+        
         if (!args.interactableObject.transform.gameObject.Equals(catchPoint.gameObject))
         {
             return;
         }
+        
         mergeManager.AddSlime(gameObject.transform.parent.gameObject, catchPoint);
         _moving.enabled = false;
         _isGrab = true;
