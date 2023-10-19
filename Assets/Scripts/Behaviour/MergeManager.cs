@@ -15,6 +15,8 @@ public class MergeManager : MonoBehaviour
 
     public GameObject[] level2Slimes;
     public GameObject[] level3Slimes;
+
+    public GameObject[] slimeCrystals;
     
     public GameObject basicPrefab;
     public GameObject vfxPrefab;
@@ -133,7 +135,8 @@ public class MergeManager : MonoBehaviour
 
 
 
-
+            await SpawnCrystal(spawnPosition, spawnRotation, slimeData1);
+            await SpawnCrystal(spawnPosition, spawnRotation, slimeData2);
             await SpawnSlime(spawnPosition, spawnRotation, newSlimeData, newSize, prefabIndex);
             Destroy(slime1);
             Destroy(slime2);
@@ -184,4 +187,17 @@ public class MergeManager : MonoBehaviour
 
         _mergedAmount++;
     }
+
+    async Task SpawnCrystal(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime)
+    {
+        int index = 0;
+        int level = slime.GetSlimeLevel();
+        if(level != 1)
+            index = slime.GetSlimeDecorationIndex();
+        GameObject newCrystal = Instantiate(slimeCrystals[index], spawnPosition, spawnRotation);
+
+
+    }
+
 }
+    

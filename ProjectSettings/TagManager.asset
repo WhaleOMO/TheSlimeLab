@@ -6,9 +6,9 @@ TagManager:
   tags:
   - Ground
   - Slime
-  - Level1
-  - Level2
-  - Level3
+  - 1
+  - 2
+  - 3
   layers:
   - Default
   - TransparentFX
