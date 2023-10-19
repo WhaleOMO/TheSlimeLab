@@ -146,12 +146,18 @@ public class MergeManager : MonoBehaviour
         }
     }
     
-    async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation,Color baseColor, Vector3 size)
+    public async Task SpawnSlime(Vector3 spawnPosition,Quaternion spawnRotation,Color baseColor, Vector3 size, int prefabIndex = 0)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
-        GameObject newSlime = Instantiate(basicPrefab, spawnPosition, spawnRotation);
+        GameObject slimePrefab;
+        slimePrefab = basicPrefab;
+        if (prefabIndex != 0)
+        {
+            slimePrefab = level2Slimes[prefabIndex - 1];
+        }
+        GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
         newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
@@ -197,11 +203,12 @@ public class MergeManager : MonoBehaviour
         int level = slime.GetSlimeLevel();
         if (level != 1)
         {
-            index = slime.GetSlimeDecorationIndex();
+            index = slime.GetSlimeDecorationIndex()+1;
         }
 
         Color slimeColor = slime.GetSlimeColor();
         GameObject newCrystal = Instantiate(slimeCrystals[index], spawnPosition, spawnRotation);
+        var itemHolder = newCrystal.AddComponent<ItemHolder>();
         // Try setting color
         if (newCrystal.TryGetComponent<MeshRenderer>(out MeshRenderer renderer))
         {
@@ -209,7 +216,6 @@ public class MergeManager : MonoBehaviour
             tempMaterial.color = slimeColor;
             renderer.sharedMaterial = tempMaterial;
         }
-        var itemHolder = newCrystal.AddComponent<ItemHolder>();
         itemHolder.item = slimeItems[index].CreateColorVariant(slimeColor);
     }
 

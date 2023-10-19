@@ -56,7 +56,6 @@ namespace Interactables
                     new Vector3(1, 1, 1), 
                     twoObj?Mathf.Max(item1.id, item2.id)-1 : item1.id-1);
             }
-            
         }
         
         private void OnTriggerEnter(Collider collision)

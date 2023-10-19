@@ -5,9 +5,16 @@ using UnityEngine;
 
 namespace Inventory
 {
+    public enum ItemType
+    {
+        Crystal,
+        Tool,
+    }
+    
     [CreateAssetMenu(fileName = "newItem", menuName = "Inventory/Item")]
     public class Item: ScriptableObject
     {
+        public ItemType itemType;
         public int id;
         public string itemName;
         [TextArea]
