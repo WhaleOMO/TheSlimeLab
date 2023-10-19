@@ -24,7 +24,6 @@ public class SlimeManager : MonoBehaviour
         FetchData();
 
         AddSlime(_slime);
-
     }
 
     void Start()
@@ -32,36 +31,36 @@ public class SlimeManager : MonoBehaviour
         ID = _slime.GetSlimeID();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        UpdateScene();
-
-    }
-
-    private void OnDisable()
-    {
-        //DeletSlime(ID);
-    }
-
-
-    private void UpdateScene()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Debug.developerConsoleVisible = !Debug.developerConsoleVisible;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
+    // // Update is called once per frame
+    // void Update()
+    // {
+    //     UpdateScene();
+    //
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     //DeletSlime(ID);
+    // }
+    //
+    //
+    // private void UpdateScene()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.R))
+    //     {
+    //         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.V))
+    //     {
+    //         Debug.developerConsoleVisible = !Debug.developerConsoleVisible;
+    //     }
+    //
+    //     if (Input.GetKeyDown(KeyCode.Escape))
+    //     {
+    //         Application.Quit();
+    //     }
+    // }
 
     public void AddSlime(Slime slime)
     {
@@ -79,7 +78,7 @@ public class SlimeManager : MonoBehaviour
         this._slime = new Slime(ID, level, slimeColor);
     }
 
-    public void DeletSlime(int ID)
+    public void DeleteSlime(int ID)
     {
         int iter = 0;
         while(iter < slimeCount)

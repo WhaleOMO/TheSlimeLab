@@ -21,13 +21,13 @@ namespace Inventory
         /// <summary>
         /// Create a new Item, with only color difference
         /// </summary>
-        /// <param name="from">The original item to copy from</param>
         /// <param name="newColor">The new color to be set</param>
         /// <returns>a new runtime instance of the Item. This new instance won't be saved as an asset in the project</returns>
-        public Item CreateColorVariant(Item from, Color newColor)
+        public Item CreateColorVariant(Color newColor)
         {
             Item newItem = ScriptableObject.CreateInstance<Item>();
-
+            
+            var from = this;
             // Copy properties from the original item to the new item
             {
                 newItem.id = from.id;
@@ -41,6 +41,7 @@ namespace Inventory
             
             // Set the new color
             newItem.color = newColor;
+            newItem.color.a = 1.0f;
 
             return newItem;
         }

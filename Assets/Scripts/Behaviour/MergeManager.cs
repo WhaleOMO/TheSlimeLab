@@ -17,6 +17,8 @@ public class MergeManager : MonoBehaviour
     public GameObject[] level3Slimes;
 
     public GameObject[] slimeCrystals;
+
+    public Inventory.Item[] slimeItems;
     
     public GameObject basicPrefab;
     public GameObject vfxPrefab;
@@ -48,6 +50,7 @@ public class MergeManager : MonoBehaviour
         }
     }
 
+    [ContextMenu("Add Random Slime")]
     public void AddSlimeAtDefaultPos()
     {
         _maxAllowed = SlimeManager.maxInScene;
@@ -55,6 +58,9 @@ public class MergeManager : MonoBehaviour
         if (_slimeCount < _maxAllowed)
         {
             SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f), new Vector3(1,1,1));
+            
+            // var newSlime = new Slime(0, 1, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
+            // SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, newSlime, new Vector3(1, 1, 1));
             _mergedAmount-=2;
         }
     }
@@ -154,6 +160,8 @@ public class MergeManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.RimColor, baseColor*3);
         renderer.material = mat;
         _mergedAmount++;
+        
+        newSlime.GetComponent<SlimeManager>().FetchData();
     }
 
     async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size, int prefabIndex = 0)
@@ -163,7 +171,7 @@ public class MergeManager : MonoBehaviour
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject slimePrefab;
         int slimeLevel = slime.GetSlimeLevel();
-
+        
         slimePrefab = (slimeLevel == 2) ? level2Slimes[prefabIndex] : level3Slimes[prefabIndex];
         //else if (slimeLevel == 2) slimePrefab = level2Slimes[prefabIndex];
         //else slimePrefab = level3Slimes[prefabIndex];
@@ -179,7 +187,7 @@ public class MergeManager : MonoBehaviour
         renderer.material = mat;
         newSlime.GetComponent<SlimeManager>().SetSlime(slime);
 
-
+        
         _mergedAmount++;
     }
 
@@ -187,11 +195,22 @@ public class MergeManager : MonoBehaviour
     {
         int index = 0;
         int level = slime.GetSlimeLevel();
-        if(level != 1)
+        if (level != 1)
+        {
             index = slime.GetSlimeDecorationIndex();
+        }
+
+        Color slimeColor = slime.GetSlimeColor();
         GameObject newCrystal = Instantiate(slimeCrystals[index], spawnPosition, spawnRotation);
-
-
+        // Try setting color
+        if (newCrystal.TryGetComponent<MeshRenderer>(out MeshRenderer renderer))
+        {
+            var tempMaterial = new Material(renderer.sharedMaterial);
+            tempMaterial.color = slimeColor;
+            renderer.sharedMaterial = tempMaterial;
+        }
+        var itemHolder = newCrystal.AddComponent<ItemHolder>();
+        itemHolder.item = slimeItems[index].CreateColorVariant(slimeColor);
     }
 
 }
