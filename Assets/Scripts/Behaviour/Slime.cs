@@ -14,21 +14,22 @@ public class Slime
     public Slime() { }
 
     // ??????????
-    public Slime(int level, Color color)
+    public Slime(int ID,int level, Color color)
     {
+        this.ID = ID;
         this.level = level;
         this.color = color;
     }
 
     // ???????????
-    public Slime(int level, Color color, int decorationIndex)
+    public Slime(int ID, int level, Color color, int decorationIndex)
     {
         this.level = level;
         this.color = color;
         this.decorationIndex = decorationIndex;
     }
     // ???????????
-    public Slime(int level, Color color, int decorationIndex, int attributeIndex)
+    public Slime(int ID, int level, Color color, int decorationIndex, int attributeIndex)
     {
         this.level = level;
         this.color = color;
@@ -36,18 +37,21 @@ public class Slime
         this.attributeIndex= attributeIndex;
     }
     // ??????????????????
-    public Slime(Slime slime1, Slime slime2)
+    public Slime(Slime slime1, Slime slime2) //need to specify id for new slime
     {
-        this.level = ((slime1.GetSlimeLevel() - 1) & (slime2.GetSlimeLevel() - 1)) + 1;
+        if (slime1.GetSlimeLevel() == 1 || slime2.GetSlimeLevel() == 1) this.level = 2;
+        else this.level = 3;
         
-        if (Random.Range(0f, 1f) > 0.5f)
-        {
-            this.color = new Color(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
-        }
-        else
-        {
-            this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
-        }
+        //if (Random.Range(0f, 1f) > 0.9f)
+        //{
+        //    this.color = new Color(Random.Range(0, 256), Random.Range(0, 256), Random.Range(0, 256));
+        //}
+        //else
+        //{
+        //    this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
+        //}
+        //a rare bug may happen when the color is set to white
+        this.color = (slime1.GetSlimeColor() + slime2.GetSlimeColor()) / 2;
         this.decorationIndex = 0;
         this.attributeIndex = 0;
         if (this.level == 2)
@@ -77,23 +81,31 @@ public class Slime
     }
 
     // private
+    private int ID;
     private int level;                  // ????????
     private Color color;              // ?????????????RGBA??????д洢
     private int decorationIndex;        // ??????????????к?
     private int attributeIndex;         // ?????????????к?
 
     // public
-    public int decorationSum = 1;   // ???????????????????
+    public int decorationSum = 2;   // ???????????????????
     public int attributeSum = 1;    // ??????????????????
 
 
     // function
     
     // Gets
+    public int GetSlimeID()
+    {
+        return ID;
+    }
+    
     public int GetSlimeLevel()
     {
         return level;
     }
+
+
 
     public Color GetSlimeColor()
     {
