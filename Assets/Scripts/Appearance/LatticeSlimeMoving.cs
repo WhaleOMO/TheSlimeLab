@@ -80,7 +80,7 @@ public class LatticeSlimeMoving : MonoBehaviour
                 ToggleControlPointsRbKinematic(false);
 
                 // Decide whether to launch or creep  
-                bool b = Random.value < 0.5f;;
+                bool b = Random.value < 0.5f;
                 // print(b);
                 
                 if (b)

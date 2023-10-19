@@ -31,7 +31,8 @@ Transform:
   m_LocalPosition: {x: -0.006000042, y: -0.024, z: -0.0009999275}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8809389583213494347}
   m_Father: {fileID: 5092794516206568471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1877152067027250435
@@ -260,8 +261,7 @@ Transform:
   m_LocalPosition: {x: 0.523731, y: -0.500092, z: 0.5865264}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 8809389583213494347}
+  m_Children: []
   m_Father: {fileID: 5092794516206568471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &2777511446917245491
@@ -400,7 +400,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -763,7 +763,7 @@ Transform:
   - {fileID: 5610694658294159747}
   - {fileID: 7896236707602104247}
   - {fileID: 3402686002377560834}
-  m_Father: {fileID: 25311315311884569}
+  m_Father: {fileID: 6114494292488529494}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8649915225284507125
 MonoBehaviour:
@@ -780,6 +780,7 @@ MonoBehaviour:
   jumpSource: {fileID: 7202674106792531323}
   creepSource: {fileID: 5060423850423972025}
   yellSource: {fileID: 3892448518913046406}
+  squeezeSource: {fileID: 0}
 --- !u!1 &3287842042394537970
 GameObject:
   m_ObjectHideFlags: 0
@@ -1480,6 +1481,12 @@ MonoBehaviour:
   mergeManager: {fileID: 0}
   leftRayInteractor: {fileID: 0}
   rightRayInteractor: {fileID: 0}
+  HapticEnter:
+    intensity: 0
+    duration: 0
+  HapticExit:
+    intensity: 0
+    duration: 0
 --- !u!114 &8741361020960611561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1497,7 +1504,7 @@ MonoBehaviour:
   isGrounded: 0
   nSteps: 20
   max: 45
-  creepForce: 100
+  creepForce: 700
   groundChecker: {fileID: 251671652011453575}
   controlPoints:
   - {fileID: 251671652011453575}

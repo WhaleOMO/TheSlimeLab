@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
 public class MergeManager : MonoBehaviour
 {
@@ -87,11 +88,16 @@ public class MergeManager : MonoBehaviour
             catch2 = null;
         }
     }
+    
     async void MergeImplement()
     {
         float distanceOfCentre = (catch1.transform.position - catch2.transform.position).magnitude;
         float threshold = catch1.GetComponent<SphereCollider>().radius + catch2.GetComponent<SphereCollider>().radius;
-        if (distanceOfCentre < 0.75 * threshold)
+        if (distanceOfCentre > 0.25 * threshold && distanceOfCentre < 0.9 * threshold)
+        {
+            SlimeSound.instance.PlaySqueezeSound(distanceOfCentre);
+        }
+        else if (distanceOfCentre < 0.25 * threshold)
         {
             /*
             Destroy(slime1);
