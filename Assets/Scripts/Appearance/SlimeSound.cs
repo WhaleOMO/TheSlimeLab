@@ -1,23 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class SlimeSound : MonoBehaviour
 {
-    public static SlimeSound instance;
     [SerializeField] private AudioSource jumpSource, creepSource, yellSource, squeezeSource;
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-    }
 
     public void PlayJumpSound()
     {
@@ -38,7 +25,7 @@ public class SlimeSound : MonoBehaviour
             yellSource.PlayOneShot(yellSource.clip);
         }
     }
-
+    
     public void PlaySqueezeSound(float relDistance)
     {
         squeezeSource.volume = (float)(1.0 * 1 / relDistance);

@@ -24,6 +24,8 @@ public class MergeManager : MonoBehaviour
     public GameObject basicPrefab;
     public GameObject vfxPrefab;
 
+    public UnityEvent<float> OnSlimeSqueeze;
+
     private int _maxAllowed;
     private int _mergedAmount;
     private int _slimeCount;
@@ -102,7 +104,7 @@ public class MergeManager : MonoBehaviour
         float threshold = catch1.GetComponent<SphereCollider>().radius + catch2.GetComponent<SphereCollider>().radius;
         if (distanceOfCentre > 0.25 * threshold && distanceOfCentre < 0.9 * threshold)
         {
-            SlimeSound.instance.PlaySqueezeSound(distanceOfCentre);
+            OnSlimeSqueeze?.Invoke(distanceOfCentre);
         }
         else if (distanceOfCentre < 0.25 * threshold)
         {
@@ -212,7 +214,7 @@ public class MergeManager : MonoBehaviour
             index = slime.GetSlimeDecorationIndex()+1;
         }
 
-        Color slimeColor = slime.GetSlimeColor();
+        Color slimeColor = level == 1 ? slime.GetSlimeColor(): Color.white;
         GameObject newCrystal = Instantiate(slimeCrystals[index], spawnPosition, spawnRotation);
         var itemHolder = newCrystal.AddComponent<ItemHolder>();
         // Try setting color

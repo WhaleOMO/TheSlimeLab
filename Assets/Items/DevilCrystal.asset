@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c29c9950224a76b77e832ef840e5d8, type: 3}
-  m_Name: CatCrystal
+  m_Name: DevilCrystal
   m_EditorClassIdentifier: 
   itemType: 0
-  id: 2
-  itemName: Cat Shape Crystal
-  description: The Cat Slime Crystal
-  icon: {fileID: 21300000, guid: f7b08567929a7b040b400d7dd53b82ab, type: 3}
-  prefab: {fileID: 5714708969736916257, guid: ab78ecfae0502a542b58aa2c63d94d81, type: 3}
+  id: 3
+  itemName: Devil Shape Crystal
+  description: The Devil Slime Crystal
+  icon: {fileID: 21300000, guid: e5f6a1fc032b80448bf2f703508c458e, type: 3}
+  prefab: {fileID: 95130942769751047, guid: a334e4130f8137243b898aba952dc1ab, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   isStackable: 1
   maxStackAmount: 10

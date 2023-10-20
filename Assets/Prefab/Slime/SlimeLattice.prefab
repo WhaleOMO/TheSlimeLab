@@ -845,7 +845,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0dfa7bc07212de04bb00327ef60af398, type: 2}
+  - {fileID: 2100000, guid: b14a946aa8bdc465695882258fc6597a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1495,11 +1495,11 @@ MonoBehaviour:
   leftRayInteractor: {fileID: 0}
   rightRayInteractor: {fileID: 0}
   HapticEnter:
-    intensity: 0
-    duration: 0
+    intensity: 0.7
+    duration: 0.2
   HapticExit:
-    intensity: 0
-    duration: 0
+    intensity: 0.2
+    duration: 0.2
 --- !u!114 &8741361020960611561
 MonoBehaviour:
   m_ObjectHideFlags: 0
