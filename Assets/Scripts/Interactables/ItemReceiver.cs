@@ -22,6 +22,9 @@ namespace Interactables
     
         public void OnGenerateButtonPressed()
         {
+            if (_tempItems.Count < 2) {
+                return;
+            }
             Color targetColor = Color.black;
             Item item1 = _tempItems[0];
             bool isLeagel = false;
@@ -62,8 +65,10 @@ namespace Interactables
                     twoObj?Mathf.Max(item1.id, item2.id)-1 : item1.id-1);
             }
 
-            icon1.sprite = null;
-            icon2.sprite = null;
+            Color _tempColor = icon1.color;
+            _tempColor.a = 0;
+            _tempColor = icon2.color;
+            _tempColor.a = 0;
         }
         
         private void OnTriggerEnter(Collider collision)
@@ -80,12 +85,15 @@ namespace Interactables
                         _item1 = itemHolder.item;
                         icon1.sprite = itemHolder.item.icon;
                         icon1.color = itemHolder.item.color;
+
                     }
 
                     if (_item2 == null && itemHolder.item.id > 1)
                     {
                         _item2 = itemHolder.item;
                         icon2.sprite = itemHolder.item.icon;
+                        Color _tempColor = icon2.color;
+                        _tempColor.a = 1;
                     }
                 }
             }
