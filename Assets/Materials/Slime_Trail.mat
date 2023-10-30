@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _ENABLE_SLIME_SHAKE
   - _RECEIVE_SHADOW
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -25,29 +26,24 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ExpressionTex:
-        m_Texture: {fileID: 2800000, guid: 1115e82fa286b1f45913103f4ac9db8f, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnableShake: 0
-    - _OutlineWidth: 0.025
+    - _EnableShake: 1
+    - _OutlineWidth: 0.01
     - _ReceiveShadow: 1
     - _ShakeAmount: 0.15
-    - _ShakeSpeed: 5
+    - _ShakeSpeed: 8
     m_Colors:
-    - _AmbientColor: {r: 0.81753254, g: 0.43137255, b: 0.9372549, a: 1}
-    - _BaseColor: {r: 0.81341326, g: 0.37169808, b: 1, a: 0}
-    - _ExpColorLayer1: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 0}
-    - _ExpColorLayer2: {r: 0.3763198, g: 0.13249075, b: 0.5471698, a: 0}
+    - _AmbientColor: {r: 0.09999997, g: 0.09999997, b: 0.09999997, a: 1}
+    - _BaseColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    - _ExpColorLayer1: {r: 1, g: 1, b: 1, a: 1}
+    - _ExpColorLayer2: {r: 1, g: 1, b: 1, a: 1}
     - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
-    - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
-    - _HighlightColor: {r: 0.4127778, g: 0.3622641, b: 1, a: 0}
-    - _OutlineColor: {r: 0.38187975, g: 0.064554356, b: 0.6415094, a: 0}
-    - _RimColor: {r: 7.783249, g: 2.838874, b: 13.433962, a: 0}
+    - _HighlightColor: {r: 1, g: 1, b: 1, a: 1}
+    - _OutlineColor: {r: 0, g: 0, b: 0, a: 0}
+    - _RimColor: {r: 0.9, g: 0.9, b: 0.9, a: 1}
     - _ShadowSamplePos: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
