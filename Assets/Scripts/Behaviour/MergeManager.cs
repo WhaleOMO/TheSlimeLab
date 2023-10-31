@@ -187,10 +187,15 @@ public class MergeManager : MonoBehaviour
         int slimeLevel = slime.GetSlimeLevel();
         
         slimePrefab = (slimeLevel == 2) ? level2Slimes[prefabIndex] : level3Slimes[prefabIndex];
-        //else if (slimeLevel == 2) slimePrefab = level2Slimes[prefabIndex];
-        //else slimePrefab = level3Slimes[prefabIndex];
+        
+        // Update SlimeDex
+        var slimeDex = FindObjectOfType<SlimeDex>();
+        slimeDex.SlimeID = (slimeLevel == 2) ? prefabIndex : prefabIndex + level2Slimes.Length;
 
+        //Generate NewSlime
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
+        
+        //Update Date of new slime
         newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
         Material mat = renderer.material;
@@ -199,6 +204,8 @@ public class MergeManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.AmbientColor, newColor * 0.4f);
         mat.SetColor(SlimeShaderProperties.RimColor, newColor * 3);
         renderer.material = mat;
+        
+        //Update data in slimemanager
         newSlime.GetComponent<SlimeManager>().SetSlime(slime);
 
         
