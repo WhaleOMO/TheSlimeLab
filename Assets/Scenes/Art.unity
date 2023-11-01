@@ -4943,7 +4943,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1670955793}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 3a8193af52243374982161a1cc4bd55d, type: 2}
   m_CullingMode: 0
@@ -6375,6 +6375,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114750894860042834, guid: b1caf073cf08dca439d23c08ca6737d3,
+        type: 3}
+      propertyPath: CompensateShapeAmount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2009627228319297762, guid: b1caf073cf08dca439d23c08ca6737d3,
         type: 3}
       propertyPath: m_Name
