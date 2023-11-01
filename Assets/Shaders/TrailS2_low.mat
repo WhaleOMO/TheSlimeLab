@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: TrailS2
+  m_Name: TrailS2_low
   m_Shader: {fileID: -6465566751694194690, guid: 1aa9c5bee0f70d045a5b717cb860d87b,
     type: 3}
   m_Parent: {fileID: 0}
@@ -59,7 +59,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color1: {r: 2.7954397, g: 2.0415437, b: 0.82808304, a: 1}
+    - _Color1: {r: 0.74901956, g: 0.5470181, b: 0.22187936, a: 1}
     - _Color2: {r: 20.865904, g: 3.3161888, b: 2.0865908, a: 1}
     - _DisSpeed: {r: -0.5, g: 0, b: 0, a: 0}
     - _MainTexSpeed: {r: -1.5, g: 0, b: 0, a: 0}

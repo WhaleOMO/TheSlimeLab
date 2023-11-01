@@ -25,6 +25,8 @@ public class SlimeDex : MonoBehaviour
             var iconColor = icon.color;
             iconColor.a = 0f;
         }
+        
+        Items[0].color = Color.white;
     }
 
     public void IconFadeIn(Image icon)
@@ -55,11 +57,11 @@ public class SlimeDex : MonoBehaviour
         {
             switch (SlimeID)
             {
-                case 0:
+                /*case 0:
                     StartCoroutine(ItemsAnimation(lockicons[0], unlockicons[0]));
                     Items[0].color = Color.white;
                     SlimeID = 99;
-                    break;
+                    break;*/
                 case 1:
                     StartCoroutine(ItemsAnimation(lockicons[1], unlockicons[1]));
                     Items[1].color = Color.white;
@@ -80,6 +82,57 @@ public class SlimeDex : MonoBehaviour
                     Items[4].color = Color.white;
                     SlimeID = 99;
                     break;
+                case 5: 
+                    StartCoroutine(ItemsAnimation(lockicons[5], unlockicons[5]));
+                    Items[5].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 6: 
+                    StartCoroutine(ItemsAnimation(lockicons[6], unlockicons[6]));
+                    Items[6].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 7: 
+                    StartCoroutine(ItemsAnimation(lockicons[7], unlockicons[7]));
+                    Items[7].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 8: 
+                    StartCoroutine(ItemsAnimation(lockicons[8], unlockicons[8]));
+                    Items[8].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 9: 
+                    StartCoroutine(ItemsAnimation(lockicons[9], unlockicons[9]));
+                    Items[9].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 10: 
+                    StartCoroutine(ItemsAnimation(lockicons[10], unlockicons[10]));
+                    Items[10].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 11: 
+                    StartCoroutine(ItemsAnimation(lockicons[11], unlockicons[11]));
+                    Items[11].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 12: 
+                    StartCoroutine(ItemsAnimation(lockicons[12], unlockicons[12]));
+                    Items[12].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 13: 
+                    StartCoroutine(ItemsAnimation(lockicons[13], unlockicons[13]));
+                    Items[13].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                case 14: 
+                    StartCoroutine(ItemsAnimation(lockicons[14], unlockicons[14]));
+                    Items[14].color = Color.white;
+                    SlimeID = 99;
+                    break;
+                
             }
         }
     }
