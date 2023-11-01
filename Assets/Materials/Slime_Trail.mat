@@ -12,7 +12,6 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _ENABLE_SLIME_SHAKE
   - _RECEIVE_SHADOW
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -31,7 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _EnableShake: 1
+    - _EnableShake: 0
     - _OutlineWidth: 0.01
     - _ReceiveShadow: 1
     - _ShakeAmount: 0.15

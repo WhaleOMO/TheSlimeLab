@@ -165,6 +165,7 @@ public class MergeManager : MonoBehaviour
         Material mat = renderer.material;
         mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
         mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
+        mat.SetColor(SlimeShaderProperties.OutlineColor, baseColor * 0.8f);
         mat.SetColor(SlimeShaderProperties.RimColor, baseColor*3);
         renderer.material = mat;
         _mergedAmount++;

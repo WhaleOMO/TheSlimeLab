@@ -11,9 +11,12 @@ namespace Interactables
     {
         // UI display
         public Image icon1, icon2;
+        public Transform targetPosition;
+        
         private Item _item1, _item2;
         private bool _item1Received = false;
         private bool _item2Received = false;
+        
         private void Start()
         {
 
@@ -21,24 +24,23 @@ namespace Interactables
     
         public void OnGenerateButtonPressed()
         {
-            Color targetColor = Color.black;
+            Color targetColor = _item1.color;
             if (_item1 != null)
             {
                 var mergeManager = FindObjectOfType<MergeManager>();
                 mergeManager.SpawnSlime(
-                    new Vector3(0,12,0), 
-                    Quaternion.identity, 
+                    targetPosition.position, 
+                    targetPosition.rotation,
                     targetColor, 
                     new Vector3(1, 1, 1), 
                     (_item2 != null)?_item2.id-1 : _item1.id-1);
                 _item1 = null;
                 _item2 = null;
+                icon1.sprite = null;
+                icon2.sprite = null;
+                icon1.color = Color.white;
+                icon2.color = Color.white;
             }
-
-            Color _tempColor = icon1.color;
-            _tempColor.a = 0;
-            _tempColor = icon2.color;
-            _tempColor.a = 0;
         }
         
         private void OnTriggerEnter(Collider collision)
