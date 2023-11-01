@@ -23,13 +23,14 @@ public class LatticeDeformer : MonoBehaviour
     [Header("Other Settings")]
     public float colliderSize = 0.35f;
     public float rigidbodyMass = 1f;
-
+    public bool allowOutsideLattice;
+    
     private Vector3[] _initialVerts;
     private Vector3[] _gridPoints;
     // trilinear uvw value for each vertex
     // calculate once, used every frame to lerp vertex positions based on lattice points' positions...
     private Vector3[] _vertexUVWs;
-
+    
     private Mesh _deformedMesh;
     private Material _slimeMat;
     
@@ -204,23 +205,47 @@ public class LatticeDeformer : MonoBehaviour
         Profiler.BeginSample("Deformed vertices update");
         {
             Vector3[] deformedVerts = new Vector3[_initialVerts.Length];
-            for (int i = 0; i < _initialVerts.Length; i++)
+            if (allowOutsideLattice)
             {
-                // Interpolate along the x-axis (bottom face).
-                Vector3 bottomInterpolationA = Vector3.Lerp(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
-                Vector3 bottomInterpolationB = Vector3.Lerp(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
-                Vector3 bottomInterpolation =
-                    Vector3.Lerp(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
+                for (int i = 0; i < _initialVerts.Length; i++)
+                {
+                    // Interpolate along the x-axis (bottom face).
+                    Vector3 bottomInterpolationA = Vector3.LerpUnclamped(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
+                    Vector3 bottomInterpolationB = Vector3.LerpUnclamped(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
+                    Vector3 bottomInterpolation =
+                        Vector3.LerpUnclamped(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
 
-                // Interpolate along the x-axis (top face).
-                Vector3 topInterpolationA = Vector3.Lerp(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
-                Vector3 topInterpolationB = Vector3.Lerp(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
-                Vector3 topInterpolation = Vector3.Lerp(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
+                    // Interpolate along the x-axis (top face).
+                    Vector3 topInterpolationA = Vector3.LerpUnclamped(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
+                    Vector3 topInterpolationB = Vector3.LerpUnclamped(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
+                    Vector3 topInterpolation = Vector3.LerpUnclamped(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
 
-                // Interpolate along the z-axis (between bottom and top faces).
-                Vector3 resultWorldSpace = Vector3.Lerp(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
-                Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
-                deformedVerts[i] = resultLocalSpace;
+                    // Interpolate along the z-axis (between bottom and top faces).
+                    Vector3 resultWorldSpace = Vector3.LerpUnclamped(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
+                    Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
+                    deformedVerts[i] = resultLocalSpace;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < _initialVerts.Length; i++)
+                {
+                    // Interpolate along the x-axis (bottom face).
+                    Vector3 bottomInterpolationA = Vector3.Lerp(latticePositions[0], latticePositions[1], _vertexUVWs[i].x);
+                    Vector3 bottomInterpolationB = Vector3.Lerp(latticePositions[3], latticePositions[2], _vertexUVWs[i].x);
+                    Vector3 bottomInterpolation =
+                        Vector3.Lerp(bottomInterpolationA, bottomInterpolationB, _vertexUVWs[i].z);
+
+                    // Interpolate along the x-axis (top face).
+                    Vector3 topInterpolationA = Vector3.Lerp(latticePositions[4], latticePositions[5], _vertexUVWs[i].x);
+                    Vector3 topInterpolationB = Vector3.Lerp(latticePositions[7], latticePositions[6], _vertexUVWs[i].x);
+                    Vector3 topInterpolation = Vector3.Lerp(topInterpolationA, topInterpolationB, _vertexUVWs[i].z);
+
+                    // Interpolate along the z-axis (between bottom and top faces).
+                    Vector3 resultWorldSpace = Vector3.Lerp(bottomInterpolation, topInterpolation, _vertexUVWs[i].y);
+                    Vector3 resultLocalSpace = transform.InverseTransformPoint(resultWorldSpace);
+                    deformedVerts[i] = resultLocalSpace;
+                }
             }
             _deformedMesh.vertices = deformedVerts;
         }

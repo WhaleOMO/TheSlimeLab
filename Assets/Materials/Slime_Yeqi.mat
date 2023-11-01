@@ -11,8 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords:
-  - _RECEIVE_SHADOW
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -36,7 +35,7 @@ Material:
     m_Floats:
     - _EnableShake: 0
     - _OutlineWidth: 0.025
-    - _ReceiveShadow: 1
+    - _ReceiveShadow: 0
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
@@ -49,4 +48,5 @@ Material:
     - _HighlightColor: {r: 0.8247925, g: 0.74925834, b: 0.8301887, a: 0}
     - _OutlineColor: {r: 0.6901961, g: 0.45882353, b: 0.6747275, a: 0}
     - _RimColor: {r: 2.92119, g: 0.293956, b: 2.6239958, a: 0}
+    - _ShadowSamplePos: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

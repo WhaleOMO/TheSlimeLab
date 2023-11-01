@@ -50,6 +50,7 @@ MonoBehaviour:
   jumpSource: {fileID: 5471525268782157212}
   creepSource: {fileID: 8811341177299157238}
   yellSource: {fileID: 3925868843220286275}
+  squeezeSource: {fileID: 0}
 --- !u!1 &856923549331120111
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,6 +270,12 @@ MonoBehaviour:
   mergeManager: {fileID: 0}
   leftRayInteractor: {fileID: 0}
   rightRayInteractor: {fileID: 0}
+  HapticEnter:
+    intensity: 0
+    duration: 0
+  HapticExit:
+    intensity: 0
+    duration: 0
 --- !u!114 &67448539088915589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1258,6 +1265,7 @@ MonoBehaviour:
   damper: 0.2
   colliderSize: 0.35
   rigidbodyMass: 1
+  allowOutsideLattice: 0
 --- !u!95 &6240564646461781522
 Animator:
   serializedVersion: 5

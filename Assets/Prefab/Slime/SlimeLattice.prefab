@@ -894,6 +894,7 @@ MonoBehaviour:
   damper: 0.2
   colliderSize: 0.35
   rigidbodyMass: 1
+  allowOutsideLattice: 0
 --- !u!95 &9153899089948358114
 Animator:
   serializedVersion: 5

@@ -45,12 +45,6 @@ public class MergeManager : MonoBehaviour
         {
             MergeImplement();
         }
-
-        if (_mergedAmount >= 3)
-        {
-            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
-            _mergedAmount-=2;
-        }
     }
 
     [ContextMenu("Add Random Slime")]
