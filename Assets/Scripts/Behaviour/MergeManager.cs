@@ -176,6 +176,7 @@ public class MergeManager : MonoBehaviour
     async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size, int prefabIndex = 0)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
+        
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject slimePrefab;
@@ -194,6 +195,9 @@ public class MergeManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.AmbientColor, newColor * 0.4f);
         mat.SetColor(SlimeShaderProperties.RimColor, newColor * 3);
         renderer.material = mat;
+        var slimeDex = FindObjectOfType<SlimeDex>();
+        slimeDex.SlimeID = (slimeLevel == 2) ? prefabIndex+1 : prefabIndex + level2Slimes.Length+1;
+        
         newSlime.GetComponent<SlimeManager>().SetSlime(slime);
 
         

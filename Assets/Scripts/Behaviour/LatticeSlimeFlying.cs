@@ -2,20 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LatticeSlimeFlying : MonoBehaviour
 {
     public GameObject[] controlPoints;
     private IEnumerator _floatingCoroutine;
-    
-    public float degreesPerSecond = 15.0f;
-    public float amplitude = 0.5f;
+
+    //public float degreesPerSecond = 15.0f;
+    public float amplitude = 1f;
     public float frequency = 1f;
-    
+    public int degreesPerSecond = 5;
+    public int nSteps = 20;
+
     // Position Storage Variables
-    private Vector3[] posOffset = new Vector3[8];
-    private Vector3[] tempPos = new Vector3[8];
-    
+    private Vector3[] posOffset = new Vector3[9];
+    private Vector3[] tempPos = new Vector3[9];
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,20 +30,20 @@ public class LatticeSlimeFlying : MonoBehaviour
             posOffset[i] = controlPoint.transform.position;
             i++;
         }
-        
-    }
 
-   void Update()
+    }
+    
+    private void Update()
     {
         VerticalFloating();
     }
-
-   // ReSharper disable Unity.PerformanceAnalysis
-   private void VerticalFloating()
-   {
+    
+    private void VerticalFloating()
+    {
         int i = 0;
         foreach (var controlPoint in controlPoints)
         {
+            
             tempPos[i] = posOffset[i];
             tempPos[i].y += Mathf.Sin (Time.fixedTime * Mathf.PI * frequency) * amplitude;
 
