@@ -1,3 +1,10 @@
-﻿#,Cat,Sunglass
-Cat,0,1
-Sunglass,1,0
+﻿#,Devil,Cat,Rabbit,Treasure,Wizard,Crown,Leaf,Sunglass,Angel
+Devil,5,2,4,0,1,4,1,5,4
+Cat,2,6,2,3,0,3,5,2,6
+Rabbit,4,2,3,5,5,5,0,4,1
+Treasure,0,3,5,1,3,1,4,3,2
+Wizard,1,0,5,3,0,6,1,0,5
+Crown,4,3,5,1,6,2,5,2,0
+Leaf,1,5,0,4,1,5,1,4,0
+Sunglass,5,2,4,3,0,2,4,6,2
+Angel,4,6,1,2,5,0,0,2,3
