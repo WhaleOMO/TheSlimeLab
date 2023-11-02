@@ -45,6 +45,12 @@ public class MergeManager : MonoBehaviour
         {
             MergeImplement();
         }
+
+        if (_mergedAmount >= 3)
+        {
+            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
+            _mergedAmount-=2;
+        }
     }
 
     [ContextMenu("Add Random Slime")]
@@ -165,7 +171,6 @@ public class MergeManager : MonoBehaviour
         Material mat = renderer.material;
         mat.SetColor(SlimeShaderProperties.BaseColor, baseColor);
         mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
-        mat.SetColor(SlimeShaderProperties.OutlineColor, baseColor * 0.8f);
         mat.SetColor(SlimeShaderProperties.RimColor, baseColor*3);
         renderer.material = mat;
         _mergedAmount++;
@@ -176,7 +181,6 @@ public class MergeManager : MonoBehaviour
     async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size, int prefabIndex = 0)
     {
         GameObject vfx = Instantiate(vfxPrefab, spawnPosition, spawnRotation);
-        
         //GameObject newSlimeModel;
         await Task.Delay(TimeSpan.FromSeconds(0.5f));
         GameObject slimePrefab;
