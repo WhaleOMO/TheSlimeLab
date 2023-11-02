@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Slime_Treasure
+  m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _RECEIVE_SHADOW
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ExpressionTex:
+        m_Texture: {fileID: 2800000, guid: 3dc3bf50a102a5b44a88f8e31974ce34, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _EnableShake: 0
+    - _OutlineWidth: 0.025
+    - _ReceiveShadow: 1
+    - _ShakeAmount: 0.15
+    - _ShakeSpeed: 5
+    m_Colors:
+    - _AmbientColor: {r: 0.6131523, g: 0.48112944, b: 0.7529412, a: 0}
+    - _BaseColor: {r: 0.8142118, g: 0.34199995, b: 1, a: 0}
+    - _ExpColorLayer1: {r: 0.3301887, g: 0.055031415, b: 0.29525962, a: 0}
+    - _ExpColorLayer2: {r: 0.41509432, g: 0.12792212, b: 0.402234, a: 0}
+    - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
+    - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
+    - _HighlightColor: {r: 0.8247925, g: 0.74925834, b: 0.8301887, a: 0}
+    - _OutlineColor: {r: 0.6901961, g: 0.45882353, b: 0.6747275, a: 0}
+    - _RimColor: {r: 2.92119, g: 0.293956, b: 2.6239958, a: 0}
+  m_BuildTextureStacks: []
