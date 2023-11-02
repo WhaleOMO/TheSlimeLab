@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 8564447093318034161}
   m_Layer: 0
   m_Name: SlimeLatticeAngle 1
-  m_TagString: 2
+  m_TagString: 3
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

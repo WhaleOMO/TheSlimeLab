@@ -193,12 +193,16 @@ public class MergeManager : MonoBehaviour
         GameObject newSlime = Instantiate(slimePrefab, spawnPosition, spawnRotation);
         newSlime.transform.localScale = size;
         MeshRenderer renderer = newSlime.GetComponentInChildren<MeshRenderer>();
-        Material mat = renderer.material;
-        Color newColor = slime.GetSlimeColor();
-        mat.SetColor(SlimeShaderProperties.BaseColor, newColor);
-        mat.SetColor(SlimeShaderProperties.AmbientColor, newColor * 0.4f);
-        mat.SetColor(SlimeShaderProperties.RimColor, newColor * 3);
-        renderer.material = mat;
+        if (slimeLevel == 2)
+        { 
+            Material mat = renderer.material;
+            Color newColor = slime.GetSlimeColor();
+            mat.SetColor(SlimeShaderProperties.BaseColor, newColor);
+            mat.SetColor(SlimeShaderProperties.AmbientColor, newColor * 0.4f);
+            mat.SetColor(SlimeShaderProperties.RimColor, newColor * 3);
+            renderer.material = mat;            
+        }
+
         var slimeDex = FindObjectOfType<SlimeDex>();
         slimeDex.SlimeID = (slimeLevel == 2) ? prefabIndex+1 : prefabIndex + level2Slimes.Length+1;
         
