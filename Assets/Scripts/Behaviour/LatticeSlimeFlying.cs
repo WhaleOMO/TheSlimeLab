@@ -12,9 +12,7 @@ public class LatticeSlimeFlying : MonoBehaviour
     //public float degreesPerSecond = 15.0f;
     public float amplitude = 1f;
     public float frequency = 1f;
-    public int degreesPerSecond = 5;
-    public int nSteps = 20;
-
+    
     // Position Storage Variables
     private Vector3[] posOffset = new Vector3[9];
     private Vector3[] tempPos = new Vector3[9];
