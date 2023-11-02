@@ -141,8 +141,6 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[8], unlockicons[8]));
                         Items[8].color = Color.white;
                         isLightUp[8] = true;
-                        SlimeInContainer[0].SetActive(true);
-                        GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[0].transform.position, SlimeInContainer[0].transform.rotation);
                     }
                     SlimeID = 99;
                     break;
@@ -152,8 +150,6 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[9], unlockicons[9]));
                         Items[9].color = Color.white;
                         isLightUp[9] = true;
-                        SlimeInContainer[1].SetActive(true);
-                        GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[1].transform.position, SlimeInContainer[1].transform.rotation);
                     }
                     SlimeID = 99;
                     break;
@@ -163,7 +159,7 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[10], unlockicons[10]));
                         Items[10].color = Color.white;
                         isLightUp[10] = true;
-                        SlimeInContainer[2].SetActive(true);
+                        SlimeInContainer[0].SetActive(true);
                         GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[2].transform.position, SlimeInContainer[2].transform.rotation);
                     }
                     SlimeID = 99;
@@ -174,7 +170,7 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[11], unlockicons[11]));
                         Items[11].color = Color.white;
                         isLightUp[11] = true;
-                        SlimeInContainer[3].SetActive(true);
+                        SlimeInContainer[1].SetActive(true);
                         GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[3].transform.position, SlimeInContainer[3].transform.rotation);
                     }
                     SlimeID = 99;
@@ -185,7 +181,7 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[12], unlockicons[12]));
                         Items[12].color = Color.white;
                         isLightUp[12] = true;
-                        SlimeInContainer[4].SetActive(true);
+                        SlimeInContainer[2].SetActive(true);
                         GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[4].transform.position, SlimeInContainer[4].transform.rotation);
                     }
                     SlimeID = 99;
@@ -196,7 +192,7 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[13], unlockicons[13]));
                         Items[13].color = Color.white;
                         isLightUp[13] = true; 
-                        SlimeInContainer[5].SetActive(true);
+                        SlimeInContainer[3].SetActive(true);
                         GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[5].transform.position, SlimeInContainer[5].transform.rotation);
                     }
                     SlimeID = 99;
@@ -207,6 +203,28 @@ public class SlimeDex : MonoBehaviour
                         StartCoroutine(ItemsAnimation(lockicons[14], unlockicons[14]));
                         Items[14].color = Color.white;
                         isLightUp[14] = true;
+                        SlimeInContainer[4].SetActive(true);
+                        GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[6].transform.position, SlimeInContainer[6].transform.rotation);
+                    }
+                    SlimeID = 99;
+                    break;
+                case 15:
+                    if (!isLightUp[15])
+                    {
+                        StartCoroutine(ItemsAnimation(lockicons[15], unlockicons[15]));
+                        Items[15].color = Color.white;
+                        isLightUp[15] = true;
+                        SlimeInContainer[5].SetActive(true);
+                        GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[6].transform.position, SlimeInContainer[6].transform.rotation);
+                    }
+                    SlimeID = 99;
+                    break;
+                case 16:
+                    if (!isLightUp[16])
+                    {
+                        StartCoroutine(ItemsAnimation(lockicons[16], unlockicons[16]));
+                        Items[16].color = Color.white;
+                        isLightUp[16] = true;
                         SlimeInContainer[6].SetActive(true);
                         GameObject vfx = Instantiate(vfxPrefab, SlimeInContainer[6].transform.position, SlimeInContainer[6].transform.rotation);
                     }
