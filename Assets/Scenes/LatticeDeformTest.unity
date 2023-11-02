@@ -415,12 +415,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c055dac9068d86745af3acaa59b698ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slimePrefab: {fileID: 4387364421234048428, guid: 173054d84fd2e80448a716f4d3dd9c6b,
-    type: 3}
+  level2Slimes: []
+  level3Slimes: []
+  slimeCrystals: []
+  slimeItems: []
+  basicPrefab: {fileID: 0}
   vfxPrefab: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,
     type: 3}
-  slimeManager: {fileID: 0}
-  _maxAllowed: 0
+  OnSlimeSqueeze:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &180390285 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3399764337711558294, guid: 0796f977c5dc99042aa09ce2703dcd24,
@@ -6198,7 +6202,7 @@ MonoBehaviour:
   - {fileID: 180390285}
   - {fileID: 1139690788}
   amplitude: 1
-  frequency: 0
+  frequency: 1
   degreesPerSecond: 15
   nSteps: 20
 --- !u!1 &448869858

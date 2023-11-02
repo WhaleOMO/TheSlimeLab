@@ -402,7 +402,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (1)
+      value: Scifi Container4
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -478,6 +478,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -816,7 +821,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container
+      value: Scifi Container5
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -883,15 +888,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4477803963540851871, guid: 9303d584f57c20f47b2721e09b66abf3,
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
-      propertyPath: m_Range
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477803963540851871, guid: 9303d584f57c20f47b2721e09b66abf3,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 3
+      propertyPath: m_Name
+      value: Container_Slime5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1235,6 +1235,12 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &229515135 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 173790568}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &249832086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1510,6 +1516,12 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.903456, z: 1}
   m_Center: {x: 0, y: 0.048272014, z: 0}
+--- !u!1 &281188028 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 811336032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &286576468
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,6 +1673,12 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &306822990 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1325443288}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &309854559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2606,6 +2624,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 391710717}
   m_CullTransparentMesh: 1
+--- !u!1 &395020018 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 71679478}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &400120061
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,6 +3087,12 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &453525025 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1076972524}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &511874004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
@@ -4508,7 +4538,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (2)
+      value: Scifi Container3
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -4584,6 +4614,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5147,6 +5182,12 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &880655264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1880585021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &895844310
 GameObject:
   m_ObjectHideFlags: 0
@@ -5576,7 +5617,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (5)
+      value: Scifi Container0
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -5642,16 +5683,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477803963540851871, guid: 9303d584f57c20f47b2721e09b66abf3,
-        type: 3}
-      propertyPath: m_Range
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4477803963540851871, guid: 9303d584f57c20f47b2721e09b66abf3,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6019,6 +6050,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060484073}
   m_CullTransparentMesh: 1
+--- !u!1 &1071503197 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 1260877653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1076972524
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6030,7 +6067,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (3)
+      value: Scifi Container2
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -6111,6 +6148,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7045,7 +7087,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (7)
+      value: Scifi Container7
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -7121,6 +7163,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7236,6 +7283,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SlimeID: 99
   fadeTime: 1
+  vfxPrefab: {fileID: 1723188640175727385, guid: 693d31b013a6fb2489db0f7f9e654b25,
+    type: 3}
   Items:
   - {fileID: 1288362080}
   - {fileID: 1568813143}
@@ -7284,6 +7333,15 @@ MonoBehaviour:
   - {fileID: 1319566466}
   - {fileID: 1081442848}
   - {fileID: 2041117685}
+  SlimeInContainer:
+  - {fileID: 1674674389}
+  - {fileID: 880655264}
+  - {fileID: 453525025}
+  - {fileID: 281188028}
+  - {fileID: 395020018}
+  - {fileID: 229515135}
+  - {fileID: 306822990}
+  - {fileID: 1071503197}
 --- !u!114 &1291717830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7536,7 +7594,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (6)
+      value: Scifi Container6
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -7612,6 +7670,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10442,7 +10505,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6a1ee7f05d7770c4ca69f55e2903c371, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6c7f321c7c3079447bc31de7b768a3ab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10843,6 +10906,12 @@ Transform:
   - {fileID: 1228983975}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1674674389 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+    type: 3}
+  m_PrefabInstance: {fileID: 974247834}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1680268394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12110,7 +12179,7 @@ PrefabInstance:
     - target: {fileID: 1106096039955852772, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
       propertyPath: m_Name
-      value: Scifi Container (4)
+      value: Scifi Container1
       objectReference: {fileID: 0}
     - target: {fileID: 3428221557721653948, guid: 9303d584f57c20f47b2721e09b66abf3,
         type: 3}
@@ -12186,6 +12255,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488612904126445447, guid: 9303d584f57c20f47b2721e09b66abf3,
+        type: 3}
+      propertyPath: m_Name
+      value: Container_Slime1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13282,74 +13356,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &2099082248
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 10.72
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -7.1159983
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1176730940367121640, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7260146727532463866, guid: 0796f977c5dc99042aa09ce2703dcd24,
-        type: 3}
-      propertyPath: m_Name
-      value: SlimeLattice (6)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0796f977c5dc99042aa09ce2703dcd24, type: 3}
 --- !u!1 &2102207631
 GameObject:
   m_ObjectHideFlags: 0
@@ -14203,7 +14209,6 @@ SceneRoots:
   - {fileID: 1680268394}
   - {fileID: 164289800}
   - {fileID: 1843762887}
-  - {fileID: 2099082248}
   - {fileID: 864801114}
   - {fileID: 359615230}
   - {fileID: 1291717833}
