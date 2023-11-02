@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Slime_Treasure
+  m_Name: Slime_King
   m_Shader: {fileID: 4800000, guid: 9d989c496a6c742c3912626a89130c02, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _ExpressionTex:
-        m_Texture: {fileID: 2800000, guid: 3dc3bf50a102a5b44a88f8e31974ce34, type: 3}
+        m_Texture: {fileID: 2800000, guid: 1115e82fa286b1f45913103f4ac9db8f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -35,19 +35,19 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableShake: 0
-    - _OutlineWidth: 0.025
+    - _OutlineWidth: 0.015
     - _ReceiveShadow: 1
     - _ShakeAmount: 0.15
     - _ShakeSpeed: 5
     m_Colors:
-    - _AmbientColor: {r: 0.8396226, g: 0.6951815, b: 0.021122515, a: 0}
-    - _BaseColor: {r: 1, g: 0.8249527, b: 0, a: 0}
-    - _ExpColorLayer1: {r: 0.3301887, g: 0.055031415, b: 0.29525962, a: 0}
-    - _ExpColorLayer2: {r: 0.41509432, g: 0.12792212, b: 0.402234, a: 0}
+    - _AmbientColor: {r: 0.30817604, g: 0.49203908, b: 1, a: 0}
+    - _BaseColor: {r: 0.13, g: 0.36199978, b: 1, a: 0}
+    - _ExpColorLayer1: {r: 0.8392157, g: 0.38431373, b: 0.38431373, a: 0}
+    - _ExpColorLayer2: {r: 0.05490196, g: 0.2784314, b: 0.58431375, a: 0}
     - _ExpColorLayer3: {r: 1, g: 1, b: 1, a: 1}
     - _ExpColorLayer4: {r: 1, g: 1, b: 1, a: 1}
-    - _HighlightColor: {r: 1, g: 0.9393187, b: 0.65723264, a: 0}
-    - _OutlineColor: {r: 0.6509434, g: 0.59778583, b: 0.034798816, a: 0}
-    - _RimColor: {r: 1, g: 0.8138608, b: 0, a: 0}
+    - _HighlightColor: {r: 1, g: 0.96794057, b: 0, a: 0}
+    - _OutlineColor: {r: 1, g: 0.9686275, b: 0, a: 0}
+    - _RimColor: {r: 1, g: 0.93011117, b: 0, a: 0}
     - _ShadowSamplePos: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

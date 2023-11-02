@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c29c9950224a76b77e832ef840e5d8, type: 3}
-  m_Name: CatCrystal
+  m_Name: 3_CatCrystal
   m_EditorClassIdentifier: 
   itemType: 0
-  id: 2
+  id: 3
   itemName: Cat Shape Crystal
   description: The Cat Slime Crystal
   icon: {fileID: 21300000, guid: f7b08567929a7b040b400d7dd53b82ab, type: 3}

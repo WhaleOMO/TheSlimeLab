@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c29c9950224a76b77e832ef840e5d8, type: 3}
-  m_Name: TestItem2
+  m_Name: 6_WizardCrystal
   m_EditorClassIdentifier: 
-  id: 0
-  itemName: Test
-  description: Dummy Test Item
-  icon: {fileID: 21300000, guid: b60859c953badc54e9a217c09a900aff, type: 3}
+  itemType: 0
+  id: 6
+  itemName: Wizard Crystal
+  description: The Wizard Slime Crystal
+  icon: {fileID: 21300000, guid: b12d1e34bd649824e811ceb27e333616, type: 3}
   prefab: {fileID: 9107678918550379722, guid: b9d1cf7d64823564b865e03dc12ff0fa, type: 3}
-  color: {r: 0.6320754, g: 0.16497563, b: 0.21971388, a: 1}
+  color: {r: 1, g: 1, b: 1, a: 1}
   isStackable: 1
   maxStackAmount: 10

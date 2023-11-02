@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 1022940766017425794}
   m_Layer: 0
   m_Name: Slime_Crown
-  m_TagString: 1
+  m_TagString: 2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -651,6 +651,7 @@ MonoBehaviour:
   damper: 0.2
   colliderSize: 0.35
   rigidbodyMass: 1
+  allowOutsideLattice: 0
 --- !u!95 &194027040358650818
 Animator:
   serializedVersion: 5
@@ -908,7 +909,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d55278f10e42b4f4ea8ddba8c0dae241, type: 2}
+  - {fileID: 2100000, guid: c2431fb298aaac44680a33485d602a5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

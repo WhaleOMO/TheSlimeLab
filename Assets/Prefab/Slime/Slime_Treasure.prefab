@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8758085433371596591}
   m_Layer: 0
   m_Name: Slime_Treasure
-  m_TagString: Untagged
+  m_TagString: 2
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -145,6 +145,7 @@ MonoBehaviour:
   damper: 0.2
   colliderSize: 0.35
   rigidbodyMass: 1
+  allowOutsideLattice: 0
 --- !u!95 &6812018401833608368
 Animator:
   serializedVersion: 5
@@ -799,15 +800,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6064180481266845153}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0.12401282, z: -0, w: 0.9922806}
+  m_LocalPosition: {x: 0.006357506, y: 0, z: -0.052868944}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8040131739139418466}
   - {fileID: 6756881448392874404}
   m_Father: {fileID: 8758085433371596591}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -14.248, z: 0}
 --- !u!114 &5735708454488189932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1739,7 +1740,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.55601585
+      value: 0.537
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
@@ -1749,12 +1750,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5560159
+      value: 0.554
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.028245749
+      value: -0.9962657
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
@@ -1764,7 +1765,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.999601
+      value: 0.086340435
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
@@ -1779,7 +1780,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -369.906
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7f02e4fb0746b468d88ab429e0931236,
         type: 3}

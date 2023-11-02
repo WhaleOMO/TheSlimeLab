@@ -27,7 +27,7 @@ public class MergeManager : MonoBehaviour
     public UnityEvent<float> OnSlimeSqueeze;
 
     private int _maxAllowed;
-    private int _mergedAmount;
+    //private int _mergedAmount;
     private int _slimeCount;
     
     void Start()
@@ -46,11 +46,11 @@ public class MergeManager : MonoBehaviour
             MergeImplement();
         }
 
-        if (_mergedAmount >= 3)
-        {
-            SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
-            _mergedAmount-=2;
-        }
+        // if (_mergedAmount >= 3)
+        // {
+        //     SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f),new Vector3(1,1,1));
+        //     _mergedAmount-=2;
+        // }
     }
 
     [ContextMenu("Add Random Slime")]
@@ -64,7 +64,7 @@ public class MergeManager : MonoBehaviour
             
             // var newSlime = new Slime(0, 1, Random.ColorHSV(0, 1, 0.3f, 0.6f, 0.5f, 0.8f));
             // SpawnSlime(new Vector3(0, 8, 0), Quaternion.identity, newSlime, new Vector3(1, 1, 1));
-            _mergedAmount-=2;
+            // _mergedAmount-=2;
         }
     }
     
@@ -102,11 +102,11 @@ public class MergeManager : MonoBehaviour
     {
         float distanceOfCentre = (catch1.transform.position - catch2.transform.position).magnitude;
         float threshold = catch1.GetComponent<SphereCollider>().radius + catch2.GetComponent<SphereCollider>().radius;
-        if (distanceOfCentre > 0.25 * threshold && distanceOfCentre < 0.9 * threshold)
+        if (distanceOfCentre > 0.5 * threshold && distanceOfCentre < 0.9 * threshold)
         {
             OnSlimeSqueeze?.Invoke(distanceOfCentre);
         }
-        else if (distanceOfCentre < 0.25 * threshold)
+        else if (distanceOfCentre < 0.5 * threshold)
         {
             /*
             Destroy(slime1);
@@ -137,7 +137,7 @@ public class MergeManager : MonoBehaviour
             Vector3 size_1 = slime1.transform.localScale;
             Vector3 size_2 = slime2.transform.localScale;
 
-            Vector3 newSize = size_1 + size_2;
+            Vector3 newSize = (size_1 + size_2)/2;
 
             slime1.SetActive(false);
             catch1.SetActive(false);
@@ -173,7 +173,7 @@ public class MergeManager : MonoBehaviour
         mat.SetColor(SlimeShaderProperties.AmbientColor, baseColor * 0.4f);
         mat.SetColor(SlimeShaderProperties.RimColor, baseColor*3);
         renderer.material = mat;
-        _mergedAmount++;
+        //_mergedAmount++;
         
         newSlime.GetComponent<SlimeManager>().FetchData();
     }
@@ -203,9 +203,8 @@ public class MergeManager : MonoBehaviour
         slimeDex.SlimeID = (slimeLevel == 2) ? prefabIndex+1 : prefabIndex + level2Slimes.Length+1;
         
         newSlime.GetComponent<SlimeManager>().SetSlime(slime);
-
         
-        _mergedAmount++;
+        //_mergedAmount++;
     }
 
     async Task SpawnCrystal(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime)
