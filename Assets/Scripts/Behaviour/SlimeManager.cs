@@ -95,6 +95,11 @@ public class SlimeManager : MonoBehaviour
         return _slime;
     }
 
+    public void UpdateSlime(int decorationIndex)
+    {
+        this._slime.UpdateDecorationIndex(decorationIndex);
+    }
+
     public void SetSlime(Slime slime)
     {
         this._slime = slime;

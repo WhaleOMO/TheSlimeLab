@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0c29c9950224a76b77e832ef840e5d8, type: 3}
-  m_Name: 4_BunnyCrystal
+  m_Name: 8_LeafCrystal
   m_EditorClassIdentifier: 
   itemType: 0
-  id: 4
-  itemName: Bunny Shape Crystal
-  description: The Bunny Slime Crystal
-  icon: {fileID: 21300000, guid: 5b88ad34a1c115445a9f669c542e5cc1, type: 3}
-  prefab: {fileID: 9107678918550379722, guid: faed40a3057f3ee4aa08b55f31d98981, type: 3}
+  id: 8
+  itemName: Crown Crystal
+  description: The Crown Slime Crystal
+  icon: {fileID: 21300000, guid: effc9fea3259e414693e102aaf355a72, type: 3}
+  prefab: {fileID: 9107678918550379722, guid: e87a702c6cf4e834bafd02a1d7abac1c, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   isStackable: 1
   maxStackAmount: 10

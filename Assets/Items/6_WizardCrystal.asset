@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Wizard Crystal
   description: The Wizard Slime Crystal
   icon: {fileID: 21300000, guid: b12d1e34bd649824e811ceb27e333616, type: 3}
-  prefab: {fileID: 9107678918550379722, guid: b9d1cf7d64823564b865e03dc12ff0fa, type: 3}
+  prefab: {fileID: 9107678918550379722, guid: ca55c48f741845a40b9a00e1e0d70ca6, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   isStackable: 1
   maxStackAmount: 10

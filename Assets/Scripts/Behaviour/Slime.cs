@@ -126,4 +126,9 @@ public class Slime
         }
         return true;
     }
+
+    public void UpdateDecorationIndex(int newDecorationIndex)
+    {
+        this.decorationIndex = newDecorationIndex;
+    }
 }

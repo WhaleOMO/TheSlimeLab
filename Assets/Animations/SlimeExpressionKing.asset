@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25a3474f54d3404280ec43da1022af2c, type: 3}
-  m_Name: SlimeExpressionPreset
+  m_Name: SlimeExpressionKing
   m_EditorClassIdentifier: 
   presets:
   - name: Default
-    expressionTexture: {fileID: 2800000, guid: 1115e82fa286b1f45913103f4ac9db8f, type: 3}
+    expressionTexture: {fileID: 2800000, guid: ed99c6f7263de2c49a0832368b83173b, type: 3}
   - name: Blink
-    expressionTexture: {fileID: 2800000, guid: 3c6afc2c5a0444c8ad230aeaa19eb54d, type: 3}
+    expressionTexture: {fileID: 2800000, guid: 26875158e1c89a94ebe1a2624ab78c03, type: 3}
   - name: Dizzy
     expressionTexture: {fileID: 2800000, guid: 1c5391222e88e1b4abbc84d0710209ea, type: 3}
   - name: Pain

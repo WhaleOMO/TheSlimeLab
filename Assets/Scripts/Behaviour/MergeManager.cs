@@ -176,6 +176,11 @@ public class MergeManager : MonoBehaviour
         //_mergedAmount++;
         
         newSlime.GetComponent<SlimeManager>().FetchData();
+        if (prefabIndex != 0)
+        {
+            int decorationIndex = prefabIndex - 1;
+            newSlime.GetComponent<SlimeManager>().UpdateSlime(decorationIndex);
+        }
     }
 
     async Task SpawnSlime(Vector3 spawnPosition, Quaternion spawnRotation, Slime slime, Vector3 size, int prefabIndex = 0)
